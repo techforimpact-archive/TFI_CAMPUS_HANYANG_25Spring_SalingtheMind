@@ -1,0 +1,9 @@
+# Node.js 모듈
+node_modules/
+
+# 빌드 디렉토리 (Vite에서 생성된 dist 디렉토리)
+dist/
+
+# 환경 변수 파일
+.env
+.env.*

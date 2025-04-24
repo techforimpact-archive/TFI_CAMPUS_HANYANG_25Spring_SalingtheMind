@@ -1,0 +1,55 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "jsx-a11y",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended", // ESLint 추천 규칙
+    "plugin:react/recommended", // React 추천 규칙
+    "plugin:react-hooks/recommended", // React Hooks 추천 규칙
+    "plugin:@typescript-eslint/recommended", // TypeScript 추천 규칙
+    "plugin:jsx-a11y/recommended", // 접근성 규칙
+    "plugin:prettier/recommended" // Prettier 규칙 적용
+  ],
+  "rules": {
+    "prettier/prettier": "error", // Prettier 위반 시 에러 처리
+    "react/react-in-jsx-scope": "off", // React 17+에서 자동으로 JSX를 처리하기 때문에 이 규칙을 끄기
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }], // 미사용 변수는 에러 처리 (예: _로 시작하는 인자 제외)
+    "no-console": "warn", // console.log 사용 시 경고
+    "no-debugger": "warn", // debugger 사용 시 경고
+    "consistent-return": "error", // 함수에서 일관되게 return 값을 사용하도록 강제
+    "eqeqeq": "error", // `==` 대신 `===` 사용하도록 강제
+    "no-else-return": "error", // `if` 문 다음에 `else` 대신 바로 `return` 사용
+    "no-magic-numbers": [
+      "error",
+      {
+        // 매직 넘버 사용 금지
+        "ignore": [0, 1]
+      }
+    ],
+    "no-undef": "error", // 선언되지 않은 변수 사용 시 에러 처리
+    "react/prop-types": "off", // TypeScript를 사용할 때 prop-types를 사용하지 않도록 설정
+    "react/jsx-uses-react": "off", // React 17+ JSX 자동 런타임에서 이 규칙을 끔
+    "react/jsx-uses-vars": "error", // JSX 내에서 사용되지 않은 변수를 에러로 처리
+    "react/jsx-no-bind": "warn", // JSX에서 inline 함수를 사용하는 것을 경고
+    "react/jsx-sort-props": "error" // JSX props 정렬
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // React 버전을 자동으로 감지
+    }
+  },
+  "ignorePatterns": ["dist", "node_modules"] // 빌드 디렉토리 및 의존성 폴더는 무시
+}

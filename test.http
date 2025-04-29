@@ -1,0 +1,7 @@
+POST http://localhost:5000/write_letter
+Content-Type: application/json
+
+{
+  "sender": "rbanbal",
+  "content": "이건 MongoDB 연결 테스트 편지입니다!"
+}

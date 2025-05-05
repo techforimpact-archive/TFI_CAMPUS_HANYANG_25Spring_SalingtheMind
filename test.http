@@ -1,4 +1,5 @@
 @host = http://192.168.0.11:5000
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
 
 ### 1) 회원가입(Signup)
 POST {{host}}/api/users/signup
@@ -21,13 +22,14 @@ Content-Type: application/json
 }
 
 ### 3) 보호된 API 호출 (수동 토큰)
-GET http://192.168.0.11:5000/api/users/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
+GET {{host}}/api/users/protected
+Authorization: {{token}}
 
-@host = http://192.168.0.11:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
+---
 
-### 1. 포인트 적립 (예: 편지 작성)
+### Reward API
+
+### 4) 포인트 적립 (예: 편지 작성)
 POST {{host}}/reward/grant
 Content-Type: application/json
 Authorization: {{token}}
@@ -36,24 +38,26 @@ Authorization: {{token}}
   "action": "write_letter"
 }
 
-### 2. 내 포인트 조회
+### 5) 내 포인트 조회
 GET {{host}}/reward/my
 Authorization: {{token}}
 
-### 3. 랜덤박스 개봉
+### 6) 랜덤박스 개봉
 POST {{host}}/reward/open-box
 Authorization: {{token}}
 
-###
+---
 
-### 4. 전체 아이템 카탈로그 조회 (비인증)
+### Item API
+
+### 7) 전체 아이템 카탈로그 조회 (비인증)
 GET {{host}}/item/catalog
 
-### 5. 내 보유 아이템 조회
+### 8) 내 보유 아이템 조회
 GET {{host}}/item/my
 Authorization: {{token}}
 
-### 6. 아이템 사용
+### 9) 아이템 사용
 POST {{host}}/item/use
 Content-Type: application/json
 Authorization: {{token}}
@@ -62,3 +66,76 @@ Authorization: {{token}}
   "item_type": "샤이니 스티커"
 }
 
+---
+
+### Letter API
+
+### 10) 편지 전송: self
+POST {{host}}/letter/send
+Content-Type: application/json
+
+{
+  "from": "user123",
+  "to": "self",
+  "content": "나 자신에게 보내는 편지 내용",
+  "emotion": "기쁨"
+}
+
+### 11) 편지 전송: volunteer
+POST {{host}}/letter/send
+Content-Type: application/json
+
+{
+  "from": "user123",
+  "to": "volunteer",
+  "content": "힘들 때 위로가 필요해요.",
+  "emotion": "슬픔"
+}
+
+### 12) 편지 전송: random 매칭
+POST {{host}}/letter/send
+Content-Type: application/json
+
+{
+  "from": "user123",
+  "to": "random",
+  "content": "요즘 가장 크게 느끼는 감정이 무엇인가요?",
+  "emotion": "설렘"
+}
+
+### 13) 나에게 온 미답장 편지 목록 조회 (폴링용)
+GET {{host}}/letter/random
+Authorization: {{token}}
+
+### 14) 특정 편지 상세 조회
+GET {{host}}/letter/{{LETTER_ID}}
+Authorization: {{token}}
+
+### 15) 답장 옵션(질문) 생성
+GET {{host}}/letter/reply-options?letter_id={{LETTER_ID}}
+Authorization: {{token}}
+
+### 16) 유저 답장 보내기
+POST {{host}}/letter/reply
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "letter_id": "{{LETTER_ID}}",
+  "reply": "당신의 마음을 잘 이해합니다. 힘내세요!"
+}
+
+### 17) 내가 보낸 편지 중 답장된 목록 조회
+GET {{host}}/letter/replied-to-me
+Authorization: {{token}}
+
+### 18) 특정 편지에 달린 답장 목록 조회
+GET {{host}}/letter/for-letter/{{LETTER_ID}}
+Authorization: {{token}}
+
+### 19) 24시간 지난 편지 자동 답장 트리거
+POST {{host}}/letter/auto-reply
+
+### 20) 내가 저장한 편지 목록 조회
+GET {{host}}/letter/saved
+Authorization: {{token}}

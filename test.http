@@ -1,7 +1,64 @@
-POST http://localhost:5000/write_letter
+@host = http://192.168.0.11:5000
+
+### 1) 회원가입(Signup)
+POST {{host}}/api/users/signup
 Content-Type: application/json
 
 {
-  "sender": "rbanbal",
-  "content": "이건 MongoDB 연결 테스트 편지입니다!"
+  "nickname": "testuser",
+  "age": 25,
+  "gender": "M",
+  "address": "Seoul",
+  "phone": "01012345678"
 }
+
+### 2) 로그인(Login)
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+  "nickname": "testuser"
+}
+
+### 3) 보호된 API 호출 (수동 토큰)
+GET http://192.168.0.11:5000/api/users/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
+
+@host = http://192.168.0.11:5000
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
+
+### 1. 포인트 적립 (예: 편지 작성)
+POST {{host}}/reward/grant
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "action": "write_letter"
+}
+
+### 2. 내 포인트 조회
+GET {{host}}/reward/my
+Authorization: {{token}}
+
+### 3. 랜덤박스 개봉
+POST {{host}}/reward/open-box
+Authorization: {{token}}
+
+###
+
+### 4. 전체 아이템 카탈로그 조회 (비인증)
+GET {{host}}/item/catalog
+
+### 5. 내 보유 아이템 조회
+GET {{host}}/item/my
+Authorization: {{token}}
+
+### 6. 아이템 사용
+POST {{host}}/item/use
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "item_type": "샤이니 스티커"
+}
+

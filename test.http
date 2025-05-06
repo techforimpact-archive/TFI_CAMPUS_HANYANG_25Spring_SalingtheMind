@@ -1,12 +1,12 @@
 @host = http://192.168.0.11:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOGM3ZTE1YWNkODEyYjc4NGJiMDY1Iiwibmlja25hbWUiOiJ0ZXN0dXNlciIsImV4cCI6MTc0NjU0MTY3MX0.w5GfsjbNZeavhlcrMwIrA-xKczwikISWFiEkCDhoTS0
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDY2MDMzMTR9.q7riEl1xYr9Bpgjt2ZUK-H7wOZ9XXGkVgB6q_MGMJ3w
 
 ### 1) 회원가입(Signup)
 POST {{host}}/api/users/signup
 Content-Type: application/json
 
 {
-  "nickname": "testuser",
+  "nickname": "testuser1",
   "age": 25,
   "gender": "M",
   "address": "Seoul",
@@ -18,7 +18,7 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "testuser"
+  "nickname": "testuser1"
 }
 
 ### 3) 보호된 API 호출 (수동 토큰)

@@ -1,113 +1,114 @@
 from flask import Blueprint, request, Response
-import json, random
+from flasgger import swag_from  # (선택)
+import json
 from datetime import datetime
 from bson import ObjectId
+import random
+from pymongo import ReturnDocument 
 from utils.db import db
 from utils.auth import token_required
-from utils.config import POINT_RULES, ITEM_THRESHOLDS
-
-reward_routes = Blueprint('reward_routes', __name__, url_prefix='/reward')
+from utils.config import POINT_RULES
 
 # 한글 JSON 응답 헬퍼
 def json_kor(data, status=200):
     return Response(
         json.dumps(data, ensure_ascii=False, default=str),
-        content_type="application/json; charset=utf-8",
+        content_type="application/json",
         status=status
     )
 
+reward_routes = Blueprint('reward_routes', __name__, url_prefix='/reward')
+
 @reward_routes.route('/grant', methods=['POST'])
 @token_required
+@swag_from({
+    'tags': ['Reward'],
+    'description': '포인트 적립 후, 새로운 아이템 무작위 지급',
+    'parameters': [
+        {'name': 'Authorization', 'in': 'header', 'type': 'string', 'required': True, 'description': 'Bearer 토큰'},
+        {'name': 'body', 'in': 'body', 'required': True,
+         'schema': {'type': 'object', 'properties': {'action': {'type': 'string', 'example': 'write_letter'}}, 'required': ['action']}}
+    ],
+    'responses': {
+        200: {'description': '성공적으로 포인트 적립 및 아이템 지급',
+              'schema': {'type': 'object','properties':{'message':{'type':'string'},'action':{'type':'string'},'new_items':{'type':'array','items':{'type':'object','properties':{'name':{'type':'string'},'description':{'type':'string'},'category':{'type':'string'}}}}}}},
+        400: {'description': '잘못된 액션입니다.'},
+        500: {'description': '서버 오류'}
+    }
+})
 def grant_point():
     """
-    포인트 적립 및 임계치 달성 시 아이템 지급
-    ---
-    tags:
-      - Reward
-    parameters:
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            action:
-              type: string
-              description: 수행한 액션 키
-          required:
-            - action
-    responses:
-      200:
-        description: 포인트 적립 및 신규 아이템 지급 결과
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-            action:
-              type: string
-            new_items:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  description:
-                    type: string
-      400:
-        description: 잘못된 액션 또는 요청 오류
-      500:
-        description: 서버 에러
+    포인트 적립 후, 새로운 아이템 무작위 지급
+    """
+    data = request.get_json()
+    action = data.get("action")
+    if action not in POINT_RULES:
+        return json_kor({"error": "올바르지 않은 액션입니다."}, 400)
+
+    user_id = ObjectId(request.user_id)
+    point = POINT_RULES[action]
+
+    # 1) 유저 포인트 증가
+    user = db.user.find_one_and_update(
+        {"_id": user_id},
+        {"$inc": {"point": point}},
+        return_document=ReturnDocument.AFTER
+    )
+
+    # 2) 보유 중인 아이템 목록 조회
+    owned = db.user_item.distinct("item_type", {"user_id": user_id})
+
+    # 3) 신규 후보 아이템 조회
+    pool = list(db.item_catalog.find(
+        {"name": {"$nin": owned}},
+        {"_id": 0, "name": 1, "description": 1, "category": 1}
+    ))
+
+    new_items = []
+    if pool:
+        pick = random.choice(pool)
+        db.user_item.insert_one({
+            "user_id": user_id,
+            "item_type": pick["name"],
+            "used": False,
+            "granted_at": datetime.utcnow()
+        })
+        new_items.append({
+            "name": pick["name"],
+            "description": pick.get("description", ""),
+            "category": pick.get("category", "")
+        })
+
+    return json_kor({
+        "message": f"{point}포인트가 적립되었습니다.",
+        "action": action,
+        "new_items": new_items
+    }, 200)
+
+@reward_routes.route('/my', methods=['GET'])
+@token_required
+@swag_from({
+    'tags': ['Reward'],
+    'description': '현재 유저의 포인트 조회',
+    'parameters': [
+        {'name': 'Authorization', 'in': 'header', 'type': 'string', 'required': True, 'description': 'Bearer 토큰'}
+    ],
+    'responses': {
+        200: {'description': '포인트 조회 성공',
+              'schema': {'type': 'object','properties':{'nickname':{'type':'string'},'point':{'type':'integer'}}}},
+        404: {'description': '사용자를 찾을 수 없음'},
+        500: {'description': '서버 오류'}
+    }
+})
+def get_my_point():
+    """
+    현재 유저가 보유한 포인트 조회
     """
     try:
-        data = request.get_json() or {}
-        action = data.get("action")
-        if action not in POINT_RULES:
-            return json_kor({"error": "올바르지 않은 액션입니다."}, 400)
-
         user_id = ObjectId(request.user_id)
-        point = POINT_RULES[action]
-
-        # 포인트 적립
-        user = db.user.find_one_and_update(
-            {"_id": user_id},
-            {"$inc": {"point": point}},
-            return_document=True
-        )
-        current_pt = user.get("point", 0)
-        awarded = set(user.get("awarded_thresholds", []))
-        new_items = []
-
-        # 임계치 달성 시 아이템 지급
-        for threshold in ITEM_THRESHOLDS:
-            if current_pt >= threshold and threshold not in awarded:
-                owned = db.user_item.distinct("item_type", {"user_id": user_id})
-                pool = list(db.item_catalog.find({"name": {"$nin": owned}}))
-                if not pool:
-                    continue
-                item = random.choice(pool)
-                doc = {
-                    "user_id": user_id,
-                    "item_type": item["name"],
-                    "used": False,
-                    "granted_at": datetime.utcnow()
-                }
-                db.user_item.insert_one(doc)
-                db.user.update_one(
-                    {"_id": user_id},
-                    {"$push": {"awarded_thresholds": threshold}}
-                )
-                new_items.append({
-                    "name": item["name"],
-                    "description": item.get("description", "")
-                })
-
-        return json_kor({
-            "message": f"{point}포인트가 적립되었습니다.",
-            "action": action,
-            "new_items": new_items
-        }, 200)
-
+        user = db.user.find_one({"_id": user_id}, {"_id":0, "nickname":1, "point":1})
+        if not user:
+            return json_kor({"error": "사용자를 찾을 수 없습니다."}, 404)
+        return json_kor({"nickname": user.get("nickname", ""), "point": user.get("point", 0)})
     except Exception as e:
         return json_kor({"error": str(e)}, 500)

@@ -77,8 +77,8 @@ Content-Type: application/json
 {
   "from": "user123",
   "to": "self",
-  "content": "나 자신에게 보내는 편지 내용",
-  "emotion": "기쁨"
+  "content": "오늘 친구랑 싸웠어어",
+  "emotion": "우울"
 }
 
 ### 11) 편지 전송: volunteer
@@ -112,7 +112,7 @@ GET {{host}}/letter/{{LETTER_ID}}
 Authorization: {{token}}
 
 ### 15) 답장 옵션(질문) 생성
-GET {{host}}/letter/reply-options?letter_id={{LETTER_ID}}
+GET {{host}}/letter/reply-options?letter_id=24a1518b-f404-4d73-8087-158b30d6221a
 Authorization: {{token}}
 
 ### 16) 유저 답장 보내기

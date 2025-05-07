@@ -1,5 +1,5 @@
 @host = http://192.168.0.11:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDY2MDMzMTR9.q7riEl1xYr9Bpgjt2ZUK-H7wOZ9XXGkVgB6q_MGMJ3w
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDY3MTEwOTl9.6ovi1fcG5V35grePq87Spt-k5bV1l_8XR8cgrsW-xDQ
 
 ### 1) 회원가입(Signup)
 POST {{host}}/api/users/signup

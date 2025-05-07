@@ -354,5 +354,5 @@ def get_saved_letters():
         description: 성공
     """
     user = request.user_id
-    letters = list(db.letter.find({'to': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1}).sort('created_at', -1))
+    letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1}).sort('created_at', -1))
     return json_kor({'saved_letters': letters}, 200)

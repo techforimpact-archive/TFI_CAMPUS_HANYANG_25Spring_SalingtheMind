@@ -210,3 +210,81 @@ def use_item():
         })
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
+@item_routes.route('/unuse', methods=['POST'])
+@token_required
+def unuse_item():
+    """
+    아이템 사용 해제
+    ---
+    tags:
+      - Item
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            item_id:
+              type: string
+              description: 해제할 아이템 ID
+    responses:
+      200:
+        description: 해제 성공
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+            unused_item:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                item_type:
+                  type: string
+                description:
+                  type: string
+                unused_at:
+                  type: string
+      400:
+        description: 잘못된 요청 또는 이미 해제된 아이템
+      500:
+        description: 서버 에러
+    """
+    try:
+        data = request.get_json()
+        item_id = data.get("item_id")
+        if not item_id:
+            return json_kor({"error": "item_id가 필요합니다."}, 400)
+
+        user_id = ObjectId(request.user_id)
+        uid = ObjectId(item_id)
+
+        result = db.user_item.find_one_and_update(
+            {"_id": uid, "user_id": user_id, "used": True},
+            {"$set": {"used": False, "used_at": None}},  # 사용 시간 초기화
+            return_document=ReturnDocument.AFTER
+        )
+
+        if not result:
+            return json_kor({"error": "이미 해제되었거나 존재하지 않는 아이템입니다."}, 400)
+
+        catalog = db.item_catalog.find_one(
+            {"name": result["item_type"]},
+            {"_id": 0, "description": 1}
+        ) or {}
+
+        unused_info = {
+            "item_id": item_id,
+            "item_type": result["item_type"],
+            "description": catalog.get("description", ""),
+            "unused_at": datetime.utcnow()
+        }
+
+        return json_kor({
+            "message": "아이템이 성공적으로 해제되었습니다.",
+            "unused_item": unused_info
+        })
+    except Exception as e:
+        return json_kor({"error": str(e)}, 500)

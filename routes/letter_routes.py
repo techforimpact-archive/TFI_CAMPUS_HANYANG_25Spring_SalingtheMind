@@ -184,37 +184,49 @@ def get_my_unread_letters():
 @letter_routes.route('/<letter_id>', methods=['GET'])
 @token_required
 def get_letter_detail(letter_id):
-    """
-    특정 편지 상세 조회
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: letter_id
-        in: path
-        type: string
-        required: true
-        description: 편지 ID
-    responses:
-      200:
-        description: 성공
-      404:
-        description: 편지 없음
-      500:
-        description: 서버 에러
-    """
     user = request.user_id
-    letter = db.letter.find_one({"_id": letter_id}, {'_id':1,'from':1,'to':1,'title':1,'emotion':1,'content':1,'created_at':1,'saved':1})
+    letter = db.letter.find_one(
+        {"_id": letter_id},
+        {'_id': 1, 'from': 1, 'to': 1, 'title': 1, 'emotion': 1, 'content': 1, 'created_at': 1, 'saved': 1, 'status': 1}
+    )
     if not letter:
         return json_kor({"error": "편지를 찾을 수 없습니다."}, 404)
+
     result = {'letter': letter}
-    # 랜덤 편지의 댓글 조회
-    is_rand = letter['to'] != 'volunteer_user' and letter['to'] != letter['from']
-    if letter['to'] == user and is_rand and letter.get('saved'):
-        comments = list(db.comment.find({'original_letter_id': letter_id},
-                                        {'_id':1,'from':1,'content':1,'read':1,'created_at':1}).sort('created_at',1))
+
+    # ✅ 편지를 저장 처리할 조건
+    is_random_to_me = (
+        letter['to'] == user and
+        letter['from'] != user and
+        letter['to'] != 'volunteer_user' and
+        not letter.get('saved', False)
+    )
+    if is_random_to_me:
+        db.letter.update_one({'_id': letter_id}, {'$set': {'saved': True}})
+        letter['saved'] = True  # 반환값에도 반영
+
+    # 댓글 처리
+    is_random_reply = (
+        letter['to'] == user and
+        letter['from'] != user and
+        letter['status'] in ['replied', 'auto_replied']
+    )
+    if is_random_reply:
+        comments = list(db.comment.find(
+            {'original_letter_id': letter_id},
+            {'_id': 1, 'from': 1, 'content': 1, 'read': 1, 'created_at': 1}
+        ).sort('created_at', 1))
         result['comments'] = comments
+
+        unread_ids = [c['_id'] for c in comments if not c.get('read')]
+        if unread_ids:
+            db.comment.update_many(
+                {'_id': {'$in': unread_ids}},
+                {'$set': {'read': True}}
+            )
+
     return json_kor(result, 200)
+
 
 @letter_routes.route('/reply-options', methods=['GET'])
 @token_required

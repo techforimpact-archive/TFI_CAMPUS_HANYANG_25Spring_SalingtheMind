@@ -77,7 +77,7 @@ Content-Type: application/json
 {
   "from": "user123",
   "to": "self",
-  "content": "오늘 친구랑 싸웠어어",
+  "content": "오늘 친구랑 싸웠어",
   "emotion": "우울"
 }
 

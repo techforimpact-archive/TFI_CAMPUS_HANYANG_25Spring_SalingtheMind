@@ -1,6 +1,5 @@
-@host = http://192.168.0.11:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDY3MTEwOTl9.6ovi1fcG5V35grePq87Spt-k5bV1l_8XR8cgrsW-xDQ
-
+@host = http://127.0.0.1:5000/
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDcxNTgyMTV9.7NK1JJ4BXaxUTmdjILeU3wabhfQRu7zDUaRIZmMCKng
 ### 1) 회원가입(Signup)
 POST {{host}}/api/users/signup
 Content-Type: application/json
@@ -29,7 +28,7 @@ Authorization: {{token}}
 
 ### Reward API
 
-### 4) 포인트 적립 (예: 편지 작성)
+### 4) 포인트 적립 및 레벨업 (예: 편지 작성)
 POST {{host}}/reward/grant
 Content-Type: application/json
 Authorization: {{token}}
@@ -38,12 +37,8 @@ Authorization: {{token}}
   "action": "write_letter"
 }
 
-### 5) 내 포인트 조회
+### 5) 내 포인트 및 레벨 조회
 GET {{host}}/reward/my
-Authorization: {{token}}
-
-### 6) 랜덤박스 개봉
-POST {{host}}/reward/open-box
 Authorization: {{token}}
 
 ---

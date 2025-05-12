@@ -26,6 +26,7 @@ def signup():
         "address": address or "",
         "phone": phone or "",
         "point": 0,
+        "level": 1,
         "limited_access": limited_access
     }
 

@@ -82,7 +82,7 @@ def generate_title_with_gpt(content):
 아래는 사용자가 쓴 편지 내용입니다:
 "{content}"
 
-이 편지를 대표할 수 있는 짧고 감성적인 제목을 1개 생성해주세요.
+이 편지의 내용을 함축적으로 잘 요약하고 있는 짧은 제목을 1개 생성해주세요.
 10자 이내로, 핵심 키워드를 담아 응답해주세요.
 """
     try:
@@ -307,8 +307,15 @@ def get_replied_letters_to_me():
         description: 성공
     """
     user = request.user_id
-    letters = list(db.letter.find({'from': user, 'status': {'$in': ['replied','auto_replied']}},{'_id':1,'to':1,'title':1,'emotion':1,'content':1,'status':1,'replied_at':1}).sort('replied_at', -1))
-    return json_kor({'replied_letters': letters}, 200)
+    letters = list(db.letter.find({
+        'to': user,
+        'from': {'$ne': user},
+        'status': {'$in': ['replied', 'auto_replied']}
+    }, {
+        '_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'content': 1,
+        'status': 1, 'replied_at': 1
+    }).sort('replied_at', -1))
+    return json_kor({'replied_inbox': letters}, 200)
 
 @letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
 @token_required

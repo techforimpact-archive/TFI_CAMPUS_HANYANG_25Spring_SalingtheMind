@@ -60,7 +60,8 @@ def create_token(user_doc):
 })
 def signup():
     try:
-        data = request.json
+        data = request.get_json(force=True)
+        
         nickname = data.get('nickname')
         age      = data.get('age')
         gender   = data.get('gender')

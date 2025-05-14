@@ -51,19 +51,17 @@ def create_app():
     app.config['JSON_AS_ASCII'] = False
 
     # ✅ CORS 전체 허용
-    CORS(app)
+    CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-    # ✅ Swagger 설정 (Authorization 테스트 가능)
+    # ✅ Swagger 설정
     swagger_config = {
         "headers": [],
-        "specs": [
-            {
-                "endpoint": 'apispec_1',
-                "route": '/apispec_1.json',
-                "rule_filter": lambda rule: True,
-                "model_filter": lambda tag: True,
-            }
-        ],
+        "specs": [{
+            "endpoint": 'apispec_1',
+            "route": '/apispec_1.json',
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
+        }],
         "static_url_path": "/flasgger_static",
         "swagger_ui": True,
         "specs_route": "/apidocs/"
@@ -89,13 +87,18 @@ def create_app():
 
     Swagger(app, config=swagger_config, template=swagger_template)
 
-    # 블루프린트 등록
+    # ✅ 루트 확인용 라우트 추가
+    @app.route('/', methods=['GET'])
+    def root():
+        return '마음의 항해 백엔드가 정상 작동 중입니다.'
+
+    # ✅ 블루프린트 등록
     app.register_blueprint(user_test, url_prefix="/api/users")
     app.register_blueprint(reward_routes, url_prefix="/reward")
     app.register_blueprint(item_routes, url_prefix="/item")
     app.register_blueprint(letter_routes, url_prefix="/letter")
 
-    # 보호된 API 예시 (토큰 필요)
+    # ✅ 보호된 API 예시
     @app.route("/api/users/protected", methods=["GET"])
     @token_required
     def protected():

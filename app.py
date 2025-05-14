@@ -69,7 +69,8 @@ def create_app():
         "swagger_ui": True,
         "specs_route": "/apidocs/"  # <- 여기 접근 가능해야 Swagger 열림
     }
-    Swagger(app, config=swagger_config)
+    Swagger(app)
+    
 
     # ✅ 블루프린트 등록
     app.register_blueprint(user_test, url_prefix="/api/users")

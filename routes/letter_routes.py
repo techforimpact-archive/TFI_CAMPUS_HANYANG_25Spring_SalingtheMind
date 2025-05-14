@@ -150,7 +150,7 @@ def send_letter():
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         received = db.letter.find({"created_at": {"$gte": today}, "to": {"$ne": 'volunteer_user'}}).distinct('to')
         users = db.user.distinct('_id')
-        candidates = [str(u) for u in users if str(u) not in received and str(u) != sender]
+        candidates = [str(u) for u in users if str(u) != sender]
         if not candidates:
             return json_kor({"error": "오늘 받을 수 있는 사용자가 없습니다."}, 400)
         receiver = random.choice(candidates)

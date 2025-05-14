@@ -298,13 +298,7 @@ def reply_letter():
 @token_required
 def get_replied_letters_to_me():
     """
-    내가 보낸 편지 중 답장된 목록 조회
-    ---
-    tags:
-      - Letter
-    responses:
-      200:
-        description: 성공
+    내가 받은 편지 중 답장 완료된 목록 조회
     """
     user = request.user_id
     letters = list(db.letter.find({
@@ -315,7 +309,7 @@ def get_replied_letters_to_me():
         '_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'content': 1,
         'status': 1, 'replied_at': 1
     }).sort('replied_at', -1))
-    return json_kor({'replied_inbox': letters}, 200)
+    return json_kor({'replied-to-me': letters}, 200)
 
 @letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
 @token_required

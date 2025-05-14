@@ -147,17 +147,6 @@ def login():
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 
-@user_test.route('/logout', methods=['POST'])
-@swag_from({
-    'tags': ['User'],
-    'summary': '로그아웃 (더 이상 사용되지 않음)',
-    'description': 'JWT 인증 방식만 사용하는 경우 이 라우터는 필요하지 않습니다.',
-    'responses': {
-        200: {'description': '응답만 반환'}
-    }
-})
-def logout():
-    return json_kor({"message": "로그아웃되었습니다."})
 
 def token_required(f):
     @wraps(f)

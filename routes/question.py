@@ -2,6 +2,7 @@ from flask import Blueprint, request, Response
 import openai
 import json
 from flasgger import swag_from
+from utils.auth import token_required
 
 question_bp = Blueprint('question', __name__)
 
@@ -14,6 +15,7 @@ def json_kor(data, status=200):
     )
 
 @question_bp.route('/question/generate', methods=['POST'])
+@token_required
 @swag_from({
     'tags': ['Question'],
     'requestBody': {
@@ -55,6 +57,7 @@ def json_kor(data, status=200):
     }
 })
 def generate_question():
+
     """
     감정을 기반으로 글쓰기를 유도하는 질문 생성
     """
@@ -82,6 +85,7 @@ def generate_question():
 
 
 @question_bp.route('/question/help', methods=['POST'])
+@token_required
 @swag_from({
     'tags': ['Question'],
     'requestBody': {

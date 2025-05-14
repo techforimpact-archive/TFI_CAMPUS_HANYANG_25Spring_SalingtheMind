@@ -103,6 +103,7 @@ def generate_title_with_gpt(content):
         return content[:10]
 
 @letter_routes.route('/send', methods=['POST'])
+@token_required
 def send_letter():
     """
     편지 전송
@@ -138,7 +139,7 @@ def send_letter():
         description: 서버 에러
     """
     data = request.get_json() or {}
-    sender = data.get("from")
+    sender = request.user_id
     to_type = data.get("to")
     content = data.get("content")
     emotion = data.get("emotion")

@@ -7,6 +7,8 @@ import os
 import json
 from datetime import datetime, timedelta
 from openai import OpenAI
+from flasgger import swag_from
+
 
 letter_routes = Blueprint('letter_routes', __name__, url_prefix='/letter')
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))

@@ -5,7 +5,7 @@ POST {{host}}/api/users/signup
 Content-Type: application/json
 
 {
-  "nickname": "testus",
+  "nickname": "test_1",
   "age": 25,
   "gender": "M",
   "address": "Seoul",
@@ -17,7 +17,7 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "testuser1"
+  "nickname": "test_1"
 }
 
 ### 3) 보호된 API 호출 (수동 토큰)
@@ -39,9 +39,10 @@ Authorization: {{token}}
 
 ### 5) 내 포인트 및 레벨 조회
 GET {{host}}/reward/my
-Authorization: {{token}}
 
----
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNDdmM2FkZTM1ZWEzNDA3Y2EyZWE3Iiwibmlja25hbWUiOiJ0ZXN0XzEiLCJleHAiOjE3NDczMDg4NzJ9.fbK7MThh2-oAl8FhdgmaTEvu7d3kMJBpjyeMkbelbmY; Expires=Thu, 15 May 2025 11:34:32 GMT; Max-Age=86400; HttpOnly; Path=/; SameSite=Lax
+
+
 ### 1. 내 아이템 목록 조회
 GET {{host}}/item/my
 Authorization: {{token}}
@@ -125,9 +126,9 @@ Content-Type: application/json
 
 ### 13) 나에게 온 미답장 편지 목록 조회 (폴링용)
 GET {{host}}/letter/random
-Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgxOWJiNzU1MWVhZTQzM2FhZTIwMjlkIiwibmlja25hbWUiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NDczMDgzMjZ9.9gVLx2Jg-9sHHem_2kRo-34xcYyQBFJJPdz27CzqHYg
 
-### 14) 특정 편지 상세 조회
+Cookie : access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNDdmM2FkZTM1ZWEzNDA3Y2EyZWE3Iiwibmlja25hbWUiOiJ0ZXN0XzEiLCJleHAiOjE3NDczMDg3Mzl9.NA5qJ3sSGHQEo9o8zLVGzjWysSkjoMIv8dEJnd6kS-w; Expires=Thu, 15 May 2025 11:32:19 GMT; Max-Age=86400; Secure; HttpOnly; Path=/; SameSite=Lax
+
 GET {{host}}/letter/{{LETTER_ID}}
 Authorization: {{token}}
 

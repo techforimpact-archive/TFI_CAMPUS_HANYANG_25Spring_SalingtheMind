@@ -30,6 +30,34 @@ def create_token(user_doc):
     return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
 
 @user_test.route('/signup', methods=['POST'])
+@swag_from({
+    'tags': ['User'],
+    'summary': '회원가입',
+    'description': '사용자를 등록합니다. 닉네임, 나이, 성별은 필수이며, 주소/전화번호는 선택 항목입니다.',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'nickname': {'type': 'string'},
+                        'age': {'type': 'integer'},
+                        'gender': {'type': 'string'},
+                        'address': {'type': 'string'},
+                        'phone': {'type': 'string'}
+                    },
+                    'required': ['nickname', 'age', 'gender']
+                }
+            }
+        }
+    },
+    'responses': {
+        201: {'description': '회원가입 성공'},
+        400: {'description': '중복 닉네임 또는 필수 항목 누락'},
+        500: {'description': '서버 에러'}
+    }
+})
 def signup():
     try:
         data = request.get_json()
@@ -43,7 +71,7 @@ def signup():
             return json_kor({"error": "닉네임, 나이, 성별은 필수입니다."}, 400)
 
         if db.user.find_one({"nickname": nickname}):
-            return json_kor({"error": "이미 존재하는 닉네임입니다."}), 400
+            return json_kor({"error": "이미 존재하는 닉네임입니다."}, 400)
 
         limited_access = not (address and phone)
         new_user = {
@@ -53,7 +81,7 @@ def signup():
             "address": address or "",
             "phone": phone or "",
             "point": 0,
-            "level":1,
+            "level": 1,
             "limited_access": limited_access
         }
 
@@ -61,20 +89,41 @@ def signup():
         user_doc = db.user.find_one({"_id": result.inserted_id})
         token = create_token(user_doc)
 
-        resp = make_response(json_kor({
+        return json_kor({
             "message": "회원가입 성공!",
             "nickname": user_doc["nickname"],
-            "limited_access": limited_access
-        }, 201))
-        resp.set_cookie(
-            "access_token", token,
-            httponly=True, secure=True, samesite='Lax', max_age=60 * ACCESS_TOKEN_EXPIRE_MINUTES
-        )
-        return resp
+            "limited_access": limited_access,
+            "token": token
+        }, 201)
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 
 @user_test.route('/login', methods=['POST'])
+@swag_from({
+    'tags': ['User'],
+    'summary': '로그인',
+    'description': '닉네임을 입력하면 토큰이 반환됩니다.',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'nickname': {'type': 'string'}
+                    },
+                    'required': ['nickname']
+                }
+            }
+        }
+    },
+    'responses': {
+        200: {'description': '로그인 성공'},
+        400: {'description': '닉네임 누락'},
+        404: {'description': '사용자 없음'},
+        500: {'description': '서버 에러'}
+    }
+})
 def login():
     try:
         data = request.get_json()
@@ -89,31 +138,34 @@ def login():
 
         token = create_token(user_doc)
 
-        resp = make_response(json_kor({
+        return json_kor({
             "message": "로그인 성공!",
             "nickname": user_doc["nickname"],
-            "limited_access": user_doc.get("limited_access", False)
-        }))
-        resp.set_cookie(
-            "access_token", token,
-            httponly=True, secure=True, samesite='Lax', max_age=60 * ACCESS_TOKEN_EXPIRE_MINUTES
-        )
-        return resp
+            "limited_access": user_doc.get("limited_access", False),
+            "token": token
+        })
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 
 @user_test.route('/logout', methods=['POST'])
+@swag_from({
+    'tags': ['User'],
+    'summary': '로그아웃 (더 이상 사용되지 않음)',
+    'description': 'JWT 인증 방식만 사용하는 경우 이 라우터는 필요하지 않습니다.',
+    'responses': {
+        200: {'description': '응답만 반환'}
+    }
+})
 def logout():
-    resp = make_response(json_kor({"message": "로그아웃되었습니다."}))
-    resp.set_cookie("access_token", "", expires=0)
-    return resp
+    return json_kor({"message": "로그아웃되었습니다."})
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.cookies.get('access_token')
-        if not token:
-            return json_kor({"error": "쿠키에 토큰이 없습니다."}, 401)
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith("Bearer "):
+            return json_kor({"error": "Authorization 헤더가 필요합니다."}, 401)
+        token = auth_header.split(" ")[1]
         try:
             payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
             user_id = payload["user_id"]
@@ -121,7 +173,7 @@ def token_required(f):
             if not user:
                 return json_kor({"error": "사용자를 찾을 수 없습니다."}, 404)
             request.user = user
-            request.user_id = str(user["_id"])  # 다른 라우터에서도 사용 가능
+            request.user_id = str(user["_id"])
         except jwt.ExpiredSignatureError:
             return json_kor({"error": "토큰이 만료되었습니다."}, 401)
         except jwt.InvalidTokenError:
@@ -131,6 +183,43 @@ def token_required(f):
 
 @user_test.route('/update', methods=['PATCH'])
 @token_required
+@swag_from({
+    'tags': ['User'],
+    'summary': '회원 정보 수정',
+    'description': '회원의 닉네임, 나이, 성별, 주소, 전화번호를 수정합니다.',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer 액세스 토큰'
+        }
+    ],
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'nickname': {'type': 'string'},
+                        'age': {'type': 'integer'},
+                        'gender': {'type': 'string'},
+                        'address': {'type': 'string'},
+                        'phone': {'type': 'string'}
+                    }
+                }
+            }
+        }
+    },
+    'responses': {
+        200: {'description': '수정 성공'},
+        400: {'description': '중복 닉네임'},
+        401: {'description': '인증 실패'},
+        500: {'description': '서버 에러'}
+    }
+})
 def update_user():
     try:
         user_id = request.user["_id"]

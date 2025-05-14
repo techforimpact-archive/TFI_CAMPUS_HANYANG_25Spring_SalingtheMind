@@ -184,6 +184,69 @@ def get_my_unread_letters():
 @letter_routes.route('/<letter_id>', methods=['GET'])
 @token_required
 def get_letter_detail(letter_id):
+    """
+    편지 상세 조회 (및 자동 저장/댓글 읽음 처리)
+    ---
+    tags:
+      - Letter
+    parameters:
+      - name: letter_id
+        in: path
+        type: string
+        required: true
+        description: 조회할 편지의 ID
+      - name: Authorization
+        in: header
+        type: string
+        required: true
+        description: Bearer 토큰
+    responses:
+      200:
+        description: 편지 상세 조회 성공
+        schema:
+          type: object
+          properties:
+            letter:
+              type: object
+              properties:
+                _id:
+                  type: string
+                from:
+                  type: string
+                to:
+                  type: string
+                title:
+                  type: string
+                emotion:
+                  type: string
+                content:
+                  type: string
+                created_at:
+                  type: string
+                saved:
+                  type: boolean
+                status:
+                  type: string
+            comments:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  from:
+                    type: string
+                  content:
+                    type: string
+                  read:
+                    type: boolean
+                  created_at:
+                    type: string
+      404:
+        description: 편지를 찾을 수 없음
+      500:
+        description: 서버 오류
+    """
     user = request.user_id
     letter = db.letter.find_one(
         {"_id": letter_id},
@@ -296,10 +359,29 @@ def reply_letter():
 
 @letter_routes.route('/replied-to-me', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '내가 받은 편지 중 답장 완료된 목록 조회',
+    'responses': {
+        200: {
+            'description': '답장 완료된 편지 목록 반환',
+            'content': {
+                'application/json': {
+                    'schema': {
+                        'type': 'object',
+                        'properties': {
+                            'replied-to-me': {
+                                'type': 'array',
+                                'items': {'type': 'object'}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
 def get_replied_letters_to_me():
-    """
-    내가 받은 편지 중 답장 완료된 목록 조회
-    """
     user = request.user_id
     letters = list(db.letter.find({
         'to': user,

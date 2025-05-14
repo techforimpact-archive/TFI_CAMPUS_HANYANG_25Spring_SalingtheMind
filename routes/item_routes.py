@@ -16,6 +16,38 @@ def json_kor(data, status=200):
 
 item_routes = Blueprint('item_routes', __name__, url_prefix='/item')
 
+@item_routes.route('/catalog', methods=['GET'])
+def get_item_catalog():
+    """
+    전체 아이템 카탈로그 조회 (비인증)
+    ---
+    tags:
+      - Item
+    responses:
+      200:
+        description: 아이템 카탈로그 리스트 반환
+        schema:
+          type: object
+          properties:
+            catalog:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+      500:
+        description: 서버 에러
+    """
+    try:
+        catalog = list(db.item_catalog.find({}, {"_id": 0}))
+        return json_kor({"catalog": catalog})
+    except Exception as e:
+        return json_kor({"error": str(e)}, 500)
 
 @item_routes.route('/my', methods=['GET'])
 @token_required

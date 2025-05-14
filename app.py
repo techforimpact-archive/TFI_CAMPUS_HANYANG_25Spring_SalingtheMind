@@ -20,7 +20,7 @@ def json_kor(data, status=200):
         status=status
     )
 
-# Authorization 헤더 기반 JWT 인증 데코레이터
+# JWT 인증 데코레이터 (Authorization 헤더 사용)
 def token_required(f):
     from functools import wraps
 
@@ -50,10 +50,10 @@ def create_app():
     app = Flask(__name__)
     app.config['JSON_AS_ASCII'] = False
 
-    # CORS 설정 (Render 또는 프론트 배포 주소 사용)
-    CORS(app, origins=["https://your-frontend.onrender.com"], supports_credentials=True)
+    # ✅ CORS 전체 허용
+    CORS(app)
 
-    # Swagger 설정
+    # ✅ Swagger 설정 (Authorization 테스트 가능)
     swagger_config = {
         "headers": [],
         "specs": [
@@ -68,7 +68,26 @@ def create_app():
         "swagger_ui": True,
         "specs_route": "/apidocs/"
     }
-    Swagger(app)
+
+    swagger_template = {
+        "swagger": "2.0",
+        "info": {
+            "title": "마음의 항해 API 문서",
+            "description": "JWT 기반 인증이 필요한 API를 테스트할 수 있습니다.",
+            "version": "1.0"
+        },
+        "securityDefinitions": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Bearer <JWT 토큰> 형식으로 입력하세요"
+            }
+        },
+        "security": [{"Bearer": []}]
+    }
+
+    Swagger(app, config=swagger_config, template=swagger_template)
 
     # 블루프린트 등록
     app.register_blueprint(user_test, url_prefix="/api/users")
@@ -76,7 +95,7 @@ def create_app():
     app.register_blueprint(item_routes, url_prefix="/item")
     app.register_blueprint(letter_routes, url_prefix="/letter")
 
-    # 테스트용 보호된 라우트
+    # 보호된 API 예시 (토큰 필요)
     @app.route("/api/users/protected", methods=["GET"])
     @token_required
     def protected():

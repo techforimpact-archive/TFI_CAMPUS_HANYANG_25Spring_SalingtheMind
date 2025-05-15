@@ -39,47 +39,6 @@ QUESTION_POOL = [
 ]
 
 # GPT 헬퍼 함수
-def generate_ai_replies_with_gpt(content, mode):
-    if mode == 'user':
-        prompt = f"""
-아래는 사용자가 쓴 편지입니다:
-"{content}"
-
-이 편지에 따뜻하게 공감하고 위로하는 짧은 답장 3개를 생성해주세요.
-각 답장은 1~2문장 이내, 존댓말로 작성해주세요.
-JSON 배열 형식으로 반환해주세요.
-["답장1", "답장2", "답장3"]
-"""
-    elif mode == 'ai':
-        prompt = f"""
-아래는 사용자가 쓴 편지입니다:
-"{content}"
-
-온기라는 캐릭터가 공감 위주로 3-4문장의 답장을 생성해주세요.
-존댓말로 작성해주세요.
-"""
-    else:
-        return []
-
-    try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "당신은 따뜻한 답장을 잘 쓰는 AI입니다."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.85
-        )
-        ai_text = response.choices[0].message.content.strip()
-        return json.loads(ai_text)
-    except Exception:
-        if mode in ['user', 'ai']:
-            return random.sample(AI_REPLY_POOL, 3)
-        elif mode == 'assist':
-            return random.sample(QUESTION_POOL, 3)
-        return []
-
-
 def generate_title_with_gpt(content):
     prompt = f"""
 아래는 사용자가 쓴 편지 내용입니다:
@@ -101,6 +60,62 @@ def generate_title_with_gpt(content):
         return response.choices[0].message.content.strip().strip('"')
     except Exception:
         return content[:10]
+def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
+    """
+    주어진 편지 내용을 바탕으로 질문 또는 답장을 생성합니다.
+
+    mode:
+        - 'assist': 공감 기반 질문 3개 생성 (답장 옵션)
+        - 'ai': 캐릭터 '온기'의 공감 위주 답장 생성 (자동 답장)
+    """
+    if not content or len(content.strip()) < 10:
+        # 내용이 비정상적으로 짧으면 fallback으로 돌림
+        return random.sample(QUESTION_POOL if mode == 'assist' else AI_REPLY_POOL, 3 if mode == 'assist' else 1)
+
+    try:
+        if mode == 'assist':
+            prompt = f"""
+        아래는 누군가가 쓴 편지입니다:
+\"{content}\"
+
+이 편지를 읽고 공감하며 답장에 도움이 되는 질문 3개를 만들어주세요.
+각 질문은 1문장 이내이며, 예의 바르고 부드럽게 작성해주세요.
+결과는 JSON 배열 형식으로 반환해주세요.
+
+예시:
+["어떤 점이 가장 힘들게 느껴지셨나요?", "그 상황에서 위로가 되었던 것이 있었나요?", "앞으로 어떤 변화가 생기길 바라시나요?"]
+"""
+        elif mode == 'ai':
+            prompt = f"""
+아래는 누군가가 쓴 편지입니다:
+\"{content}\"
+
+이 편지를 읽고, 캐릭터 '온기'가 따뜻하게 공감하며 위로의 답장을 작성하려고 합니다.
+답장은 존댓말로, 공감 위주의 따뜻한 말 2~3문장으로 작성해주세요.
+"""
+        else:
+            return []
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.8,
+        )
+
+        result = response.choices[0].message.content.strip()
+
+        import json
+        if mode == 'assist':
+            # 질문 리스트 반환
+            questions = json.loads(result)
+            return questions if isinstance(questions, list) else []
+        else:
+            # 단일 답장 텍스트 반환
+            return result
+
+    except Exception as e:
+        print(f"[GPT 실패] {mode} 질문/답장 생성 실패: {e}")
+        return random.sample(QUESTION_POOL if mode == 'assist' else AI_REPLY_POOL, 3 if mode == 'assist' else 1)
 
 @letter_routes.route('/send', methods=['POST'])
 @token_required

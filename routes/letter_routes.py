@@ -164,10 +164,9 @@ def send_letter():
     if to_type == 'self':
         receiver = sender
     elif to_type == 'volunteer':
-        receiver = 'volunteer_user'
+        receiver = 'volunteer'
     elif to_type == 'random':
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        received = db.letter.find({"created_at": {"$gte": today}, "to": {"$ne": 'volunteer_user'}}).distinct('to')
         users = db.user.distinct('_id')
         candidates = [str(u) for u in users if str(u) != sender]
         if not candidates:

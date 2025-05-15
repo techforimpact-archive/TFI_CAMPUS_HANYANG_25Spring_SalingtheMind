@@ -7,6 +7,10 @@ from pymongo import ReturnDocument
 from utils.db import db
 from utils.auth import token_required
 
+def get_nickname(user_id):
+    user = db.user.find_one({"_id": ObjectId(user_id)}, {"nickname": 1})
+    return user.get("nickname", "알 수 없음") if user else "알 수 없음"
+  
 def json_kor(data, status=200):
     return Response(
         json.dumps(data, ensure_ascii=False, default=str),

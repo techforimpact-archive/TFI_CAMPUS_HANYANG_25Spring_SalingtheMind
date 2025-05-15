@@ -285,9 +285,11 @@ def get_letter_detail(letter_id):
     if not letter:
         return json_kor({"error": "편지를 찾을 수 없습니다."}, 404)
       
+    if letter['from'] != user and letter['to'] != user:
+      return json_kor({"error": "해당 편지에 접근할 권한이 없습니다."}, 403)
     letter['from_nickname'] = get_nickname(letter['from'])
     letter['to_nickname'] = get_nickname(letter['to'])
-    
+
     result = {'letter': letter}
 
     # ✅ 편지를 저장 처리할 조건
@@ -451,10 +453,11 @@ def get_comments_for_letter(letter_id):
       200:
         description: 성공
     """
+    
     comms = list(db.comment.find({'original_letter_id': str(letter_id)},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
     for comment in comms:
         comment['from_nickname'] = get_nickname(comment['from'])
-
+    
     return json_kor({'comments': comms}, 200)
 
 @letter_routes.route('/auto-reply', methods=['POST'])

@@ -17,3 +17,5 @@ response = client.chat.completions.create(
 )
 
 print(response.choices[0].message.content)
+one = db.letter.find_one()
+print(one['to'], type(one['to'])) 

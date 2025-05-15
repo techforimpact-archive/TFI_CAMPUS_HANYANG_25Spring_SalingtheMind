@@ -8,6 +8,7 @@ import json
 from datetime import datetime, timedelta
 from openai import OpenAI
 from flasgger import swag_from
+from bson import ObjectId
 
 
 
@@ -162,7 +163,7 @@ def send_letter():
         description: 서버 에러
     """
     data = request.get_json() or {}
-    sender = request.user_id
+    sender = ObjectId(request.user_id)
     to_type = data.get("to")
     content = data.get("content")
     emotion = data.get("emotion")
@@ -176,18 +177,18 @@ def send_letter():
     elif to_type == 'random':
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         users = db.user.distinct('_id')
-        candidates = [str(u) for u in users if str(u) != sender]
+        candidates = [u for u in users if u != sender]
         if not candidates:
             return json_kor({"error": "오늘 받을 수 있는 사용자가 없습니다."}, 400)
         receiver = random.choice(candidates)
     else:
         return json_kor({"error": "유효하지 않은 수신 타입"}, 400)
     title = generate_title_with_gpt(content)
-    letter = {"_id": str(uuid.uuid4()), "from": sender, "to": receiver, "title": title,"emotion": emotion, "content": content, "status": 'sent',
+    letter = {"_id": ObjectId(uuid.uuid4()), "from": sender, "to": receiver, "title": title,"emotion": emotion, "content": content, "status": 'sent',
               "saved": to_type in ['self', 'volunteer'], "created_at": datetime.now()}
     db.letter.insert_one(letter)
     return json_kor({"message": "편지 전송 완료", "letter_id": letter['_id'],
-                     "to": receiver, "title": title, "emotion": emotion}, 201)
+                     "to": get_nickname(receiver), "title": title, "emotion": emotion}, 201)
 
 @letter_routes.route('/random', methods=['GET'])
 @token_required
@@ -203,9 +204,12 @@ def get_my_unread_letters():
       500:
         description: 서버 에러
     """
-    user = request.user_id
+    user = ObjectId(request.user_id)
     letters = list(db.letter.find({"to": user, "status": 'sent', "from": {"$nin": ['volunteer_user', user]}},{'_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'created_at': 1}).sort('created_at', -1))
+    for letter in letters:
+          letter['from_nickname'] = get_nickname(letter['from'])
     return json_kor({"unread_letters": letters}, 200)
+
 
 @letter_routes.route('/<letter_id>', methods=['GET'])
 @token_required
@@ -273,9 +277,9 @@ def get_letter_detail(letter_id):
       500:
         description: 서버 오류
     """
-    user = request.user_id
+    user = ObjectId(request.user_id)
     letter = db.letter.find_one(
-        {"_id": letter_id},
+        {"_id":  ObjectId(letter_id)},
         {'_id': 1, 'from': 1, 'to': 1, 'title': 1, 'emotion': 1, 'content': 1, 'created_at': 1, 'saved': 1, 'status': 1}
     )
     if not letter:
@@ -305,15 +309,16 @@ def get_letter_detail(letter_id):
     )
     if is_random_reply:
         comments = list(db.comment.find(
-            {'original_letter_id': letter_id},
+            {'original_letter_id':  ObjectId(letter_id)},
             {'_id': 1, 'from': 1, 'content': 1, 'read': 1, 'created_at': 1}
         ).sort('created_at', 1))
         
         result['comments'] = comments
 
-        unread_ids = [c['_id'] for c in comments if not c.get('read')]
+        unread_ids = [ObjectId(c['_id']) for c in comments if not c.get('read')]
         
-        comments['from_nickname'] = get_nickname(comments['from'])
+        for comment in comments:
+          comment['from_nickname'] = get_nickname(comment['from'])
         
         if unread_ids:
             db.comment.update_many(
@@ -344,7 +349,8 @@ def get_reply_options():
       404:
         description: 편지 없음
     """
-    lid = request.args.get('letter_id')
+    lid = ObjectId(request.args.get('letter_id'))
+    
     letter = db.letter.find_one({'_id': lid})
     if not letter:
         return json_kor({'error': '편지를 찾을 수 없습니다.'}, 404)
@@ -378,14 +384,14 @@ def reply_letter():
         description: 잘못된 요청
     """
     data = request.get_json() or {}
-    lid = data.get('letter_id')
+    lid = ObjectId(data.get('letter_id'))
     text = data.get('reply')
     if not (lid and text):
         return json_kor({'error': '필수값 누락'}, 400)
     orig = db.letter.find_one({'_id': lid})
     if not orig or orig.get('status') != 'sent':
         return json_kor({'error': '답장할 수 없습니다.'}, 400)
-    comment = {'_id': str(uuid.uuid4()), 'from': request.user_id,'to': orig.get('from'), 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': lid}
+    comment = {'_id': ObjectId(uuid.uuid4()), 'from': request.user_id,'to': orig.get('from'), 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': lid}
     db.comment.insert_one(comment)
     db.letter.update_one({'_id': lid}, {'$set': {'status': 'replied', 'replied_at': datetime.now()}})
     return json_kor({'message': '답장 완료'}, 200)
@@ -415,7 +421,7 @@ def reply_letter():
     }
 })
 def get_replied_letters_to_me():
-    user = request.user_id
+    user = ObjectId(request.user_id)
     letters = list(db.letter.find({
         'to': user,
         'from': {'$ne': user},
@@ -424,6 +430,8 @@ def get_replied_letters_to_me():
         '_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'content': 1,
         'status': 1, 'replied_at': 1
     }).sort('replied_at', -1))
+    for letter in letters:
+        letter['from_nickname'] = get_nickname(letter['from'])
     return json_kor({'replied-to-me': letters}, 200)
 
 @letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
@@ -443,8 +451,10 @@ def get_comments_for_letter(letter_id):
       200:
         description: 성공
     """
-    comms = list(db.comment.find({'original_letter_id': letter_id},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
-    comms['from_nickname'] = get_nickname(comms['from'])
+    comms = list(db.comment.find({'original_letter_id': str(letter_id)},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
+    for comment in comms:
+        comment['from_nickname'] = get_nickname(comment['from'])
+
     return json_kor({'comments': comms}, 200)
 
 @letter_routes.route('/auto-reply', methods=['POST'])
@@ -483,7 +493,9 @@ def get_saved_letters():
       200:
         description: 성공
     """
-    user = request.user_id
-    letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1}).sort('created_at', -1))
-    letters['from_nickname'] = get_nickname(letters['from'])
+    user = ObjectId(request.user_id)
+    letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1,'to':1}).sort('created_at', -1))
+    for letter in letters:
+        letter['from_nickname'] = get_nickname(letter['from'])
+        letter['to_nickname'] = get_nickname(letter['to'])
     return json_kor({'saved_letters': letters}, 200)

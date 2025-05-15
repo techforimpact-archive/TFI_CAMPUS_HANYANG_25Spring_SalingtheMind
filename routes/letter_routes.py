@@ -21,7 +21,15 @@ def json_kor(data, status=200):
         content_type="application/json; charset=utf-8",
         status=status
     )
-
+def get_nickname(user_id):
+    try:
+        if not isinstance(user_id, ObjectId):
+            user_id = ObjectId(user_id)
+        user = db.user.find_one({"_id": user_id}, {"nickname": 1})
+        return user.get("nickname", "알 수 없음") if user else "알 수 없음"
+    except Exception:
+        return "알 수 없음"
+      
 # AI fallback pool
 AI_REPLY_POOL = [
     "지금도 충분히 잘하고 있어요.",
@@ -190,7 +198,7 @@ def get_my_unread_letters():
     tags:
       - Letter
     responses:
-      200:
+      200: 
         description: 성공
       500:
         description: 서버 에러
@@ -272,7 +280,10 @@ def get_letter_detail(letter_id):
     )
     if not letter:
         return json_kor({"error": "편지를 찾을 수 없습니다."}, 404)
-
+      
+    letter['from_nickname'] = get_nickname(letter['from'])
+    letter['to_nickname'] = get_nickname(letter['to'])
+    
     result = {'letter': letter}
 
     # ✅ 편지를 저장 처리할 조건
@@ -297,9 +308,13 @@ def get_letter_detail(letter_id):
             {'original_letter_id': letter_id},
             {'_id': 1, 'from': 1, 'content': 1, 'read': 1, 'created_at': 1}
         ).sort('created_at', 1))
+        
         result['comments'] = comments
 
         unread_ids = [c['_id'] for c in comments if not c.get('read')]
+        
+        comments['from_nickname'] = get_nickname(comments['from'])
+        
         if unread_ids:
             db.comment.update_many(
                 {'_id': {'$in': unread_ids}},
@@ -429,6 +444,7 @@ def get_comments_for_letter(letter_id):
         description: 성공
     """
     comms = list(db.comment.find({'original_letter_id': letter_id},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
+    comms['from_nickname'] = get_nickname(comms['from'])
     return json_kor({'comments': comms}, 200)
 
 @letter_routes.route('/auto-reply', methods=['POST'])
@@ -452,6 +468,7 @@ def auto_reply_to_old_letters():
         db.comment.insert_one(cm)
         db.letter.update_one({'_id': mail.get('_id')}, {'$set': {'status': 'auto_replied', 'replied_at': datetime.now()}})
         auto_ids.append(mail.get('_id'))
+        cm['to_nickname'] = get_nickname(cm['from'])
     return json_kor({'message': f"{len(auto_ids)}건 자동 답장 완료", 'auto_ids': auto_ids}, 200)
 
 @letter_routes.route('/saved', methods=['GET'])
@@ -468,4 +485,5 @@ def get_saved_letters():
     """
     user = request.user_id
     letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1}).sort('created_at', -1))
+    letters['from_nickname'] = get_nickname(letters['from'])
     return json_kor({'saved_letters': letters}, 200)

@@ -19,7 +19,60 @@ def json_kor(data, status=200):
 
 reward_routes = Blueprint('reward_routes', __name__, url_prefix='/reward')
 
-LEVEL_UP_THRESHOLD = 50
+LEVEL_UP_THRESHOLD = 100
+
+def grant_point_by_action(user_id, action):
+    if action not in POINT_RULES:
+        return False, f"올바르지 않은 액션입니다: {action}"
+
+    user = db.user.find_one({"_id": user_id}, {"point": 1, "level": 1})
+    if not user:
+        return False, "사용자를 찾을 수 없습니다."
+
+    point_gain = POINT_RULES[action]
+    current_point = user.get("point", 0)
+    current_level = user.get("level", 1)
+    new_point = current_point + point_gain
+    leveled_up = False
+    new_items = []
+
+    if new_point >= LEVEL_UP_THRESHOLD:
+        current_level += 1
+        new_point = 0
+        leveled_up = True
+
+        owned_items = db.user_item.distinct("item_type", {"user_id": user_id})
+        item_pool = list(db.item_catalog.find(
+            {"name": {"$nin": owned_items}},
+            {"_id": 0, "name": 1, "description": 1, "category": 1}
+        ))
+
+        if item_pool:
+            reward_item = random.choice(item_pool)
+            db.user_item.insert_one({
+                "user_id": user_id,
+                "item_type": reward_item["name"],
+                "used": False,
+                "granted_at": datetime.utcnow()
+            })
+            new_items.append({
+                "name": reward_item["name"],
+                "description": reward_item.get("description", ""),
+                "category": reward_item.get("category", "")
+            })
+
+    db.user.update_one(
+        {"_id": user_id},
+        {"$set": {"point": new_point, "level": current_level}}
+    )
+
+    return True, {
+        "point": point_gain,
+        "leveled_up": leveled_up,
+        "level": current_level,
+        "new_items": new_items
+    }
+
 
 @reward_routes.route('/grant', methods=['POST'])
 @token_required

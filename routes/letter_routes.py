@@ -132,29 +132,77 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
 @swag_from({
     'tags': ['Letter'],
     'summary': '편지 전송',
-    'description': '수신 타입(to)에 따라 수신자를 자동으로 결정하고, 본문과 감정을 포함하여 편지를 전송합니다.',
-    'parameters': [
-        {
-            'name': 'body',
-            'in': 'body',
-            'required': True,
-            'schema': {
-                'type': 'object',
-                'properties': {
-                    'to': {'type': 'string', 'description': '수신 타입 (self, volunteer, random)'},
-                    'content': {'type': 'string', 'description': '편지 내용'},
-                    'emotion': {'type': 'string', 'description': '감정 태그'}
-                },
-                'required': ['to', 'content', 'emotion']
+    'description': '수신 타입(to)에 따라 수신자를 자동으로 결정하고, 편지 내용을 저장합니다.\n\n'
+                   '- self: 본인에게 저장\n'
+                   '- volunteer: 자원봉사자에게 전송\n'
+                   '- random: 무작위 사용자에게 전송\n\n'
+                   '※ 편지 내용은 최대 1000자까지 가능하며, 200자 초과 시 보너스 포인트가 지급됩니다.',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'to': {
+                            'type': 'string',
+                            'description': '수신 타입 (self, volunteer, random)',
+                            'example': 'random'
+                        },
+                        'content': {
+                            'type': 'string',
+                            'description': '편지 내용 (최대 1000자)',
+                            'example': '오늘 하루는 조금 힘들었지만, 그래도 버텨냈어요.'
+                        },
+                        'emotion': {
+                            'type': 'string',
+                            'description': '감정 태그',
+                            'example': '우울'
+                        }
+                    },
+                    'required': ['to', 'content', 'emotion']
+                }
             }
         }
-    ],
+    },
     'responses': {
-        201: {'description': '전송 성공'},
-        400: {'description': '필수 정보 누락 또는 유효하지 않은 수신 타입'},
-        500: {'description': '서버 에러'}
+        201: {
+            'description': '편지 전송 성공',
+            'content': {
+                'application/json': {
+                    'example': {
+                        "message": "편지 전송 완료",
+                        "letter_id": "665f17fecc20397ac3d7eabc",
+                        "to": "작은파도",
+                        "title": "조금은 힘든 하루",
+                        "emotion": "우울"
+                    }
+                }
+            }
+        },
+        400: {
+            'description': '필수 정보 누락 / 잘못된 수신 타입 / 글자수 초과 / 수신자 없음',
+            'content': {
+                'application/json': {
+                    'example': {
+                        "error": "필수 정보 누락"
+                    }
+                }
+            }
+        },
+        500: {
+            'description': '서버 내부 에러',
+            'content': {
+                'application/json': {
+                    'example': {
+                        "error": "Internal Server Error"
+                    }
+                }
+            }
+        }
     }
 })
+
 def send_letter():
     data = request.get_json() or {}
     sender = ObjectId(request.user_id)
@@ -212,72 +260,84 @@ def get_my_unread_letters():
     return json_kor({"unread_letters": letters}, 200)
 
 
+
 @letter_routes.route('/<letter_id>', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '편지 상세 조회 (자동 저장 및 답장 읽음 처리 포함)',
+    'description': '특정 편지의 상세 정보를 조회합니다.\n\n'
+                   '- 로그인한 사용자가 보낸 편지 또는 받은 편지만 접근할 수 있습니다.\n'
+                   '- 수신자가 나이고 랜덤 발신자의 편지이며 아직 저장되지 않은 경우, 자동으로 `saved = true` 처리됩니다.\n'
+                   '- 수신자가 나이고 상태가 `replied` 또는 `auto_replied`인 경우, 댓글 목록을 함께 반환하며 읽음 처리도 수행됩니다.',
+    'parameters': [
+        {
+            'name': 'letter_id',
+            'in': 'path',
+            'type': 'string',
+            'required': True,
+            'description': '조회할 편지의 ID'
+        },
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer JWT 토큰'
+        }
+    ],
+    'responses': {
+        200: {
+            'description': '편지 상세 조회 성공',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'letter': {
+                        'type': 'object',
+                        'properties': {
+                            '_id': {'type': 'string'},
+                            'from': {'type': 'string'},
+                            'to': {'type': 'string'},
+                            'title': {'type': 'string'},
+                            'emotion': {'type': 'string'},
+                            'content': {'type': 'string'},
+                            'created_at': {'type': 'string'},
+                            'saved': {'type': 'boolean'},
+                            'status': {'type': 'string'},
+                            'from_nickname': {'type': 'string'},
+                            'to_nickname': {'type': 'string'}
+                        }
+                    },
+                    'comments': {
+                        'type': 'array',
+                        'items': {
+                            'type': 'object',
+                            'properties': {
+                                '_id': {'type': 'string'},
+                                'from': {'type': 'string'},
+                                'content': {'type': 'string'},
+                                'read': {'type': 'boolean'},
+                                'created_at': {'type': 'string'},
+                                'from_nickname': {'type': 'string'}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        403: {
+            'description': '권한 없음 (다른 사용자의 편지에 접근)'
+        },
+        404: {
+            'description': '편지를 찾을 수 없음'
+        },
+        500: {
+            'description': '서버 오류'
+        }
+    }
+})
+
 def get_letter_detail(letter_id):
-    """
-    편지 상세 조회 (및 자동 저장/댓글 읽음 처리)
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: letter_id
-        in: path
-        type: string
-        required: true
-        description: 조회할 편지의 ID
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer 토큰
-    responses:
-      200:
-        description: 편지 상세 조회 성공
-        schema:
-          type: object
-          properties:
-            letter:
-              type: object
-              properties:
-                _id:
-                  type: string
-                from:
-                  type: string
-                to:
-                  type: string
-                title:
-                  type: string
-                emotion:
-                  type: string
-                content:
-                  type: string
-                created_at:
-                  type: string
-                saved:
-                  type: boolean
-                status:
-                  type: string
-            comments:
-              type: array
-              items:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                  from:
-                    type: string
-                  content:
-                    type: string
-                  read:
-                    type: boolean
-                  created_at:
-                    type: string
-      404:
-        description: 편지를 찾을 수 없음
-      500:
-        description: 서버 오류
-    """
     user = ObjectId(request.user_id)
     letter = db.letter.find_one(
         {"_id":  ObjectId(letter_id)},
@@ -446,41 +506,17 @@ def get_replied_letters_to_me():
         letter['from_nickname'] = get_nickname(letter['from'])
     return json_kor({'replied-to-me': letters}, 200)
 
-@letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
+"""@letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
 @token_required
 def get_comments_for_letter(letter_id):
-    """
-    특정 편지의 댓글 목록 조회
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: letter_id
-        in: path
-        type: string
-        required: true
-    responses:
-      200:
-        description: 성공
-    """
-    
     comms = list(db.comment.find({'original_letter_id': ObjectId(letter_id)},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
     for comment in comms:
         comment['from_nickname'] = get_nickname(comment['from'])
     
-    return json_kor({'comments': comms}, 200)
+    return json_kor({'comments': comms}, 200)"""
 
-@letter_routes.route('/auto-reply', methods=['POST'])
+"""@letter_routes.route('/auto-reply', methods=['POST'])
 def auto_reply_to_old_letters():
-    """
-    24시간 지난 랜덤 편지 자동 답장
-    ---
-    tags:
-      - Letter
-    responses:
-      200:
-        description: 자동 답장 결과
-    """
     threshold = datetime.now() - timedelta(hours=24)
     expired = list(db.letter.find({'status': 'sent', 'created_at': {'$lte': threshold},'to': {'$nin': ['volunteer_user']},'$expr': {'$ne': ['$to', '$from']}}))
     auto_ids = []
@@ -492,20 +528,76 @@ def auto_reply_to_old_letters():
         db.letter.update_one({'_id': mail.get('_id')}, {'$set': {'status': 'auto_replied', 'replied_at': datetime.now()}})
         auto_ids.append(mail.get('_id'))
         cm['to_nickname'] = get_nickname(cm['from'])
-    return json_kor({'message': f"{len(auto_ids)}건 자동 답장 완료", 'auto_ids': auto_ids}, 200)
+    return json_kor({'message': f"{len(auto_ids)}건 자동 답장 완료", 'auto_ids': auto_ids}, 200)"""
 
 @letter_routes.route('/saved', methods=['GET'])
-@token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '내가 저장한 편지 목록 조회',
+    'description': '사용자가 저장한 편지들을 최신순으로 반환합니다.',
+    'responses': {
+        200: {
+            'description': '저장된 편지 목록 조회 성공',
+            'content': {
+                'application/json': {
+                    'schema': {
+                        'type': 'object',
+                        'properties': {
+                            'saved_letters': {
+                                'type': 'array',
+                                'items': {
+                                    'type': 'object',
+                                    'properties': {
+                                        '_id': {
+                                            'type': 'string',
+                                            'description': '편지 ID'
+                                        },
+                                        'from': {
+                                            'type': 'string',
+                                            'description': '보낸 사람의 ObjectId'
+                                        },
+                                        'to': {
+                                            'type': 'string',
+                                            'description': '받는 사람의 ObjectId'
+                                        },
+                                        'title': {
+                                            'type': 'string',
+                                            'description': '편지 제목'
+                                        },
+                                        'emotion': {
+                                            'type': 'string',
+                                            'description': '감정 태그'
+                                        },
+                                        'created_at': {
+                                            'type': 'string',
+                                            'format': 'date-time',
+                                            'description': '작성일시'
+                                        },
+                                        'from_nickname': {
+                                            'type': 'string',
+                                            'description': '보낸 사람 닉네임'
+                                        },
+                                        'to_nickname': {
+                                            'type': 'string',
+                                            'description': '받는 사람 닉네임'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        401: {
+            'description': '인증 실패 (토큰 누락 또는 유효하지 않음)'
+        },
+        500: {
+            'description': '서버 에러'
+        }
+    }
+})
 def get_saved_letters():
-    """
-    내가 저장한 편지 목록 조회
-    ---
-    tags:
-      - Letter
-    responses:
-      200:
-        description: 성공
-    """
     user = ObjectId(request.user_id)
     letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1,'to':1}).sort('created_at', -1))
     for letter in letters:

@@ -161,7 +161,7 @@ def send_letter():
     to_type = data.get("to")
     content = data.get("content")
     emotion = data.get("emotion")
-    if not (sender and to_type and content and emotion):
+    if not (to_type and content and emotion):
         return json_kor({"error": "필수 정보 누락"}, 400)
     
     # 1000자 글자수 제한

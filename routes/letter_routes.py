@@ -1,6 +1,7 @@
 from flask import Blueprint, request, Response
 from utils.db import db
 from utils.auth import token_required
+from routes.reward_routes import grant_point_by_action
 import uuid
 import random
 import os
@@ -169,6 +170,15 @@ def send_letter():
     emotion = data.get("emotion")
     if not (sender and to_type and content and emotion):
         return json_kor({"error": "필수 정보 누락"}, 400)
+    
+    # 1000자 글자수 제한
+    if len(content) > 1000:
+        return json_kor({"error": "편지는 최대 1000자까지 작성할 수 있습니다."}, 400)
+    
+    # 200자 초과 포인트 지급
+    if len(content) > 200:
+        grant_point_by_action(sender, "long_letter_bonus")
+
     # 수신자 결정
     if to_type == 'self':
         receiver = sender
@@ -390,6 +400,15 @@ def reply_letter():
     text = data.get('reply')
     if not (lid and text):
         return json_kor({'error': '필수값 누락'}, 400)
+
+    # 1000자 글자수 제한한
+    if len(text) > 1000:
+        return json_kor({'error': '답장은 최대 1000자까지 작성할 수 있습니다.'}, 400)
+    
+    # 200자 초과 포인트 지급
+    if len(text) > 200:
+        grant_point_by_action(ObjectId(request.user_id), "long_letter_bonus")
+
     orig = db.letter.find_one({'_id': lid})
     if not orig or orig.get('status') != 'sent':
         return json_kor({'error': '답장할 수 없습니다.'}, 400)

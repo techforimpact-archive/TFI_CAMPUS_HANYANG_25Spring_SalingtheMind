@@ -19,10 +19,11 @@ JWT_ALGORITHM              = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
 POINT_RULES = {
     "write_letter": 10,
-    "reply_letter": 15,
+    "reply_letter": 10,
+    "long_letter_bonus": 5  # 200자 초과 시 추가 포인트
 }
 LEVEL_UP_THRESHOLD = {
-    10: "level_up"
+    100: "level_up"
 }
 
 # 6) 서버 · 배포 설정

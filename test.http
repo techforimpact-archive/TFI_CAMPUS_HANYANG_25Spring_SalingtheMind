@@ -1,6 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0NzQyMTg3Nn0.RbdXC5Hye4YIyKIai1Pr4fbed4fPeTcS2FUEjN87pLM
-@letter_id = 6826aaaaffff000000000015
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0NzQ5MjM0MX0.O8N1uzbvMbfY_YKx2-RC1kEcom9KggkamzH-_eNgPSc
 @item_id = 6824678b33b3799bb8c137c3
 
 ### 🧑‍💼 회원가입
@@ -20,7 +19,7 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "test_1"
+  "nickname": "master01"
 }
 
 ### 🔒 인증 확인
@@ -138,3 +137,8 @@ POST {{host}}/letter/auto-reply
 ### 💾 내가 저장한 편지 목록
 GET {{host}}/letter/saved
 Authorization: {{token}}
+
+####특정 아이템 조회
+GET {{host}}/item/my?category=바다아이템
+Authorization: {{token}}
+Content-Type: application/json

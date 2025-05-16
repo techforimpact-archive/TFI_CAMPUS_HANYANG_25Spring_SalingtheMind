@@ -53,6 +53,9 @@ def get_item_catalog():
 @item_routes.route('/my', methods=['GET'])
 @token_required
 def get_item_list():
+    @item_routes.route('/my', methods=['GET'])
+@token_required
+def get_item_list():
     """
     내가 보유한 아이템 목록 조회
     ---
@@ -63,10 +66,10 @@ def get_item_list():
         in: query
         type: string
         required: false
-        description: 필터링할 카테고리 (육지아이템, 바다아이템, 캐릭터아이템)
+        description: 필터링할 카테고리 (예: 바다아이템, 육지아이템, 캐릭터아이템)
     responses:
       200:
-        description: 성공
+        description: 사용자의 보유 아이템 목록 조회 성공
         schema:
           type: object
           properties:
@@ -77,13 +80,20 @@ def get_item_list():
                 properties:
                   item_id:
                     type: string
+                    description: 아이템의 고유 ID (ObjectId → string 변환)
                   item_type:
                     type: string
+                    description: 아이템 이름 (item_catalog의 name과 동일)
                   used:
                     type: boolean
+                    description: 사용 여부 (true면 이미 사용한 아이템)
+                  category:
+                    type: string
+                    description: 아이템의 카테고리
       500:
-        description: 서버 에러
+        description: 서버 내부 오류
     """
+
     try:
         user_id = ObjectId(request.user_id)
         category = request.args.get("category")
@@ -103,7 +113,8 @@ def get_item_list():
             "_id": 0,
             "item_id": {"$toString": "$_id"},
             "item_type": "$item_type",
-            "used": "$used"
+            "used": "$used",
+            "category": "$catalog.category"
         }})
         items = list(db.user_item.aggregate(pipeline))
         return json_kor({"items": items})

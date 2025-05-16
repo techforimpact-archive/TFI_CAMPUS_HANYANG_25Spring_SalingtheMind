@@ -128,40 +128,33 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
 
 @letter_routes.route('/send', methods=['POST'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '편지 전송',
+    'description': '수신 타입(to)에 따라 수신자를 자동으로 결정하고, 본문과 감정을 포함하여 편지를 전송합니다.',
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'to': {'type': 'string', 'description': '수신 타입 (self, volunteer, random)'},
+                    'content': {'type': 'string', 'description': '편지 내용'},
+                    'emotion': {'type': 'string', 'description': '감정 태그'}
+                },
+                'required': ['to', 'content', 'emotion']
+            }
+        }
+    ],
+    'responses': {
+        201: {'description': '전송 성공'},
+        400: {'description': '필수 정보 누락 또는 유효하지 않은 수신 타입'},
+        500: {'description': '서버 에러'}
+    }
+})
 def send_letter():
-    """
-    편지 전송
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            from:
-              type: string
-              description: 보낸 사람 ID
-            to:
-              type: string
-              description: 수신 타입 (self, volunteer, random)
-            content:
-              type: string
-              description: 편지 내용
-            emotion:
-              type: string
-              description: 감정 태그
-          required: [from, to, content, emotion]
-    responses:
-      201:
-        description: 전송 성공
-      400:
-        description: 필수 정보 누락 또는 잘못된 요청
-      500:
-        description: 서버 에러
-    """
     data = request.get_json() or {}
     sender = ObjectId(request.user_id)
     to_type = data.get("to")
@@ -192,18 +185,16 @@ def send_letter():
 
 @letter_routes.route('/random', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '나에게 온 미답장 편지 목록 조회',
+    'responses': {
+        200: {'description': '미답장 편지 목록 반환'},
+        500: {'description': '서버 에러'}
+    }
+})
+
 def get_my_unread_letters():
-    """
-    나에게 온 미답장 편지 목록 조회
-    ---
-    tags:
-      - Letter
-    responses:
-      200: 
-        description: 성공
-      500:
-        description: 서버 에러
-    """
     user = ObjectId(request.user_id)
     letters = list(db.letter.find({"to": user, "status": 'sent', "from": {"$nin": ['volunteer_user', user]}},{'_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'created_at': 1}).sort('created_at', -1))
     for letter in letters:

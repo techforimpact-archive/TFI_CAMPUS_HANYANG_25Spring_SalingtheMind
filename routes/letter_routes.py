@@ -187,7 +187,7 @@ def send_letter():
     else:
         return json_kor({"error": "유효하지 않은 수신 타입"}, 400)
     title = generate_title_with_gpt(content)
-    letter = {"_id": ObjectId(uuid.uuid4()), "from": sender, "to": receiver, "title": title,"emotion": emotion, "content": content, "status": 'sent',
+    letter = {"_id": ObjectId(), "from": sender, "to": receiver, "title": title,"emotion": emotion, "content": content, "status": 'sent',
               "saved": to_type in ['self', 'volunteer'], "created_at": datetime.now()}
     db.letter.insert_one(letter)
     return json_kor({"message": "편지 전송 완료", "letter_id": letter['_id'],
@@ -403,7 +403,7 @@ def reply_letter():
     orig = db.letter.find_one({'_id': lid})
     if not orig or orig.get('status') != 'sent':
         return json_kor({'error': '답장할 수 없습니다.'}, 400)
-    comment = {'_id': ObjectId(uuid.uuid4()), 'from': request.user_id,'to': orig.get('from'), 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': lid}
+    comment = {'_id': ObjectId(), 'from': ObjectId(request.user_id),'to': orig.get('from'), 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': lid}
     db.comment.insert_one(comment)
     db.letter.update_one({'_id': lid}, {'$set': {'status': 'replied', 'replied_at': datetime.now()}})
     return json_kor({'message': '답장 완료'}, 200)
@@ -464,7 +464,7 @@ def get_comments_for_letter(letter_id):
         description: 성공
     """
     
-    comms = list(db.comment.find({'original_letter_id': str(letter_id)},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
+    comms = list(db.comment.find({'original_letter_id': ObjectId(letter_id)},{'_id':1,'from':1,'content':1,'created_at':1,'read':1}).sort('created_at', -1))
     for comment in comms:
         comment['from_nickname'] = get_nickname(comment['from'])
     
@@ -487,7 +487,7 @@ def auto_reply_to_old_letters():
     for mail in expired:
         ai_list = generate_ai_replies_with_gpt(mail.get('content', ''), 'ai')
         reply = random.choice(ai_list) if isinstance(ai_list, list) else ai_list
-        cm = {'_id': str(uuid.uuid4()), 'from': '온기', 'to': mail.get('from'),'content': reply, 'read': False, 'created_at': datetime.now(),'original_letter_id': mail.get('_id')}
+        cm = {'_id': ObjectId(), 'from': '온기', 'to': mail.get('from'),'content': reply, 'read': False, 'created_at': datetime.now(),'original_letter_id': mail.get('_id')}
         db.comment.insert_one(cm)
         db.letter.update_one({'_id': mail.get('_id')}, {'$set': {'status': 'auto_replied', 'replied_at': datetime.now()}})
         auto_ids.append(mail.get('_id'))

@@ -1,5 +1,9 @@
 @host = http://127.0.0.1:5000
+<<<<<<< HEAD
 @token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyODk3YjMxZmMwYjQwMTE3ZjNlZWI1Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDc1NzcxMzl9.UpP5iG7sNSnxzB9HcOMaBw7Fs85WlhOTls6oztpwGuk
+=======
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNzQyYjA1Mjk3YjdjOTVhYTk3MjVhIiwibmlja25hbWUiOiJ0ZXN0XzEiLCJleHAiOjE3NDc1NzU0OTh9.DnBahUAkOM0b2F_-chSyHNG7FmyjTjvbFWlsOYk0gn4
+>>>>>>> 09b50943a6fbe1fcebb02c2cfb0753d3688ec2fa
 @item_id = 6824678b33b3799bb8c137c3
 
 ### 🧑‍💼 회원가입
@@ -19,7 +23,11 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
   "nickname": "고민하냥"
+=======
+  "nickname": "test_1"
+>>>>>>> 09b50943a6fbe1fcebb02c2cfb0753d3688ec2fa
 }
 
 ### 🔒 인증 확인
@@ -142,3 +150,21 @@ Authorization: {{token}}
 GET {{host}}/item/my?category=바다아이템
 Authorization: {{token}}
 Content-Type: application/json
+
+### 감정 기반 질문 생성 (generate)
+POST {{host}}/question/generate
+Authorization: Bearer YOUR_JWT_TOKEN
+Content-Type: application/json
+
+{
+  "emotion": "불안"
+}
+
+### 글쓰기 도움 질문 생성 (help)
+POST {{host}}/question/help
+Authorization: Bearer YOUR_JWT_TOKEN
+Content-Type: application/json
+
+{
+  "partial_letter": "요즘 학교생활이 너무 힘들어요. 친구들이 저를 피하는 것 같고..."
+}

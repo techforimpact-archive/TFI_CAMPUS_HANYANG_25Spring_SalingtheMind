@@ -1,10 +1,13 @@
 from flask import Blueprint, request, Response
-import openai
+from openai import OpenAI
+import os
 import json
 from flasgger import swag_from
 from utils.auth import token_required
 
+# Flask Blueprint 생성
 question_bp = Blueprint('question', __name__)
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # 한글 JSON 응답 함수
 def json_kor(data, status=200):
@@ -14,10 +17,12 @@ def json_kor(data, status=200):
         status=status
     )
 
-@question_bp.route('/question/generate', methods=['POST'])
+@question_bp.route('/generate', methods=['POST'])
 @token_required
 @swag_from({
     'tags': ['Question'],
+    'summary': '감정 기반 질문 생성',
+    'description': '선택한 감정을 기반으로 글쓰기를 유도하는 따뜻한 질문을 생성합니다.',
     'requestBody': {
         'required': True,
         'content': {
@@ -27,7 +32,8 @@ def json_kor(data, status=200):
                     'properties': {
                         'emotion': {
                             'type': 'string',
-                            'example': '불안'
+                            'example': '불안',
+                            'description': '사용자가 선택한 감정'
                         }
                     },
                     'required': ['emotion']
@@ -52,15 +58,16 @@ def json_kor(data, status=200):
                 }
             }
         },
-        400: {'description': '감정 누락 오류'},
+        400: {'description': 'emotion 필드 누락'},
         500: {'description': 'OpenAI API 오류'}
     }
 })
 def generate_question():
-
     """
     감정을 기반으로 글쓰기를 유도하는 질문 생성
     """
+    print("✅ /question/generate 엔드포인트 호출됨")
+
     data = request.json
     emotion = data.get("emotion")
 
@@ -73,21 +80,25 @@ def generate_question():
     '''
 
     try:
-        response = openai.ChatCompletion.create(
+        print("🧠 OpenAI 호출 전:", prompt)
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "user", "content": prompt}],
             temperature=0.7
         )
         question = response.choices[0].message.content.strip()
         return json_kor({"question": question}), 200
     except Exception as e:
+        print("❌ OpenAI 예외:", str(e))
         return json_kor({"error": str(e)}), 500
 
-
-@question_bp.route('/question/help', methods=['POST'])
+@question_bp.route('/help', methods=['POST'])
 @token_required
 @swag_from({
     'tags': ['Question'],
+    'summary': '편지 글쓰기 도움 질문 생성',
+    'description': '편지를 쓰다 막힌 사용자를 위해, 이어서 글을 쓰도록 유도하는 질문을 생성합니다.',
     'requestBody': {
         'required': True,
         'content': {
@@ -97,7 +108,8 @@ def generate_question():
                     'properties': {
                         'partial_letter': {
                             'type': 'string',
-                            'example': '요즘 학교생활이 너무 힘들어요. 친구들이 저를 피하는 것 같고...'
+                            'example': '요즘 학교생활이 너무 힘들어요. 친구들이 저를 피하는 것 같고...',
+                            'description': '사용자가 지금까지 작성한 편지 내용'
                         }
                     },
                     'required': ['partial_letter']
@@ -122,7 +134,7 @@ def generate_question():
                 }
             }
         },
-        400: {'description': '입력값 누락'},
+        400: {'description': 'partial_letter 필드 누락'},
         500: {'description': 'OpenAI API 오류'}
     }
 })
@@ -130,6 +142,8 @@ def help_question():
     """
     편지 작성 중 막혔을 때 글쓰기를 도와주는 질문 생성
     """
+    print("✅ /question/help 엔드포인트 호출됨")
+
     data = request.json
     partial_letter = data.get("partial_letter", "").strip()
 
@@ -147,7 +161,7 @@ def help_question():
     """
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
@@ -155,4 +169,5 @@ def help_question():
         help_q = response.choices[0].message.content.strip()
         return json_kor({"help_question": help_q}), 200
     except Exception as e:
+        print("❌ OpenAI 예외:", str(e))
         return json_kor({"error": str(e)}), 500

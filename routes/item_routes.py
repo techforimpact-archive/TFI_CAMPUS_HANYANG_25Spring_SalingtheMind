@@ -63,10 +63,10 @@ def get_item_list():
         in: query
         type: string
         required: false
-        description: 필터링할 카테고리 (예: 바다아이템, 육지아이템, 캐릭터아이템)
+        description: "필터링할 카테고리 (예: 바다아이템, 육지아이템, 캐릭터아이템)"
     responses:
       200:
-        description: 사용자의 보유 아이템 목록 조회 성공
+        description: "사용자의 보유 아이템 목록 조회 성공"
         schema:
           type: object
           properties:
@@ -77,18 +77,18 @@ def get_item_list():
                 properties:
                   item_id:
                     type: string
-                    description: 아이템의 고유 ID (ObjectId → string 변환)
+                    description: "아이템의 고유 ID (ObjectId → string 변환)"
                   item_type:
                     type: string
-                    description: 아이템 이름 (item_catalog의 name과 동일)
+                    description: "아이템 이름 (item_catalog의 name과 동일)"
                   used:
                     type: boolean
-                    description: 사용 여부 (true면 이미 사용한 아이템)
+                    description: "사용 여부 (true면 이미 사용한 아이템)"
                   category:
                     type: string
-                    description: 아이템의 카테고리
+                    description: "아이템의 카테고리"
       500:
-        description: 서버 내부 오류
+        description: "서버 내부 오류"
     """
 
     try:
@@ -132,10 +132,10 @@ def get_item_detail(item_id):
         in: path
         type: string
         required: true
-        description: 조회할 아이템 ID
+        description: "조회할 아이템 ID"
     responses:
       200:
-        description: 성공
+        description: "성공"
         schema:
           type: object
           properties:
@@ -153,10 +153,10 @@ def get_item_detail(item_id):
                 description:
                   type: string
       404:
-        description: 소유권 없음 또는 존재하지 않음
+        description:" 소유권 없음 또는 존재하지 않음"
       500:
-        description: 서버 에러
-    """
+        description: "서버 에러"
+    """"
     try:
         user_id = ObjectId(request.user_id)
         uid = ObjectId(item_id)
@@ -196,10 +196,10 @@ def use_item():
           properties:
             item_id:
               type: string
-              description: 사용할 아이템 ID
+              description: "사용할 아이템 ID"
     responses:
       200:
-        description: 사용 성공
+        description: "사용 성공"
         schema:
           type: object
           properties:
@@ -217,9 +217,9 @@ def use_item():
                 used_at:
                   type: string
       400:
-        description: 잘못된 요청 또는 이미 사용된 아이템
+        description: "잘못된 요청 또는 이미 사용된 아이템"
       500:
-        description: 서버 에러
+        description: "서버 에러"
     """
     try:
         data = request.get_json()
@@ -268,10 +268,10 @@ def unuse_item():
           properties:
             item_id:
               type: string
-              description: 해제할 아이템 ID
+              description: "해제할 아이템 ID"
     responses:
       200:
-        description: 해제 성공
+        description: "해제 성공"
         schema:
           type: object
           properties:
@@ -289,9 +289,9 @@ def unuse_item():
                 unused_at:
                   type: string
       400:
-        description: 잘못된 요청 또는 이미 해제된 아이템
+        description: "잘못된 요청 또는 이미 해제된 아이템"
       500:
-        description: 서버 에러
+        description: "서버 에러"
     """
     try:
         data = request.get_json()

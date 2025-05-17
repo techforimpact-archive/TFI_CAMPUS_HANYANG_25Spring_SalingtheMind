@@ -1,5 +1,5 @@
 from flask import Blueprint, request, Response
-from flasgger import swag_from  # (선택)
+from flasgger import swag_from
 import json
 from datetime import datetime
 from bson import ObjectId
@@ -18,32 +18,19 @@ def json_kor(data, status=200):
 item_routes = Blueprint('item_routes', __name__, url_prefix='/item')
 
 @item_routes.route('/catalog', methods=['GET'])
+@swag_from({
+    'tags': ['Item'],
+    'summary': '전체 아이템 카탈로그 조회 (비인증)',
+    'responses': {
+        200: {
+            'description': '아이템 카탈로그 리스트 반환'
+        },
+        500: {
+            'description': '서버 에러'
+        }
+    }
+})
 def get_item_catalog():
-    """
-    전체 아이템 카탈로그 조회 (비인증)
-    ---
-    tags:
-      - Item
-    responses:
-      200:
-        description: 아이템 카탈로그 리스트 반환
-        schema:
-          type: object
-          properties:
-            catalog:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  category:
-                    type: string
-                  description:
-                    type: string
-      500:
-        description: 서버 에러
-    """
     try:
         catalog = list(db.item_catalog.find({}, {"_id": 0}))
         return json_kor({"catalog": catalog})
@@ -52,45 +39,28 @@ def get_item_catalog():
 
 @item_routes.route('/my', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Item'],
+    'summary': '내가 보유한 아이템 목록 조회',
+    'parameters': [
+        {
+            'name': 'category',
+            'in': 'query',
+            'type': 'string',
+            'required': False,
+            'description': '필터링할 카테고리 (예: 바다아이템, 육지아이템, 캐릭터아이템)'
+        }
+    ],
+    'responses': {
+        200: {
+            'description': '보유 아이템 목록 조회 성공'
+        },
+        500: {
+            'description': '서버 내부 오류'
+        }
+    }
+})
 def get_item_list():
-    """
-    내가 보유한 아이템 목록 조회
-    ---
-    tags:
-      - Item
-    parameters:
-      - name: category    
-        in: query
-        type: string
-        required: false
-        description: "필터링할 카테고리 (예: 바다아이템, 육지아이템, 캐릭터아이템)"
-    responses:
-      200:
-        description: "사용자의 보유 아이템 목록 조회 성공"
-        schema:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  item_id:
-                    type: string
-                    description: "아이템의 고유 ID (ObjectId → string 변환)"
-                  item_type:
-                    type: string
-                    description: "아이템 이름 (item_catalog의 name과 동일)"
-                  used:
-                    type: boolean
-                    description: "사용 여부 (true면 이미 사용한 아이템)"
-                  category:
-                    type: string
-                    description: "아이템의 카테고리"
-      500:
-        description: "서버 내부 오류"
-    """
-
     try:
         user_id = ObjectId(request.user_id)
         category = request.args.get("category")
@@ -118,45 +88,33 @@ def get_item_list():
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 
-
 @item_routes.route('/<item_id>', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Item'],
+    'summary': '특정 아이템 상세 조회',
+    'parameters': [
+        {
+            'name': 'item_id',
+            'in': 'path',
+            'type': 'string',
+            'required': True,
+            'description': '조회할 아이템 ID'
+        }
+    ],
+    'responses': {
+        200: {
+            'description': '성공'
+        },
+        404: {
+            'description': '소유권 없음 또는 존재하지 않음'
+        },
+        500: {
+            'description': '서버 에러'
+        }
+    }
+})
 def get_item_detail(item_id):
-    """
-    특정 아이템 상세 조회
-    ---
-    tags:
-      - Item
-    parameters:
-      - name: item_id
-        in: path
-        type: string
-        required: true
-        description: "조회할 아이템 ID"
-    responses:
-      200:
-        description: "성공"
-        schema:
-          type: object
-          properties:
-            item:
-              type: object
-              properties:
-                item_id:
-                  type: string
-                item_type:
-                  type: string
-                used:
-                  type: boolean
-                granted_at:
-                  type: string
-                description:
-                  type: string
-      404:
-        description:" 소유권 없음 또는 존재하지 않음"
-      500:
-        description: "서버 에러"
-    """"
     try:
         user_id = ObjectId(request.user_id)
         uid = ObjectId(item_id)
@@ -178,49 +136,35 @@ def get_item_detail(item_id):
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 
-
 @item_routes.route('/use', methods=['POST'])
 @token_required
+@swag_from({
+    'tags': ['Item'],
+    'summary': '아이템 사용 처리',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'item_id': {
+                            'type': 'string',
+                            'description': '사용할 아이템 ID'
+                        }
+                    },
+                    'required': ['item_id']
+                }
+            }
+        }
+    },
+    'responses': {
+        200: {'description': '사용 성공'},
+        400: {'description': '잘못된 요청 또는 이미 사용된 아이템'},
+        500: {'description': '서버 에러'}
+    }
+})
 def use_item():
-    """
-    아이템 사용 처리
-    ---
-    tags:
-      - Item
-    parameters:
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            item_id:
-              type: string
-              description: "사용할 아이템 ID"
-    responses:
-      200:
-        description: "사용 성공"
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-            used_item:
-              type: object
-              properties:
-                item_id:
-                  type: string
-                item_type:
-                  type: string
-                description:
-                  type: string
-                used_at:
-                  type: string
-      400:
-        description: "잘못된 요청 또는 이미 사용된 아이템"
-      500:
-        description: "서버 에러"
-    """
     try:
         data = request.get_json()
         item_id = data.get("item_id")
@@ -251,48 +195,36 @@ def use_item():
         })
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
+
 @item_routes.route('/unuse', methods=['POST'])
 @token_required
+@swag_from({
+    'tags': ['Item'],
+    'summary': '아이템 사용 해제',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'item_id': {
+                            'type': 'string',
+                            'description': '해제할 아이템 ID'
+                        }
+                    },
+                    'required': ['item_id']
+                }
+            }
+        }
+    },
+    'responses': {
+        200: {'description': '해제 성공'},
+        400: {'description': '잘못된 요청 또는 이미 해제된 아이템'},
+        500: {'description': '서버 에러'}
+    }
+})
 def unuse_item():
-    """
-    아이템 사용 해제
-    ---
-    tags:
-      - Item
-    parameters:
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            item_id:
-              type: string
-              description: "해제할 아이템 ID"
-    responses:
-      200:
-        description: "해제 성공"
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-            unused_item:
-              type: object
-              properties:
-                item_id:
-                  type: string
-                item_type:
-                  type: string
-                description:
-                  type: string
-                unused_at:
-                  type: string
-      400:
-        description: "잘못된 요청 또는 이미 해제된 아이템"
-      500:
-        description: "서버 에러"
-    """
     try:
         data = request.get_json()
         item_id = data.get("item_id")
@@ -304,7 +236,7 @@ def unuse_item():
 
         result = db.user_item.find_one_and_update(
             {"_id": uid, "user_id": user_id, "used": True},
-            {"$set": {"used": False, "used_at": None}},  # 사용 시간 초기화
+            {"$set": {"used": False, "used_at": None}},
             return_document=ReturnDocument.AFTER
         )
 

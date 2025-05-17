@@ -521,15 +521,14 @@ def reply_letter():
 def get_replied_letters_to_me():
     user = ObjectId(request.user_id)
     letters = list(db.letter.find({
-        'to': user,
-        'from': {'$ne': user},
+        'from': user,
         'status': {'$in': ['replied', 'auto_replied']}
     }, {
-        '_id': 1, 'from': 1, 'title': 1, 'emotion': 1, 'content': 1,
+        '_id': 1, 'to': 1, 'title': 1, 'emotion': 1, 'content': 1,
         'status': 1, 'replied_at': 1
     }).sort('replied_at', -1))
     for letter in letters:
-        letter['from_nickname'] = get_nickname(letter['from'])
+        letter['to_nickname'] = get_nickname(letter['to'])
     return json_kor({'replied-to-me': letters}, 200)
 
 """@letter_routes.route('/for-letter/<letter_id>', methods=['GET'])

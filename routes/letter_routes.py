@@ -345,9 +345,9 @@ def get_letter_detail(letter_id):
     )
     if not letter:
         return json_kor({"error": "편지를 찾을 수 없습니다."}, 404)
-      
+    
     if letter['from'] != user and letter['to'] != user:
-      return json_kor({"error": "해당 편지에 접근할 권한이 없습니다."}, 403)
+        return json_kor({"error": "해당 편지에 접근할 권한이 없습니다."}, 403)
     letter['from_nickname'] = get_nickname(letter['from'])
     letter['to_nickname'] = get_nickname(letter['to'])
 
@@ -381,7 +381,7 @@ def get_letter_detail(letter_id):
         unread_ids = [ObjectId(c['_id']) for c in comments if not c.get('read')]
         
         for comment in comments:
-          comment['from_nickname'] = get_nickname(comment['from'])
+            comment['from_nickname'] = get_nickname(comment['from'])
         
         if unread_ids:
             db.comment.update_many(
@@ -394,24 +394,24 @@ def get_letter_detail(letter_id):
 
 @letter_routes.route('/reply-options', methods=['GET'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': 'AI 질문 3개 생성 (답장 옵션)',
+    'parameters': [
+        {
+            'name': 'letter_id',
+            'in': 'query',
+            'type': 'string',
+            'required': True,
+            'description': '편지 ID'
+        }
+    ],
+    'responses': {
+        200: {'description': '성공'},
+        404: {'description': '편지 없음'}
+    }
+})
 def get_reply_options():
-    """
-    AI 질문 3개 생성 (답장 옵션)
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: letter_id
-        in: query
-        type: string
-        required: true
-        description: 편지 ID
-    responses:
-      200:
-        description: 성공
-      404:
-        description: 편지 없음
-    """
     lid = ObjectId(request.args.get('letter_id'))
     
     letter = db.letter.find_one({'_id': lid})
@@ -422,30 +422,57 @@ def get_reply_options():
 
 @letter_routes.route('/reply', methods=['POST'])
 @token_required
+@swag_from({
+    'tags': ['Letter'],
+    'summary': '유저 답장 저장',
+    'requestBody': {
+        'required': True,
+        'content': {
+            'application/json': {
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'letter_id': {
+                            'type': 'string',
+                            'description': '답장할 편지의 ID',
+                            'example': '665f17fecc20397ac3d7eabc'
+                        },
+                        'reply': {
+                            'type': 'string',
+                            'description': '답장 내용 (최대 1000자)',
+                            'example': '당신의 편지를 읽고 마음이 따뜻해졌어요. 감사합니다.'
+                        }
+                    },
+                    'required': ['letter_id', 'reply']
+                }
+            }
+        }
+    },
+    'responses': {
+        200: {
+            'description': '답장 성공',
+            'content': {
+                'application/json': {
+                    'example': {
+                        "message": "답장 완료"
+                    }
+                }
+            }
+        },
+        400: {
+            'description': '잘못된 요청 (필수값 누락, 글자 수 초과 등)',
+            'content': {
+                'application/json': {
+                    'example': {
+                        "error": "필수값 누락"
+                    }
+                }
+            }
+        }
+    }
+})
 def reply_letter():
-    """
-    유저 답장 저장
-    ---
-    tags:
-      - Letter
-    parameters:
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            letter_id:
-              type: string
-            reply:
-              type: string
-          required: [letter_id, reply]
-    responses:
-      200:
-        description: 답장 성공
-      400:
-        description: 잘못된 요청
-    """
+    
     data = request.get_json() or {}
     lid = ObjectId(data.get('letter_id'))
     text = data.get('reply')

@@ -558,6 +558,7 @@ def auto_reply_to_old_letters():
     return json_kor({'message': f"{len(auto_ids)}건 자동 답장 완료", 'auto_ids': auto_ids}, 200)"""
 
 @letter_routes.route('/saved', methods=['GET'])
+@token_required
 @swag_from({
     'tags': ['Letter'],
     'summary': '내가 저장한 편지 목록 조회',
@@ -625,9 +626,18 @@ def auto_reply_to_old_letters():
     }
 })
 def get_saved_letters():
-    user = ObjectId(request.user_id)
-    letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1,'to':1}).sort('created_at', -1))
-    for letter in letters:
-        letter['from_nickname'] = get_nickname(letter['from'])
-        letter['to_nickname'] = get_nickname(letter['to'])
-    return json_kor({'saved_letters': letters}, 200)
+        print("✅ /letter/saved 진입")
+        user = ObjectId(request.user_id)
+        letters = list(db.letter.find({'from': user, 'saved': True},{'_id':1,'from':1,'title':1,'emotion':1,'created_at':1,'to':1}).sort('created_at', -1))
+        print("🧾 조회된 편지 수:", len(letters))
+        for letter in letters:
+            if letter.get('from'):
+                letter['from_nickname'] = get_nickname(letter['from'])
+            else:
+                letter['from_nickname'] = "(알 수 없음)"
+
+            if letter.get('to'):
+                letter['to_nickname'] = get_nickname(letter['to'])
+            else:
+                letter['to_nickname'] = "(알 수 없음)"
+            return json_kor({'saved_letters': letters}, 200)

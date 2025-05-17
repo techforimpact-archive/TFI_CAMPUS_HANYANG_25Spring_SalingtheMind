@@ -4,7 +4,7 @@ import json
 from flasgger import swag_from
 from utils.auth import token_required
 
-question_bp = Blueprint('question', __name__)
+question_bp = Blueprint('question', __name__, url_prefix='/question')
 
 # 한글 JSON 응답 함수
 def json_kor(data, status=200):
@@ -57,6 +57,7 @@ def json_kor(data, status=200):
     }
 })
 def generate_question():
+    print("✅ /question/generate 엔드포인트 호출됨")
 
     """
     감정을 기반으로 글쓰기를 유도하는 질문 생성
@@ -73,6 +74,7 @@ def generate_question():
     '''
 
     try:
+        print("🧠 OpenAI 호출 전:", prompt)
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
@@ -81,6 +83,7 @@ def generate_question():
         question = response.choices[0].message.content.strip()
         return json_kor({"question": question}), 200
     except Exception as e:
+        print("❌ OpenAI 예외:", str(e))
         return json_kor({"error": str(e)}), 500
 
 

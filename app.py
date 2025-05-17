@@ -52,6 +52,10 @@ def create_app():
 
     # ✅ CORS 전체 허용
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+    app.config['SWAGGER'] = {
+    'title': '마음의 항해 API 문서',
+    'uiversion': 3
+}
 
     # ✅ Swagger 설정
     swagger_config = {

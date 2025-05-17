@@ -79,7 +79,7 @@ def get_item_list():
         pipeline.append({"$project": {
             "_id": 0,
             "item_id": {"$toString": "$_id"},
-            "item_type": "$item_type",
+            "name": "$item_type",
             "used": "$used",
             "category": "$catalog.category"
         }})

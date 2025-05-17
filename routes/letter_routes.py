@@ -355,19 +355,18 @@ def get_letter_detail(letter_id):
 
     # ✅ 편지를 저장 처리할 조건
     is_random_to_me = (
-        letter['to'] == user and
-        letter['from'] != user and
+        letter['from'] == user and
         letter['to'] != 'volunteer_user' and
+        letter['status'] in ['replied', 'auto_replied'] and
         not letter.get('saved', False)
     )
     if is_random_to_me:
-        db.letter.update_one({'_id': letter_id}, {'$set': {'saved': True}})
+        db.letter.update_one({'_id': ObjectId(letter_id)}, {'$set': {'saved': True}})
         letter['saved'] = True  # 반환값에도 반영
 
     # 댓글 처리
     is_random_reply = (
-        letter['to'] == user and
-        letter['from'] != user and
+        letter['from'] == user and
         letter['status'] in ['replied', 'auto_replied']
     )
     if is_random_reply:
@@ -641,3 +640,4 @@ def get_saved_letters():
             else:
                 letter['to_nickname'] = "(알 수 없음)"
             return json_kor({'saved_letters': letters}, 200)
+        

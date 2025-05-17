@@ -133,13 +133,14 @@ def grant_point():
         # 아이템 지급
         if item_pool:
             reward_item = random.choice(item_pool)
-            db.user_item.insert_one({
+            insert_result = db.user_item.insert_one({
                 "user_id": user_id,
                 "item_type": reward_item["name"],
                 "used": False,
                 "granted_at": datetime.utcnow()
             })
             new_items.append({
+                "item_id": str(insert_result.inserted_id),
                 "name": reward_item["name"],
                 "description": reward_item.get("description", ""),
                 "category": reward_item.get("category", "")

@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNzQyYjA1Mjk3YjdjOTVhYTk3MjVhIiwibmlja25hbWUiOiJ0ZXN0XzEiLCJleHAiOjE3NDc1NzU0OTh9.DnBahUAkOM0b2F_-chSyHNG7FmyjTjvbFWlsOYk0gn4
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyOGI3ZjI1ZTc2MTA5MzFmNjRlODI4Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUyIiwiZXhwIjoxNzQ3NTg1NDAwfQ.RtJsZ0-dAYOuSwco1DLNGnDWAJsMxsBmvyIbr2R0eUo
 @item_id = 6824678b33b3799bb8c137c3
 
 ### 🧑‍💼 회원가입
@@ -7,9 +7,9 @@ POST {{host}}/api/users/signup
 Content-Type: application/json
 
 {
-  "nickname": "test_1",
+  "nickname": "고민하냥2",
   "age": 25,
-  "gender": "M",
+  "gender": "W",
   "address": "Seoul",
   "phone": "01012345678"
 }
@@ -19,7 +19,7 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "test_1"
+  "nickname": "고민하냥2"
 }
 
 ### 🔒 인증 확인

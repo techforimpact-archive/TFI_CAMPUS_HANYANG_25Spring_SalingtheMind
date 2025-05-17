@@ -53,16 +53,13 @@ def get_item_catalog():
 @item_routes.route('/my', methods=['GET'])
 @token_required
 def get_item_list():
-    @item_routes.route('/my', methods=['GET'])
-@token_required
-def get_item_list():
     """
     내가 보유한 아이템 목록 조회
     ---
     tags:
       - Item
     parameters:
-      - name: category
+      - name: category    
         in: query
         type: string
         required: false

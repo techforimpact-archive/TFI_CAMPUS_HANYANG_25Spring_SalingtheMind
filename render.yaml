@@ -1,0 +1,6 @@
+services:
+  - type: background
+    name: auto-reply-worker
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python auto_reply.py

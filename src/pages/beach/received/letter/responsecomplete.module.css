@@ -27,13 +27,11 @@
 }
 
 .rewardSection h3 {
-  font-size: 2rem; /* ⬅️ increase size */
+  font-size: 2rem;
   font-weight: 700;
   color: #222;
   margin-bottom: 1rem;
 }
-
-
 
 .rewardItems {
   display: flex;

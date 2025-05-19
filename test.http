@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyODk3YjMxZmMwYjQwMTE3ZjNlZWI1Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDc3MTU1MzB9.3hOdpF53-90VCPmyRWYTlBj1zlyW_xj6waFtJhKJNgA
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyODk3YjMxZmMwYjQwMTE3ZjNlZWI1Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDc3NDA1MjZ9.xqS7jscDGvD2NdRgiwNYg2KZTF4afSmzgfVlSAogMBk
 ### 🧑‍💼 회원가입
 POST {{host}}/api/users/signup
 Content-Type: application/json
@@ -34,11 +34,8 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "nickname": "고민하냥",
   "age": 23,
-  "gender": "W",
-  "address": "Seoul",
-  "phone": "01012345678"
+  "gender": "M"
 }
 
 ### 🎁 포인트 적립 (편지 작성)

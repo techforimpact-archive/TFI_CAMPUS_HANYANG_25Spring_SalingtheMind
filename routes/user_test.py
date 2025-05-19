@@ -215,7 +215,12 @@ def update_user():
         user_id = request.user["_id"]
         data = request.get_json()
 
-        update_fields = {k: v for k, v in data.items() if k in ['nickname', 'age', 'gender', 'address', 'phone']}
+        # 나이와 성별은 수정에서 제외
+        update_fields = {k: v for k, v in data.items() if k in ['nickname', 'address', 'phone']}
+        # 아무 필드도 제공되지 않았을 경우 예외 처리
+        if not update_fields:
+            return json_kor({"error": "수정할 항목이 제공되지 않았습니다."}, 400)
+        
         if "nickname" in update_fields:
             if db.user.find_one({"nickname": update_fields["nickname"], "_id": {"$ne": user_id}}):
                 return json_kor({"error": "이미 존재하는 닉네임입니다."}, 400)

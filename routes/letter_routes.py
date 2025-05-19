@@ -352,29 +352,19 @@ def get_letter_detail(letter_id):
     letter['to_nickname'] = get_nickname(letter['to'])
 
     result = {'letter': letter}
-
-    # ✅ 편지를 저장 처리할 조건
-    is_random_to_me = (
-        letter['from'] == user and
-        letter['to'] != 'volunteer_user' and
-        letter['status'] in ['replied', 'auto_replied'] and
-        not letter.get('saved', False)
-    )
-    if is_random_to_me:
-        db.letter.update_one({'_id': ObjectId(letter_id)}, {'$set': {'saved': True}})
-        letter['saved'] = True  # 반환값에도 반영
-
-    # 댓글 처리
+    
+    
     is_random_reply = (
         letter['from'] == user and
         letter['status'] in ['replied', 'auto_replied']
     )
+    
     if is_random_reply:
         comments = list(db.comment.find(
             {'original_letter_id':  ObjectId(letter_id)},
             {'_id': 1, 'from': 1, 'content': 1, 'read': 1, 'created_at': 1}
         ).sort('created_at', 1))
-        
+        print ("답장 존재")
         result['comments'] = comments
 
         unread_ids = [ObjectId(c['_id']) for c in comments if not c.get('read')]
@@ -387,6 +377,19 @@ def get_letter_detail(letter_id):
                 {'_id': {'$in': unread_ids}},
                 {'$set': {'read': True}}
             )
+            
+    # ✅ 편지를 저장 처리할 조건
+    is_random_to_me = (
+        letter['from'] == user and
+        letter['to'] != 'volunteer_user' and
+        letter['status'] in ['replied', 'auto_replied'] and
+        not letter.get('saved', False)
+    )
+    if is_random_to_me:
+        db.letter.update_one({'_id': ObjectId(letter_id)}, {'$set': {'saved': True}})
+        letter['saved'] = True  # 반환값에도 반영
+
+    # 댓글 처리
 
     return json_kor(result, 200)
 

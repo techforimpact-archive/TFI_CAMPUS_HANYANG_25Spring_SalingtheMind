@@ -231,3 +231,65 @@ def update_user():
         })
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
+
+@user_test.route('/me', methods=['GET'])
+@token_required
+@swag_from({
+    'tags': ['User'],
+    'summary': '내 정보 조회',
+    'description': '로그인한 사용자의 정보를 반환합니다.',
+    'parameters': [
+        {
+            'name': 'Authorization',
+            'in': 'header',
+            'type': 'string',
+            'required': True,
+            'description': 'Bearer 액세스 토큰'
+        }
+    ],
+    'responses': {
+        200: {
+            'description': '사용자 정보 반환',
+            'content': {
+                'application/json': {
+                    'schema': {
+                        'type': 'object',
+                        'properties': {
+                            'user': {
+                                'type': 'object',
+                                'properties': {
+                                    'nickname': {'type': 'string'},
+                                    'age': {'type': 'integer'},
+                                    'gender': {'type': 'string'},
+                                    'address': {'type': 'string'},
+                                    'phone': {'type': 'string'},
+                                    'point': {'type': 'integer'},
+                                    'level': {'type': 'integer'},
+                                    'limited_access': {'type': 'boolean'}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        401: {'description': '인증 실패'},
+        404: {'description': '사용자 없음'}
+    }
+})
+def get_my_info():
+    try:
+        user = request.user
+        user_info = {
+            "nickname": user.get("nickname"),
+            "age": user.get("age"),
+            "gender": user.get("gender"),
+            "address": user.get("address", ""),
+            "phone": user.get("phone", ""),
+            "point": user.get("point", 0),
+            "level": user.get("level", 1),
+            "limited_access": user.get("limited_access", True)
+        }
+        return json_kor({"user": user_info}, 200)
+    except Exception as e:
+        return json_kor({"error": str(e)}, 500)

@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNzQyYjA1Mjk3YjdjOTVhYTk3MjVhIiwibmlja25hbWUiOiJ0ZXN0XzEiLCJleHAiOjE3NDc1OTM2ODN9.H-zq5lCQYk29MpCkoWsX0bXCnlTU-ihFCC-D5oKlllQ
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyODk3YjMxZmMwYjQwMTE3ZjNlZWI1Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDc3MTU1MzB9.3hOdpF53-90VCPmyRWYTlBj1zlyW_xj6waFtJhKJNgA
 ### 🧑‍💼 회원가입
 POST {{host}}/api/users/signup
 Content-Type: application/json
@@ -17,12 +17,29 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "test_1"
+  "nickname": "고민하냥"
 }
 
 ### 🔒 인증 확인
 GET {{host}}/api/users/protected
 Authorization: {{token}}
+
+### 사용자 정보 조회
+GET {{host}}/api/users/me
+Authorization: {{token}}
+
+### 사용자 정보 수정
+PATCH {{host}}/api/users/update
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "nickname": "고민하냥",
+  "age": 23,
+  "gender": "W",
+  "address": "Seoul",
+  "phone": "01012345678"
+}
 
 ### 🎁 포인트 적립 (편지 작성)
 POST {{host}}/reward/grant

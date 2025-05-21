@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #c7e2e1;
+  background-color: #e6f4fb; /* You can change this if you prefer #c7e2e1 */
 }
 
 .container {
@@ -78,4 +78,29 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1.6rem;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  margin-bottom: 2rem; /* footer와의 간격 */
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #3182ce;
+}
+
+.submitButton:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
 }

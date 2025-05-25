@@ -52,8 +52,6 @@ export default function BeachPage() {
 
       <img
         className={styles.postImage}
-        // src="/image/main/background_initial.webp"
-        src="https://placehold.co/300x300"
         object-fit="fill"
         alt="post-office"
       />

@@ -32,8 +32,8 @@ export default function LetterSharePage() {
 
   return (
     <>
-      <Appbar title="" />
       <div className={styles.container}>
+        <Appbar title="" />
         <h2>편지를 누구에게 띄울까요?</h2>
         <button className={styles.shareButton} onClick={handleSave}>
           <img

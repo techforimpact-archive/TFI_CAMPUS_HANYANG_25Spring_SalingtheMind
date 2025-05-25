@@ -15,7 +15,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 4rem;
-  background-image: url('/image/post/background_post.webp');
+  background-image: url('/image/beach/background_ocean.webp');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -126,3 +126,4 @@ body {
     width: 60px;
   }
 }
+

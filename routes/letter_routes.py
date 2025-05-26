@@ -64,7 +64,7 @@ def generate_title_with_gpt(content):
                 {"role": "system", "content": "당신은 감성적인 제목을 잘 만드는 AI입니다."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7,
+            temperature=0.3,
             max_tokens=16
         )
         return response.choices[0].message.content.strip().strip('"')
@@ -76,7 +76,7 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
 
     mode:
         - 'assist': 공감 기반 질문 3개 생성 (답장 옵션)
-        - 'ai': 캐릭터 '온기'의 공감 위주 답장 생성 (자동 답장)
+        - 'ai': 캐릭터 '온달'의 공감 위주 답장 생성 (자동 답장)
     """
     if not content or len(content.strip()) < 10:
         # 내용이 비정상적으로 짧으면 fallback으로 돌림

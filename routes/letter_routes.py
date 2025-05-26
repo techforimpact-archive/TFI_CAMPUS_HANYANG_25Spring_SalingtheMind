@@ -70,6 +70,11 @@ def generate_title_with_gpt(content):
         return response.choices[0].message.content.strip().strip('"')
     except Exception:
         return content[:10]
+import re
+
+# GPT 응답에서 ```json ... ``` 제거
+
+
 def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
     """
     주어진 편지 내용을 바탕으로 질문 또는 답장을 생성합니다.
@@ -88,12 +93,10 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
         아래는 누군가가 쓴 편지입니다:
 \"{content}\"
 
-이 편지를 읽고 공감하며 답장에 도움이 되는 질문 3개를 만들어주세요.
+이 편지를 읽고 공감하며 답장에 도움이 되는 문장 3개를 만들어주세요.
 각 질문은 1문장 이내이며, 예의 바르고 부드럽게 작성해주세요.
 결과는 JSON 배열 형식으로 반환해주세요.
-
-예시:
-["어떤 점이 가장 힘들게 느껴지셨나요?", "그 상황에서 위로가 되었던 것이 있었나요?", "앞으로 어떤 변화가 생기길 바라시나요?"]
+- 코드블럭(```json ... ```) 없이 **순수한 JSON 배열만** 출력해주세요.
 """
         elif mode == 'ai':
             prompt = f"""
@@ -113,11 +116,13 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
         )
 
         result = response.choices[0].message.content.strip()
-
+        print(f"[GPT 응답]: {repr(result)}")
         import json
+        
         if mode == 'assist':
             # 질문 리스트 반환
             questions = json.loads(result)
+            
             return questions if isinstance(questions, list) else []
         else:
             # 단일 답장 텍스트 반환

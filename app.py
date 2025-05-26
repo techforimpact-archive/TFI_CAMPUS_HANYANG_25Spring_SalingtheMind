@@ -101,7 +101,7 @@ def create_app():
     app.register_blueprint(reward_routes, url_prefix="/reward")
     app.register_blueprint(item_routes, url_prefix="/item")
     app.register_blueprint(letter_routes, url_prefix="/letter")
-    app.register_blueprint(question_bp, url_prefix="/question")  # 이 줄 추가
+    app.register_blueprint(question_bp, url_prefix="/question") 
 
     # ✅ 보호된 API 예시
     @app.route("/api/users/protected", methods=["GET"])

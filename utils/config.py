@@ -16,6 +16,7 @@ DB_NAME      = os.getenv("DB_NAME", "maeum_sailing")
 # 4) 인증 · 보안 설정 
 JWT_ALGORITHM              = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 POINT_RULES = {
     "write_letter": 10,

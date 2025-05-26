@@ -21,7 +21,7 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-secret")
 POINT_RULES = {
     "write_letter": 10,
     "reply_letter": 10,
-    "long_letter_bonus": 15  # 200자 초과 시 추가 포인트
+    "long_letter_bonus": 5  # 200자 초과 시 추가 포인트
 }
 LEVEL_UP_THRESHOLD = {
     100: "level_up"

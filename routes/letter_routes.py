@@ -222,7 +222,7 @@ def send_letter():
         return json_kor({"error": "편지는 최대 1000자까지 작성할 수 있습니다."}, 400)
     
     # 200자 초과 포인트 지급
-    if len(content) > 200:
+    if len(content) > 100:
         grant_point_by_action(sender, "long_letter_bonus")
 
     # 수신자 결정
@@ -500,7 +500,7 @@ def reply_letter():
         return json_kor({'error': '답장은 최대 1000자까지 작성할 수 있습니다.'}, 400)
     
     # 200자 초과 포인트 지급
-    if len(text) > 200:
+    if len(text) > 100:
         grant_point_by_action(ObjectId(request.user_id), "long_letter_bonus")
 
     orig = db.letter.find_one({'_id': lid})

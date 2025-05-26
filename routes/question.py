@@ -82,7 +82,7 @@ def generate_question():
     try:
         print("🧠 OpenAI 호출 전:", prompt)
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[
                 {"role": "user", "content": prompt}],
             temperature=0.7
@@ -162,7 +162,7 @@ def help_question():
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )

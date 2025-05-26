@@ -13,10 +13,10 @@ DEBUG = ENV == "development"
 MONGODB_URI = os.getenv("MONGO_URI")
 DB_NAME      = os.getenv("DB_NAME", "maeum_sailing")
 
-# 4) 인증 · 보안 설정 (테스트 용으로 넣어놓은거라 토큰 발급 안할거면 빼도 됨)
-JWT_SECRET_KEY             = os.getenv("JWT_SECRET_KEY", "dev-secret")
+# 4) 인증 · 보안 설정 
 JWT_ALGORITHM              = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
+
 POINT_RULES = {
     "write_letter": 10,
     "reply_letter": 10,

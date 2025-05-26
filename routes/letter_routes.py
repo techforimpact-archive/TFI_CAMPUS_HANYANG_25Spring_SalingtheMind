@@ -61,7 +61,7 @@ def generate_title_with_gpt(content):
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "당신은 감성적인 제목을 잘 만드는 AI입니다."},
+                {"role": "system", "content": "당신은 제목을 잘 만드는 AI입니다."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,
@@ -100,7 +100,7 @@ def generate_ai_replies_with_gpt(content: str, mode: str = 'assist') -> list:
 아래는 누군가가 쓴 편지입니다:
 \"{content}\"
 
-이 편지를 읽고, 캐릭터 '온기'가 따뜻하게 공감하며 위로의 답장을 작성하려고 합니다.
+이 편지를 읽고, 캐릭터 '온달'가 따뜻하게 공감하며 위로의 답장을 작성하려고 합니다.
 답장은 존댓말로, 공감 위주의 따뜻한 말 2~3문장으로 작성해주세요.
 """
         else:
@@ -238,6 +238,15 @@ def send_letter():
     letter = {"_id": ObjectId(), "from": sender, "to": receiver, "title": title,"emotion": emotion, "content": content, "status": 'sent',
               "saved": to_type in ['self', 'volunteer'], "created_at": datetime.now()}
     db.letter.insert_one(letter)
+    
+    #######유저 테스트용 - 실제 배포 시에는 삭제
+    if to_type == 'random':
+        text = generate_ai_replies_with_gpt(content,'ai')
+        comment = {'_id': ObjectId(), 'from': ObjectId('68260f67f02ef2dccfdeffc9'),'to': sender, 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': letter['_id']}
+        db.comment.insert_one(comment)
+        db.letter.update_one({'_id': letter['_id']}, {'$set': {'status': 'replied', 'replied_at': datetime.now()}})
+        
+    
     return json_kor({"message": "편지 전송 완료", "letter_id": letter['_id'],
                      "to": get_nickname(receiver), "title": title, "emotion": emotion}, 201)
 

@@ -134,17 +134,25 @@ def login():
             return json_kor({"error": "닉네임을 입력해주세요."}, 400)
 
         user_doc = db.user.find_one({"nickname": nickname})
+        
         if not user_doc:
             return json_kor({"error": "해당 닉네임의 사용자가 존재하지 않습니다."}, 404)
 
         token = create_token(user_doc)
-
+        user_id = user_doc['_id']
+        
+        #####더미용 데이터#####
+        letter = {"_id": ObjectId(), "from": ObjectId('68260f67f02ef2dccfdeffc9'), "to": user_id, "title": '',"emotion": '슬픔', "content": '정말 친하다고 생각했던 친구와 크게 싸웠어요. 좋은 친구라고 생각했는데 아니였던 것 같아요 우정이 영원할 수는 없는 걸까요?', "status": 'sent',
+              "saved": False, "created_at": datetime.now()}
+        
+        db.letter.insert_one(letter)
         return json_kor({
             "message": "로그인 성공!",
             "nickname": user_doc["nickname"],
             "limited_access": user_doc.get("limited_access", False),
             "token": token
         })
+        
     except Exception as e:
         return json_kor({"error": str(e)}, 500)
 

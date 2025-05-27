@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0ODM2NDQ3MH0.AxkcEHLyB58h-7kUvGLBb5_LOGTuPt54_NLiq_isJ2E
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0ODQ1NTI5OX0.DvI5cGFAhG2KHVWmau9sytXBsBpylWxKTmXYw3RiqOk
 ### 🧑‍💼 회원가입
 POST {{host}}/api/users/signup
 Content-Type: application/json
@@ -118,7 +118,7 @@ GET {{host}}/letter/random
 Authorization: {{token}}
 
 ### 📄 편지 상세 조회
-GET {{host}}/letter/6828d7778482b4cb4f711ee3
+GET {{host}}/letter/6835f15b642c2bb75040741c
 Authorization: {{token}}
 
 ### 🤖 AI 질문 옵션 조회

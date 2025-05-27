@@ -495,7 +495,7 @@ def reply_letter():
     if not (lid and text):
         return json_kor({'error': '필수값 누락'}, 400)
 
-    # 1000자 글자수 제한한
+    # 1000자 글자수 제한
     if len(text) > 1000:
         return json_kor({'error': '답장은 최대 1000자까지 작성할 수 있습니다.'}, 400)
     
@@ -539,13 +539,27 @@ def get_replied_letters_to_me():
     user = ObjectId(request.user_id)
     letters = list(db.letter.find({
         'from': user,
-        'status': {'$in': ['replied', 'auto_replied']}
+        'status': {'$in': ['replied', 'auto_replied']},
+        'saved': {'$ne': True}  # 저장되지 않은 편지만 조회
     }, {
         '_id': 1, 'to': 1, 'title': 1, 'emotion': 1, 'content': 1,
         'status': 1, 'replied_at': 1
     }).sort('replied_at', -1))
     for letter in letters:
         letter['to_nickname'] = get_nickname(letter['to'])
+
+        # 해당 편지의 답장(comment) 조회
+        reply = db.comment.find_one({'original_letter_id': letter['_id']})
+        if reply:
+            letter['reply'] = {
+                'from': str(reply['from']),
+                'content': reply['content'],
+                'created_at': reply['created_at']
+            }
+        else:
+            letter['reply'] = None
+
+
     return json_kor({'replied-to-me': letters}, 200)
 
 """@letter_routes.route('/for-letter/<letter_id>', methods=['GET'])
@@ -655,5 +669,16 @@ def get_saved_letters():
                 letter['to_nickname'] = get_nickname(letter['to'])
             else:
                 letter['to_nickname'] = "(알 수 없음)"
-            return json_kor({'saved_letters': letters}, 200)
+
+            # 답장(comment) 존재 시 포함
+            comment = db.comment.find_one({'original_letter_id': letter['_id']})
+            if comment:
+                letter['reply'] = {
+                    'from': str(comment['from']),
+                    'content': comment['content'],
+                    'created_at': comment['created_at'].isoformat()
+                }
+            else:
+                letter['reply'] = None
+        return json_kor({'saved_letters': letters}, 200)
         

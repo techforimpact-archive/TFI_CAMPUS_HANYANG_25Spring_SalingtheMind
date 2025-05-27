@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyODk3YjMxZmMwYjQwMTE3ZjNlZWI1Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDc3NDA1MjZ9.xqS7jscDGvD2NdRgiwNYg2KZTF4afSmzgfVlSAogMBk
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0ODM2NDQ3MH0.AxkcEHLyB58h-7kUvGLBb5_LOGTuPt54_NLiq_isJ2E
 ### 🧑‍💼 회원가입
 POST {{host}}/api/users/signup
 Content-Type: application/json
@@ -17,7 +17,7 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "고민하냥"
+  "nickname": "master01"
 }
 
 ### 🔒 인증 확인
@@ -122,7 +122,7 @@ GET {{host}}/letter/6828d7778482b4cb4f711ee3
 Authorization: {{token}}
 
 ### 🤖 AI 질문 옵션 조회
-GET {{host}}/letter/reply-options?letter_id={{letter_id}}
+GET {{host}}/letter/reply-options?letter_id=6834970e7e5bd7c1323279e0
 Authorization: {{token}}
 
 ### ✍️ 답장 보내기

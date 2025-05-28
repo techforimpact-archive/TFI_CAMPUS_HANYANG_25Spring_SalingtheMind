@@ -146,7 +146,7 @@ def login():
               "saved": False, "created_at": datetime.datetime.now()}
         db.letter.insert_one(letter)
         #######여기까지는 실제 배포시에는 삭제!!!!!
-        db.letter.insert_one(letter)
+        
         return json_kor({
             "message": "로그인 성공!",
             "nickname": user_doc["nickname"],

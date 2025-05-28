@@ -245,11 +245,11 @@ def send_letter():
     db.letter.insert_one(letter)
     
     #######유저 테스트용 - 실제 배포 시에는 삭제
-    #if to_type == 'random':
-    #    text = generate_ai_replies_with_gpt(content,'ai')
-    #    comment = {'_id': ObjectId(), 'from': ObjectId('68260f67f02ef2dccfdeffc9'),'to': sender, 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': letter['_id']}
-    #    db.comment.insert_one(comment)
-    #    db.letter.update_one({'_id': letter['_id']}, {'$set': {'status': 'replied', 'replied_at': datetime.now()}})
+    if to_type == 'random':
+        text = generate_ai_replies_with_gpt(content,'ai')
+        comment = {'_id': ObjectId(), 'from': ObjectId('68260f67f02ef2dccfdeffc9'),'to': sender, 'content': text, 'read': False,'created_at': datetime.now(), 'original_letter_id': letter['_id']}
+        db.comment.insert_one(comment)
+        db.letter.update_one({'_id': letter['_id']}, {'$set': {'status': 'replied', 'replied_at': datetime.now()}})
         
     
     return json_kor({"message": "편지 전송 완료", "letter_id": letter['_id'],

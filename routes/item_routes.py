@@ -127,7 +127,7 @@ def get_item_detail(item_id):
         ) or {}
         detail = {
             "item_id": item_id,
-            "item_type": ui["item_type"],
+            "item_name": ui["item_type"],
             "used": ui.get("used", False),
             "granted_at": ui.get("granted_at"),
             "description": catalog.get("description", "")

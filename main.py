@@ -7,9 +7,10 @@ from datetime import datetime, timedelta
 from openai import OpenAI
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from utils.db import db
 
 # 환경변수 로드
-load_dotenv()
+#load_dotenv()
 
 # OpenAI 클라이언트 설정
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))

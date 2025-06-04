@@ -11,7 +11,7 @@ DEBUG = ENV == "development"
 
 # 3) 데이터베이스 설정
 MONGODB_URI = os.getenv("MONGO_URI")
-DB_NAME      = os.getenv("DB_NAME", "maeum_sailing")
+DB_NAME      = os.getenv("DB_NAME", "user_test")
 
 # 4) 인증 · 보안 설정 
 JWT_ALGORITHM              = os.getenv("JWT_ALGORITHM", "HS256")

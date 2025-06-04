@@ -86,5 +86,5 @@ if __name__ == "__main__":
 
     while True:
         auto_reply_to_old_letters()
-        time.sleep(interval_hours * 3600)
+        time.sleep(3600)
 

@@ -47,7 +47,7 @@ def create_token(user_doc):
                         'address': {'type': 'string'},
                         'phone': {'type': 'string'}
                     },
-                    'required': ['nickname', 'age', 'gender']
+                    'required': ['nickname', 'age', 'gender','address']
                 }
             }
         }
@@ -74,7 +74,7 @@ def signup():
         if db.user.find_one({"nickname": nickname}):
             return json_kor({"error": "이미 존재하는 닉네임입니다."}, 400)
 
-        limited_access = not (address and phone)
+        limited_access = not (phone)
         new_user = {
             "nickname": nickname,
             "age": age,

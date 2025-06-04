@@ -81,11 +81,10 @@ def auto_reply_to_old_letters():
         print(f"자동 답장 완료: 편지 ID {mail['_id']}")
 
 if __name__ == "__main__":
-    """interval_hours = int(os.getenv("REPLY_INTERVAL_HOURS", "6"))
+    interval_hours = int(os.getenv("REPLY_INTERVAL_HOURS", "6"))
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 자동 답장 워커 시작! {interval_hours}시간 간격으로 실행")
 
     while True:
         auto_reply_to_old_letters()
-        time.sleep(interval_hours * 3600)"""
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 테스트 실행: 자동 답장 한번만 수행")
-    auto_reply_to_old_letters()
+        time.sleep(interval_hours * 3600)
+

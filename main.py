@@ -15,10 +15,7 @@ from utils.db import db
 # OpenAI 클라이언트 설정
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# MongoDB 연결
-mongo_uri = os.getenv("MONGODB_URI")
-mongo_client = MongoClient(mongo_uri)
-db = mongo_client.get_database()  # URI에 따라 자동 인식됨
+
 
 # Fallback 메시지
 AI_REPLY_POOL = [
@@ -69,7 +66,7 @@ def auto_reply_to_old_letters():
         reply = generate_ai_reply(mail.get('content', ''))
         comment = {
             "_id": str(uuid.uuid4()),
-            "from": "온기",
+            "from": "온달달",
             "to": mail["from"],
             "content": reply,
             "read": False,

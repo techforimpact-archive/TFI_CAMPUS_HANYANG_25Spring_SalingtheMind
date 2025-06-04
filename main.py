@@ -39,7 +39,7 @@ def generate_ai_reply(content):
     try:
         response = client.chat.completions.create(
             model="gpt-4o",
-            messages=[""
+            messages=[
                 {"role": "system", "content": "당신은 따뜻한 답장을 잘 쓰는 AI입니다."},
                 {"role": "user", "content": prompt}
             ],

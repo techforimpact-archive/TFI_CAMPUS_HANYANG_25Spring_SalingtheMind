@@ -24,4 +24,4 @@ if os.environ.get("FLASK_ENV") != "production":
 
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
-db = client.get_default_database()  # 기본 데이터베이스 사용
+db = client['user_test']  # 기본 데이터베이스 사용

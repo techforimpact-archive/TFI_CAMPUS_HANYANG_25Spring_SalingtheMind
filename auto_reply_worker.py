@@ -33,13 +33,13 @@ def generate_ai_reply(content):
 아래는 사용자가 쓴 편지입니다:
 "{content}"
 
-온기라는 캐릭터가 공감 위주로 3-4문장의 답장을 생성해주세요.
+온달달라는 캐릭터가 공감 위주로 3-4문장의 답장을 생성해주세요.
 존댓말로 작성해주세요.
 """
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
+            model="gpt-4o",
+            messages=[""
                 {"role": "system", "content": "당신은 따뜻한 답장을 잘 쓰는 AI입니다."},
                 {"role": "user", "content": prompt}
             ],
@@ -83,9 +83,11 @@ def auto_reply_to_old_letters():
         print(f"자동 답장 완료: 편지 ID {mail['_id']}")
 
 if __name__ == "__main__":
-    interval_hours = int(os.getenv("REPLY_INTERVAL_HOURS", "6"))
+    """interval_hours = int(os.getenv("REPLY_INTERVAL_HOURS", "6"))
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 자동 답장 워커 시작! {interval_hours}시간 간격으로 실행")
 
     while True:
         auto_reply_to_old_letters()
-        time.sleep(interval_hours * 3600)
+        time.sleep(interval_hours * 3600)"""
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 테스트 실행: 자동 답장 한번만 수행")
+    auto_reply_to_old_letters()

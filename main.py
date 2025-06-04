@@ -31,7 +31,7 @@ def generate_ai_reply(content):
 아래는 사용자가 쓴 편지입니다:
 "{content}"
 
-온달달라는 캐릭터가 공감 위주로 3-4문장의 답장을 생성해주세요.
+공감 위주로 3-4문장의 답장을 생성해주세요.
 존댓말로 작성해주세요.
 """
     try:
@@ -66,7 +66,7 @@ def auto_reply_to_old_letters():
         reply = generate_ai_reply(mail.get('content', ''))
         comment = {
             "_id": str(uuid.uuid4()),
-            "from": "온달달",
+            "from": "온달",
             "to": mail["from"],
             "content": reply,
             "read": False,

@@ -12,13 +12,7 @@ from routes.reward_routes import reward_routes
 from routes.item_routes import item_routes
 from routes.letter_routes import letter_routes
 from routes.question import question_bp 
-# 한글 JSON 응답 헬퍼
-def json_kor(data, status=200):
-    return Response(
-        jsonify(data).data.decode('utf-8'),
-        content_type="application/json; charset=utf-8",
-        status=status
-    )
+from routes.satisfaction_routes import satisfaction_bp
 
 # JWT 인증 데코레이터 (Authorization 헤더 사용)
 def token_required(f):
@@ -102,6 +96,8 @@ def create_app():
     app.register_blueprint(item_routes, url_prefix="/item")
     app.register_blueprint(letter_routes, url_prefix="/letter")
     app.register_blueprint(question_bp, url_prefix="/question") 
+    app.register_blueprint(satisfaction_bp, url_prefix="/satisfaction")
+
 
     # ✅ 보호된 API 예시
     @app.route("/api/users/protected", methods=["GET"])

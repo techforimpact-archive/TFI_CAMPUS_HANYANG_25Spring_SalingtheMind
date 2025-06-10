@@ -1,11 +1,10 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjgyNjBmNjdmMDJlZjJkY2NmZGVmZmM5Iiwibmlja25hbWUiOiJtYXN0ZXIwMSIsImV4cCI6MTc0ODQ1NTI5OX0.DvI5cGFAhG2KHVWmau9sytXBsBpylWxKTmXYw3RiqOk
-### 🧑‍💼 회원가입
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjg0MDc4YmY2NzlmYzg4NzRiYjZhN2MzIiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDkxNDg1NjV9.62FMh-vd5x3JrDjZs8J-LvqpS0TVdUfRrgyMIHDkS3Y
 POST {{host}}/api/users/signup
 Content-Type: application/json
 
 {
-  "nickname": "고민하냥",
+  "nickname": "꼬마개발자",
   "age": 25,
   "gender": "W",
   "address": "Seoul",
@@ -17,8 +16,20 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "master01"
+  "nickname": "고민하냥"
 }
+
+### 만족도 설문
+POST {{host}}/satisfaction
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "letter_id": "68409111d76379b2252edde0",
+  "rating": 5,
+  "reason": "너무 신기해요."
+}
+
 
 ### 🔒 인증 확인
 GET {{host}}/api/users/protected
@@ -107,8 +118,8 @@ Authorization: {{token}}
 
 {
   "to": "random",
-  "content": "요즘 가장 크게 느끼는 감정이 무엇인가요?",
-  "emotion": "두려움움"
+  "content": "슈퍼개발자가 되고 말겠어요!",
+  "emotion": "기쁨"
 }
 
 
@@ -118,7 +129,7 @@ GET {{host}}/letter/random
 Authorization: {{token}}
 
 ### 📄 편지 상세 조회
-GET {{host}}/letter/6835f15b642c2bb75040741c
+GET {{host}}/letter/6840910dd76379b2252edddf
 Authorization: {{token}}
 
 ### 🤖 AI 질문 옵션 조회
@@ -131,8 +142,8 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "letter_id": "6828d7778482b4cb4f711ee3",
-  "reply": "당신의 마음을 잘 이해합니다. 많이 힘들었죠? 힘내세요!"
+  "letter_id": "6840910dd76379b2252edddf",
+  "reply": "유캔두잇"
 }
 
 ### 📬 내가 받은 답장된 편지 목록

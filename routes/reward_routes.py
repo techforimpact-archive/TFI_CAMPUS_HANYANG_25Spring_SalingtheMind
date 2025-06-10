@@ -132,8 +132,7 @@ def grant_point():
 
         # 아이템 지급
         if item_pool:
-            #reward_item = random.choice(item_pool)
-            reward_item = next((item for item in item_pool if item["name"] == "돌고래"), None)
+            reward_item = random.choice(item_pool)
             insert_result = db.user_item.insert_one({
                 "user_id": user_id,
                 "item_type": reward_item["name"],

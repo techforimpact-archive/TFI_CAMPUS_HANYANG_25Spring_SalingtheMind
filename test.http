@@ -1,5 +1,5 @@
 @host = http://127.0.0.1:5000
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjg0MDc4YmY2NzlmYzg4NzRiYjZhN2MzIiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NDkxNDg1NjV9.62FMh-vd5x3JrDjZs8J-LvqpS0TVdUfRrgyMIHDkS3Y
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjg0YTIyN2MyN2I2NmM1NjJlOWY5Y2M5Iiwibmlja25hbWUiOiJcdWFjZTBcdWJiZmNcdWQ1NThcdWIwZTUiLCJleHAiOjE3NTAwOTU4MTR9.u_sa7ZvekiPtW4jBEtJeKndB5ZaNMUF-qaQ9ZvYdF9Q
 POST {{host}}/api/users/signup
 Content-Type: application/json
 
@@ -56,6 +56,16 @@ Authorization: {{token}}
 
 {
   "action": "write_letter"
+}
+
+### 🎁 포인트 적립 (편지 작성 - 15포인트 지급 테스트용)
+POST {{host}}/reward/grant
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "action": "write_letter",
+  "content": "오늘 하루 너무 힘들었어요. 모든 게 버겁고, 누구에게도 털어놓을 수 없는 마음이 쌓이기만 해요. 이렇게라도 적어보면 좀 나아질까 싶어서 써봅니다. 사실 이런 마음조차 정리되지 않지만, 이 편지를 쓰는 동안 만큼은 내 감정을 인정해주고 싶어요. 나 자신을 위로하고 싶은 그런 하루였어요. 아직도 어깨가 무겁고 마음은 지쳐있지만, 이렇게라도 흘려보내면 조금은 가벼워질 수 있을까요? 글로 적으니 조금은 정리가 되는 기분이 들어요. 고마워요."
 }
 
 ### 🎒 내 아이템 목록

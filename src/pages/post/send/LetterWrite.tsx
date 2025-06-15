@@ -19,6 +19,7 @@ import { getMyItems } from '@/lib/api/item';
 import { useItemStore } from '@/store/item';
 import { usePointStore } from '@/store/point';
 import { useLetterStore } from '@/store/letter';
+import AddressModal from './components/AddressModal';
 
 export default function LetterWritePage() {
   const [content, setContent] = useState('');
@@ -27,6 +28,7 @@ export default function LetterWritePage() {
   const [firstTime, setFirstTime] = useState(true);
   const [openStopWrite, setOpenStopWrite] = useState(false);
   const [openCompleteWrite, setOpenCompleteWrite] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
 
   const [helpMessages, setHelpMessages] = useState<string[]>([]);
 
@@ -58,10 +60,6 @@ export default function LetterWritePage() {
   const handleSendLetter = async () => {
     if (emotion === null) {
       showToast('감정을 선택해주세요.');
-      return;
-    }
-    if (content.length < 10) {
-      showToast('편지는 최소 10자 이상 작성해주세요.');
       return;
     }
 
@@ -176,6 +174,32 @@ export default function LetterWritePage() {
     fetchHelpQuestion();
   };
 
+  const handleCompleteWrite = () => {
+    if (emotion === null) {
+      showToast('감정을 선택해주세요.');
+      return;
+    }
+    if (content.length < 10) {
+      showToast('편지는 최소 10자 이상 작성해주세요.');
+      return;
+    }
+
+    setOpenCompleteWrite(true);
+  };
+
+  const handleConfirmComplete = () => {
+    if (sendType === SendType.VOLUNTEER) {
+      setOpenCompleteWrite(false);
+      setShowAddressModal(true);
+    } else {
+      handleSendLetter();
+    }
+  };
+
+  const handleSendAddress = () => {
+    handleSendLetter();
+  };
+
   const handleChangeEmotion = (newEmotion: EmotionType) => {
     setEmotion(newEmotion);
     setFirstTime(true);
@@ -187,11 +211,18 @@ export default function LetterWritePage() {
       {openCompleteWrite && (
         <CompleteWriteModal
           onClose={() => setOpenCompleteWrite(false)}
-          onConfirm={handleSendLetter}
+          onConfirm={handleConfirmComplete}
           isLoading={isLoading}
           type="letter"
           content={content}
           sendType={sendType}
+        />
+      )}
+      {showAddressModal && (
+        <AddressModal
+          onSend={handleSendAddress}
+          onClose={() => setShowAddressModal(false)}
+          isLoading={isLoading}
         />
       )}
       <Appbar
@@ -321,7 +352,7 @@ export default function LetterWritePage() {
             content={content}
             onChange={setContent}
             disabled={isLoading}
-            onSend={() => setOpenCompleteWrite(true)}
+            onSend={handleCompleteWrite}
             type="letter"
           />
         </div>

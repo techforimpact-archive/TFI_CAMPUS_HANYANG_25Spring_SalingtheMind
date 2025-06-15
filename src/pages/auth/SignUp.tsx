@@ -80,7 +80,7 @@ export default function SignUpPage() {
       <h1>회원가입</h1>
       <div className={styles.formContainer}>
         <div className={styles.labelContainer}>
-          <label className={styles.label}>닉네임(ID)</label>
+          <label className={styles.label}>닉네임(ID)*</label>
           <input
             className={styles.input}
             type="text"
@@ -92,7 +92,7 @@ export default function SignUpPage() {
           />
         </div>
         <div className={styles.labelContainer}>
-          <label className={styles.label}>성별 </label>
+          <label className={styles.label}>성별*</label>
           <div className={styles.radioContainer}>
             <div className={styles.radioLabelContainer}>
               <input
@@ -119,7 +119,7 @@ export default function SignUpPage() {
           </div>
         </div>
         <div className={styles.labelContainer}>
-          <label className={styles.label}>출생연도</label>
+          <label className={styles.label}>출생연도*</label>
           <input
             className={styles.input}
             name="age"

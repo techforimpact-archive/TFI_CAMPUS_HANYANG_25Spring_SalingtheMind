@@ -4,6 +4,7 @@ import styles from './modal.module.css';
 interface ModalProps {
   children?: React.ReactNode;
   onClose?: () => void;
+  contentStyles?: React.CSSProperties;
 }
 
 export default function Modal(props: ModalProps) {
@@ -19,7 +20,7 @@ export default function Modal(props: ModalProps) {
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.content}>
+      <div className={styles.content} style={props.contentStyles}>
         <button className={styles.closeButton} onClick={handleClose} />
         {props.children}
       </div>

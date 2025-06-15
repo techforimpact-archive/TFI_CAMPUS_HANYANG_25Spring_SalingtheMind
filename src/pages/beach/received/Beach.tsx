@@ -17,44 +17,44 @@ export default function BeachPage() {
     isReceivedRepliesLoading,
     fetchReceivedLetters,
     fetchReceivedReplies,
-    setReceivedLetters,
-    setReceivedReplies,
+    // setReceivedLetters,
+    // setReceivedReplies,
   } = useLetterStore();
   const [otterClicked, setOtterClicked] = useState(false);
 
   useEffect(() => {
-    // Promise.all([
-    //   fetchReceivedLetters().catch(error => {
-    //     showToast(error.message || '편지 목록을 불러오는 중 오류가 발생했습니다.');
-    //   }),
-    //   fetchReceivedReplies().catch(error => {
-    //     showToast(error.message || '답장 목록을 불러오는 중 오류가 발생했습니다.');
-    //   }),
+    Promise.all([
+      fetchReceivedLetters().catch(error => {
+        showToast(error.message || '편지 목록을 불러오는 중 오류가 발생했습니다.');
+      }),
+      fetchReceivedReplies().catch(error => {
+        showToast(error.message || '답장 목록을 불러오는 중 오류가 발생했습니다.');
+      }),
+    ]);
+    // setReceivedLetters([
+    //   {
+    //     _id: 'letter1',
+    //     from: 'user1',
+    //     from_nickname: 'User One',
+    //     title: 'Hello from the sea!',
+    //     emotion: EmotionType.ANGRY,
+    //     created_at: new Date().toISOString(),
+    //   },
     // ]);
-    setReceivedLetters([
-      {
-        _id: 'letter1',
-        from: 'user1',
-        from_nickname: 'User One',
-        title: 'Hello from the sea!',
-        emotion: EmotionType.ANGRY,
-        created_at: new Date().toISOString(),
-      },
-    ]);
-    setReceivedReplies([
-      {
-        _id: 'reply1',
-        from: 'user2',
-        from_nickname: 'User Two',
-        title: 'Re: Hello from the sea!',
-        emotion: EmotionType.SAD,
-        to: 'user2',
-        content: 'Thank you for your letter!',
-        status: StatusType.REPLIED,
-        replied_at: new Date().toISOString(),
-        created_at: new Date().toISOString(),
-      },
-    ]);
+    // setReceivedReplies([
+    //   {
+    //     _id: 'reply1',
+    //     from: 'user2',
+    //     from_nickname: 'User Two',
+    //     title: 'Re: Hello from the sea!',
+    //     emotion: EmotionType.SAD,
+    //     to: 'user2',
+    //     content: 'Thank you for your letter!',
+    //     status: StatusType.REPLIED,
+    //     replied_at: new Date().toISOString(),
+    //     created_at: new Date().toISOString(),
+    //   },
+    // ]);
   }, []);
 
   const pseudoRandomFromId = (id: string) => {

@@ -24,9 +24,10 @@ export default function SettingPage() {
   });
 
   useEffect(() => {
-    fetchUserInfo().catch(error => {
-      showToast(error.message || '회원 정보 조회 중 오류가 발생했습니다.');
-    });
+    if (userInfo.nickname.length === 0)
+      fetchUserInfo().catch(error => {
+        showToast(error.message || '회원 정보 조회 중 오류가 발생했습니다.');
+      });
   }, []);
 
   useEffect(() => {
@@ -51,6 +52,8 @@ export default function SettingPage() {
       await updateUserInfo({
         ...formData,
         age: parseInt(formData.age) || undefined,
+      }).then(() => {
+        fetchUserInfo();
       });
       showToast('회원 정보가 수정되었습니다.');
     } catch (error) {

@@ -96,7 +96,7 @@ export default function LetterWritePage() {
         rewardAction = ActionType.WRITE_LONG;
       }
 
-      const rewardResponse = await grantReward({ action: rewardAction });
+      const rewardResponse = await grantReward({ action: rewardAction, content: content });
 
       if (isErrorResponse(rewardResponse)) {
         showToast(rewardResponse.error);

@@ -75,7 +75,13 @@ export default function ReceivedLetterDetailPage() {
       <div className={styles.container}>
         <p>{letter.created_at.slice(0, 10)}</p>
         <h2>{letter.title}</h2>
-        <Textarea type="letter" disabled value={letter.content} wrapperstyles={{ flex: 1 }} />
+        <Textarea
+          key={`letter-${letter._id}`}
+          type="letter"
+          disabled
+          value={letter.content}
+          wrapperstyles={{ flex: 1 }}
+        />
         <div className={styles.flexContainer}>
           <p className={styles.helperText}>
             {'당신의 한 마디가 큰 힘이 돼요.\n답장으로 마음을 전해보세요.'}

@@ -34,9 +34,9 @@ export default function SignUpPage() {
     if (!formData.nickname) {
       showToast('닉네임(ID)을 입력해주세요.');
       return;
-    } else if (!formData.address) {
-      showToast('주소를 입력해주세요.');
-      return;
+      // } else if (!formData.address) {
+      //   // showToast('주소를 입력해주세요.');
+      //   // return;
     } else if (!formData.age) {
       showToast('출생연도를 입력해주세요.');
       return;

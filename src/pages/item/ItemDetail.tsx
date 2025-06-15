@@ -8,6 +8,7 @@ import { isErrorResponse } from '@/lib/response_dto';
 import { useToastStore } from '@/store/toast';
 import { useItemStore } from '@/store/item';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ITEM_IMAGE_URL } from '@/lib/constants/items';
 
 export default function ItemDetailModal() {
   const { itemId } = useParams();
@@ -71,7 +72,7 @@ export default function ItemDetailModal() {
 
       showToast('아이템이 적용되었습니다.');
       setItem({ ...item, used: true });
-      setItems(items.map(item => (item.item_id === item.item_id ? { ...item, used: true } : item)));
+      setItems(items.map(it => (it.item_id === item.item_id ? { ...it, used: true } : it)));
     } catch (error) {
       showToast('아이템 적용에 실패했습니다.');
     } finally {
@@ -98,9 +99,7 @@ export default function ItemDetailModal() {
 
       showToast('아이템 적용이 해제되었습니다.');
       setItem({ ...item, used: false });
-      setItems(
-        items.map(item => (item.item_id === item.item_id ? { ...item, used: false } : item)),
-      );
+      setItems(items.map(it => (it.item_id === item.item_id ? { ...it, used: false } : it)));
     } catch (error) {
       showToast('아이템 해제에 실패했습니다.');
     } finally {
@@ -112,21 +111,49 @@ export default function ItemDetailModal() {
 
   return (
     <Modal onClose={() => navigate(-1)}>
-      <h1>{item.name}</h1>
-      <img src={'/image/item/dolphin.webp'} alt={item.name} style={{ height: '16rem' }} />
+      <h2>{item.item_name}</h2>
+      <img
+        src={ITEM_IMAGE_URL[item.item_name!]}
+        alt={item.item_name}
+        object-fit="contain"
+        style={{ height: '12rem', width: 'auto', margin: '2rem 0' }}
+      />
       <p>{item.description}</p>
-      <p className={styles.date}>획득일: {item.granted_at.substring(0, 10)}</p>
       {item.used ? (
         <button
           className={`${styles.chip} ${styles.used}`}
           onClick={handleUnuse}
           disabled={isLoading}
         >
-          {isLoading ? <LoadingSpinner spinnerSize={2} /> : '❎아이템 해제하기'}
+          {isLoading ? (
+            <LoadingSpinner spinnerSize={2} />
+          ) : (
+            <>
+              <img
+                src="/image/item/check.svg"
+                alt="사용중"
+                className={styles.checkImage}
+                style={{ height: '3.5rem' }}
+              />
+              해제하기
+            </>
+          )}
         </button>
       ) : (
         <button className={styles.chip} onClick={handleUse} disabled={isLoading}>
-          {isLoading ? <LoadingSpinner spinnerSize={2} /> : '💚아이템 적용하기'}
+          {isLoading ? (
+            <LoadingSpinner spinnerSize={2} />
+          ) : (
+            <>
+              <img
+                src="/image/item/circle.svg"
+                alt="사용가능"
+                className={styles.circleImage}
+                style={{ height: '2.5rem' }}
+              />
+              사용하기
+            </>
+          )}
         </button>
       )}
     </Modal>

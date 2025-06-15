@@ -1,74 +1,70 @@
 import Appbar from '@/components/Appbar';
 import styles from './beach.module.css';
 import { useNavigate } from 'react-router-dom';
-import { Suspense, useEffect, useState } from 'react';
-import { getRandomLetters, getRepliedLetters } from '@/lib/api/letter';
-import { isErrorResponse } from '@/lib/response_dto';
+import { useEffect, useState } from 'react';
 import { useToastStore } from '@/store/toast';
-import { Letter, RepliedLetter } from '@/lib/type/letter.type';
+import { useLetterStore } from '@/store/letter';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { EmotionType, StatusType } from '@/lib/type/letter.type';
 
 export default function BeachPage() {
   const navigate = useNavigate();
   const { showToast } = useToastStore();
-  const [letters, setLetters] = useState<Letter[] | undefined>(undefined);
-  const [comments, setComments] = useState<RepliedLetter[] | undefined>(undefined);
-  const [isLettersLoading, setIsLettersLoading] = useState(false);
-  const [isCommentsLoading, setIsCommentsLoading] = useState(false);
-
+  const {
+    receivedLetters,
+    receivedReplies,
+    isReceivedLettersLoading,
+    isReceivedRepliesLoading,
+    fetchReceivedLetters,
+    fetchReceivedReplies,
+    setReceivedLetters,
+    setReceivedReplies,
+  } = useLetterStore();
   const [otterClicked, setOtterClicked] = useState(false);
 
-  const fetchLetters = async () => {
-    setIsLettersLoading(true);
-
-    try {
-      const response = await getRandomLetters();
-
-      if (!response) {
-        showToast('알 수 없는 오류가 발생했습니다.');
-        return;
-      }
-
-      if (isErrorResponse(response)) {
-        showToast(response.error);
-        return;
-      }
-
-      setLetters(response.unread_letters);
-    } catch (error) {
-      showToast('편지 목록을 불러오는 중 오류가 발생했습니다.');
-    } finally {
-      setIsLettersLoading(false);
-    }
-  };
-
-  const fetchComments = async () => {
-    setIsCommentsLoading(true);
-
-    try {
-      const response = await getRepliedLetters();
-
-      if (!response) {
-        showToast('알 수 없는 오류가 발생했습니다.');
-        return;
-      }
-
-      if (isErrorResponse(response)) {
-        showToast(response.error);
-        return;
-      }
-
-      setComments(response['replied-to-me']);
-    } catch (error) {
-      showToast('답장 목록을 불러오는 중 오류가 발생했습니다.');
-    } finally {
-      setIsCommentsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    Promise.all([fetchLetters(), fetchComments()]);
+    // Promise.all([
+    //   fetchReceivedLetters().catch(error => {
+    //     showToast(error.message || '편지 목록을 불러오는 중 오류가 발생했습니다.');
+    //   }),
+    //   fetchReceivedReplies().catch(error => {
+    //     showToast(error.message || '답장 목록을 불러오는 중 오류가 발생했습니다.');
+    //   }),
+    // ]);
+    setReceivedLetters([
+      {
+        _id: 'letter1',
+        from: 'user1',
+        from_nickname: 'User One',
+        title: 'Hello from the sea!',
+        emotion: EmotionType.ANGRY,
+        created_at: new Date().toISOString(),
+      },
+    ]);
+    setReceivedReplies([
+      {
+        _id: 'reply1',
+        from: 'user2',
+        from_nickname: 'User Two',
+        title: 'Re: Hello from the sea!',
+        emotion: EmotionType.SAD,
+        to: 'user2',
+        content: 'Thank you for your letter!',
+        status: StatusType.REPLIED,
+        replied_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+      },
+    ]);
   }, []);
+
+  const pseudoRandomFromId = (id: string) => {
+    // id를 해시처럼 사용해 항상 같은 위치가 나오도록
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = (hash * 31 + id.charCodeAt(i)) % 100000;
+    }
+    return hash / 100000;
+  };
 
   return (
     <div className={styles.pageBackground}>
@@ -99,17 +95,17 @@ export default function BeachPage() {
         </div>
         {/* 편지들 */}
         <div className={styles.lettersContainer}>
-          {(isLettersLoading || isCommentsLoading) && (
+          {(isReceivedLettersLoading || isReceivedRepliesLoading) && (
             <LoadingSpinner spinnerSize={3} description="바다에서 편지가 흘러오는 중..." />
           )}
-          {!isLettersLoading &&
-            letters &&
-            letters.slice(0, 3).map((letter, index) => {
+          {!isReceivedLettersLoading &&
+            receivedLetters &&
+            receivedLetters.slice(0, 3).map(letter => {
               // 랜덤 위치 생성
-              const top = Math.random() * 50;
-              const left = Math.random() * 80;
+              const top = pseudoRandomFromId(letter._id) * 50;
+              const left = pseudoRandomFromId(letter._id) * 80;
               const size = 15 + (top / 100) * 15; // 아래에 있을수록 크기가 커짐
-              const delay = Math.random() * 3;
+              const delay = pseudoRandomFromId(letter._id) * 3;
 
               return (
                 <button
@@ -127,17 +123,17 @@ export default function BeachPage() {
                 />
               );
             })}
-          {!isCommentsLoading &&
-            comments &&
-            comments.slice(0, 1).map((comment, index) => {
-              const top = Math.random() * 50;
-              const left = Math.random() * 80;
+          {!isReceivedRepliesLoading &&
+            receivedReplies &&
+            receivedReplies.slice(0, 1).map(reply => {
+              const top = pseudoRandomFromId(reply._id) * 50;
+              const left = pseudoRandomFromId(reply._id) * 80;
               const size = 15 + (top / 100) * 15; // 아래에 있을수록 크기가 커짐
-              const delay = Math.random() * 3;
+              const delay = pseudoRandomFromId(reply._id) * 3;
 
               return (
                 <button
-                  key={`comment-${comment._id}`}
+                  key={`comment-${reply._id}`}
                   style={{
                     position: 'absolute',
                     left: `${left}%`,
@@ -147,7 +143,7 @@ export default function BeachPage() {
                     animationDelay: `${delay}s`,
                   }}
                   className={styles.randomCommentButton}
-                  onClick={() => navigate(`/received/responses/${comments[0]._id}`)}
+                  onClick={() => navigate(`/received/responses/${reply._id}`)}
                 />
               );
             })}

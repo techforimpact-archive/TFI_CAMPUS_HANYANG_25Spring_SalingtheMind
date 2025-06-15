@@ -12,7 +12,10 @@
   margin-right: auto;
   width: 6rem;
   height: 6rem;
-  cursor: pointer;
+  background-image: url('/image/common/back.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .title {
   flex-grow: 1;
@@ -27,6 +30,10 @@
   width: 10rem;
   height: 10rem;
   z-index: 505;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .nextButton {
   width: 10rem;
@@ -34,9 +41,20 @@
 }
 .nextButton,
 .backButton {
-  background: none;
   border: none;
   cursor: pointer;
   font-size: 2rem;
   color: var(--text-primary-color);
+}
+
+.nextButton > img {
+  display: block;
+}
+.nextButtonText {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: 2rem;
+  color: var(--text-secondary-color);
+  text-align: center;
 }

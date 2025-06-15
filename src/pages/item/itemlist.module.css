@@ -4,8 +4,8 @@
 }
 .container {
   padding: 2rem;
-  padding-top: 14rem;
-  height: calc(100dvh - 30rem);
+  padding-top: 12rem;
+  height: calc(100dvh - 50rem);
 }
 .tabList {
   display: flex;
@@ -23,6 +23,7 @@
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   cursor: pointer;
+  line-height: 6rem;
   transition:
     border-color 0.3s,
     color 0.3s;

@@ -16,7 +16,7 @@ export const EmotionIcon: { [key in EmotionType]: string } = {
   [EmotionType.HAPPY]: 'happy',
   [EmotionType.SAD]: 'sad',
   [EmotionType.ANGRY]: 'angry',
-  [EmotionType.DEPRESSED]: 'depressed',
+  [EmotionType.DEPRESSED]: 'bored',
 };
 
 export enum StatusType {

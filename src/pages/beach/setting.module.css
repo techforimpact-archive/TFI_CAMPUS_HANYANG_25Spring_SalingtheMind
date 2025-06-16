@@ -52,6 +52,14 @@
   border-color: white !important;
   box-shadow: 0 0 0 0.3rem var(--blue-border-color) !important;
 }
+.radioInput:disabled {
+  border-color: var(--text-placeholder-color) !important;
+}
+.radioInput:checked:disabled {
+  background-color: var(--text-placeholder-color) !important;
+  border-color: white !important;
+  box-shadow: 0 0 0 0.3rem var(--text-placeholder-color) !important;
+}
 
 .saveButton {
   width: 100%;

@@ -110,7 +110,7 @@ export default function SettingPage() {
                   value={GenderType.MALE}
                   checked={formData.gender === GenderType.MALE}
                   onChange={handleInputChange}
-                  disabled={isLoading}
+                  disabled={true}
                   className={styles.radioInput}
                 />
                 <label className={styles.ageLabel}>남</label>
@@ -122,7 +122,7 @@ export default function SettingPage() {
                   value={GenderType.FEMALE}
                   checked={formData.gender === GenderType.FEMALE}
                   onChange={handleInputChange}
-                  disabled={isLoading}
+                  disabled={true}
                   className={styles.radioInput}
                 />
                 <label className={styles.ageLabel}>여</label>
@@ -138,7 +138,7 @@ export default function SettingPage() {
               placeholder="출생연도 ex. 2006"
               value={formData.age}
               onChange={handleInputChange}
-              disabled={isLoading}
+              disabled={true}
             />
           </div>
           <div className={styles.labelContainer}>

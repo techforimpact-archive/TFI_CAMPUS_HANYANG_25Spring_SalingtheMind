@@ -220,10 +220,6 @@ def send_letter():
     # 1000자 글자수 제한
     if len(content) > 1000:
         return json_kor({"error": "편지는 최대 1000자까지 작성할 수 있습니다."}, 400)
-    
-    # 200자 초과 포인트 지급
-    if len(content) > 100:
-        grant_point_by_action(sender, "long_letter_bonus")
 
     # 수신자 결정
     if to_type == 'self':

@@ -78,7 +78,7 @@ def json_kor(data, status=200):
 def grant_point():
     data = request.get_json()
     action = data.get("action")
-    content = data.get("content", "")  # 선택적 입력
+    content = data.get("content", "")
 
     if action not in POINT_RULES:
         return json_kor({"error": "올바르지 않은 액션입니다."}, 400)

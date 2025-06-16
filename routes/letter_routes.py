@@ -217,9 +217,6 @@ def send_letter():
     if not (to_type and content and emotion):
         return json_kor({"error": "필수 정보 누락"}, 400)
     
-    # 1000자 글자수 제한
-    if len(content) > 1000:
-        return json_kor({"error": "편지는 최대 1000자까지 작성할 수 있습니다."}, 400)
 
     # 수신자 결정
     if to_type == 'self':

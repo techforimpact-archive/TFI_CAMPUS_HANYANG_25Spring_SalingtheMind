@@ -93,10 +93,10 @@ export default function LetterWritePage() {
       // 편지 길이에 따른 보상 지급
       let rewardAction = ActionType.WRITE;
       if (content.length >= 100) {
-        rewardAction = ActionType.WRITE_LONG;
+        rewardAction = ActionType.WRITE;
       }
 
-      const rewardResponse = await grantReward({ action: rewardAction });
+      const rewardResponse = await grantReward({ action: rewardAction, content: content });
 
       if (isErrorResponse(rewardResponse)) {
         showToast(rewardResponse.error);

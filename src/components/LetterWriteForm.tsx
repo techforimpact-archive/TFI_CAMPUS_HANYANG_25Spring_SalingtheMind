@@ -41,7 +41,7 @@ export default function LetterWriteForm({
       </Textarea>
       <div className={styles.completeContainer}>
         <p className={styles.rewardInfo}>
-          ✅ 100자 이상 작성하시면 리워드가 추가로 제공돼요.
+          ✅ 200자 이상 작성하시면 리워드가 추가로 제공돼요.
           {'\n'}
           🎁 마음을 담아 길게 써주시면, 작은 보상을 드려요
         </p>

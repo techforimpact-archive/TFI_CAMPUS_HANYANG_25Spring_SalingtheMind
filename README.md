@@ -65,7 +65,7 @@
 
 | Name | Affiliation | Role | Responsibility | Contact |
 |------|------|------|----------------|---------|
-| **유서현 (Seohyeon Yoo)** | DataScience | 리더 (PM) | "" | ✉️ dbtjgus69@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| **유서현 (Seohyeon Yoo)** | DataScience | 리더 (PM) | "" | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
 | **이예진 (Yejin Lee)** | ComputerScience | 프론트엔드 개발자 | "" | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
 | **한채연 (Chaelin Han)** | InformationSystem | 백엔드 개발자 | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
 | **김혜연 (Hyeyeon Kim)** | DataScience | 백엔드 개발자 | "" | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |

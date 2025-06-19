@@ -68,13 +68,13 @@
 
 ## 🧑‍🤝‍🧑 Team Members
 
-| Name | Role | Responsibility | Contact |
-|------|------|----------------|---------|
-| **유서현 (Seohyeon Yoo)** | 리더 (PM) | "" | ✉️ dbtjgus69@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
-| **이예진 (Yejin Lee)** | 프론트엔드 개발자 | "" | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
-| **한채연 (Chaelin Han)** | 백엔드 개발자 | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
-| **김혜연 (Hyeyeon Kim)** | 백엔드 개발자 | "" | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
-| **임선민 (Sunmin Lim)** | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
+| Name | Affiliation | Role | Responsibility | Contact |
+|------|------|------|----------------|---------|
+| **유서현 (Seohyeon Yoo)** | DataScience | 리더 (PM) | "" | ✉️ dbtjgus69@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| **이예진 (Yejin Lee)** | ComputerScience | 프론트엔드 개발자 | "" | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
+| **한채연 (Chaelin Han)** | InformationSystem | 백엔드 개발자 | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
+| **김혜연 (Hyeyeon Kim)** | DataScience | 백엔드 개발자 | "" | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
+| **임선민 (Sunmin Lim)** | InformationSystem | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
 

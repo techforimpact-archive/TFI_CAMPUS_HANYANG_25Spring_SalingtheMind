@@ -1,7 +1,4 @@
-# TFI_CAMPUS_HANYANG_25Spring_SalingtheMind
-
 # 마음의 항해 (Sailing of the Heart)
-
 **AI 기반 감정 글쓰기 조력 및 정서 지원 플랫폼**  
 
 ---
@@ -17,13 +14,12 @@
 ---
 
 ## ✍️ 주요 기능 (Key Features)
-- 감정 선택 기반 자기 표현 시작 (Unpleasant–Pleasant / Arousal / Control)
-- GPT-4o 기반 AI 질문 유도 시스템
-- 자원봉사자/익명 사용자 대상 편지 작성 및 송수신
-- 온도계 기반 보상 시스템 및 세계관 UI
+- 감정 기반 편지 작성을 통한 자기 표현
+- GPT-4o를 활용한 감정/내용 기반 질문 및 제안 제공
+- 개인보관함/익명사용자/온기우편함 대상 편지 송수신 교류
+- 메인 화면 꾸미기용 포인트 기반 보상 시스템
 
 ---
-<!-- Development Environment로만 짧게할까
 ## ⚙️ Technical Implementation
 
 ### 🧩 시스템 아키텍처
@@ -52,7 +48,7 @@
 - **Backend**: `Render` (API 서버 및 DB 호스팅)
 
 ---
- -->
+
 ## 🛠 Development Environment
 
 | Category   | Stack / Tool |
@@ -61,7 +57,7 @@
 | **Backend** | Flask + JWT + MongoDB |
 | **AI Service** | OpenAI GPT-4o API |
 | **Deployment** | Vercel (Frontend), Render (Backend) |
-<!--| **Others** | Axios, REST API, Notion (Issue Mgmt), GitHub (Version Control) |-->
+| **Others** | Axios, REST API, Notion (Issue Mgmt), GitHub (Version Control) |
 
 ---
 
@@ -78,8 +74,8 @@
 ---
 
 ## 🎓 Fellowship & Mentorship
-- **Fellow**: 조현식 님 (온기 Onji)<br>🔗 [Ongibox](https://ongibox.co.kr/)
-- **Mentor**: 이정음 님 (카카오 Kakao)
+- **Fellow**: 조현식 님 (온기 Onji) 🔗[Ongibox](https://ongibox.co.kr/)
+- **Mentor**: 이정음 님 (카카오 Kakao) 🔗[GitHub](https://github.com/jeongum) 
 
 ---
 

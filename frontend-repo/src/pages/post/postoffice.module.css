@@ -1,0 +1,97 @@
+.container {
+  height: 100dvh;
+  position: relative;
+  background-image: url('/image/post/background_post.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 아이콘 + 텍스트 하나의 블록을 수직으로 */
+.optionRow {
+  position: absolute;
+  bottom: 10rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.optionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: fit-content;
+}
+
+/* 아이콘 */
+.icon {
+  width: auto;
+  height: 22rem;
+}
+
+/* 텍스트 박스 */
+.labelBox {
+  padding: 2rem 4rem;
+  background-color: var(--yellow-base-color);
+  border: 1rem solid var(--yellow-border-color);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.labelText {
+  font-size: 3.3rem;
+  line-height: 1.2;
+  color: var(--text-primary-color);
+  text-align: center;
+  margin: 0;
+}
+
+.speechBubble {
+  position: absolute;
+  top: 18rem;
+  left: calc(50% - 15rem);
+  width: 32rem;
+  font-size: 2.8rem;
+  color: var(--text-primary-color);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0 2rem;
+  border-radius: 4rem;
+  line-height: 1.2;
+  word-break: keep-all;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+/* 말풍선 꼬리 */
+.speechBubble::after {
+  content: '';
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 1rem;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent;
+}
+
+.bubbleAnimation {
+  animation: bubble 2s infinite;
+}
+
+@keyframes bubble {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

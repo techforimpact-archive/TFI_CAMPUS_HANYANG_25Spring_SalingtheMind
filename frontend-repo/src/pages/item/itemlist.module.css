@@ -1,0 +1,50 @@
+.pageBackground {
+  background-color: var(--apricot-background-color);
+  height: 100dvh;
+}
+.container {
+  padding: 2rem;
+  padding-top: 12rem;
+  height: calc(100dvh - 50rem);
+}
+.tabList {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -0.5rem;
+}
+
+.tabButton {
+  padding-bottom: 2rem;
+  width: 100%;
+  background-color: var(--apricot-dark-color);
+  color: var(--text-primary-color);
+  font-size: 2rem;
+  border: 0.5rem solid var(--apricot-border-color);
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  cursor: pointer;
+  line-height: 6rem;
+  transition:
+    border-color 0.3s,
+    color 0.3s;
+}
+
+.active {
+  background-color: var(--apricot-base-color);
+  border-bottom-color: transparent;
+  font-weight: bold;
+}
+
+.gridContainer {
+  background-color: var(--apricot-base-color);
+  padding: 2rem;
+  border: 0.5rem solid #f1c16f;
+  height: 100%;
+  overflow: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; /* 아이템 간 간격 */
+}

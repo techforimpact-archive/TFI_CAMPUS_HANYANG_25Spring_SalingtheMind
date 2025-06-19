@@ -1,0 +1,43 @@
+.container {
+  background-color: var(--orange-base-color);
+  position: relative;
+}
+.otterImage {
+  position: absolute;
+  top: -22rem;
+  left: calc(50% - 7rem);
+  width: 14rem;
+  height: auto;
+  object-fit: cover;
+}
+.title {
+  white-space: pre-wrap;
+  line-height: 1.2;
+}
+.description {
+  line-height: 1.4;
+}
+
+.input {
+  width: 100%;
+  margin-top: 1rem;
+  box-sizing: border-box;
+  font-size: 2.4rem;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 2rem;
+  background-color: var(--background-color);
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--blue-border-color);
+}
+.starImage {
+  width: 6rem;
+  opacity: 0.8;
+  height: auto;
+  object-fit: cover;
+}

@@ -1,0 +1,172 @@
+.container {
+  padding-top: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--background-color);
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+
+.labelContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+.label {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.input {
+  width: 100%;
+  margin-top: 1rem;
+  box-sizing: border-box;
+}
+
+.radioContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 3rem;
+  margin-top: 0.5rem;
+}
+.radioLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.radioInput {
+  border-color: var(--blue-border-color) !important;
+}
+.radioInput:checked {
+  background-color: var(--blue-border-color) !important;
+  border-color: white !important;
+  box-shadow: 0 0 0 0.3rem var(--blue-border-color) !important;
+}
+.radioInput:disabled {
+  border-color: var(--text-placeholder-color) !important;
+}
+.radioInput:checked:disabled {
+  background-color: var(--text-placeholder-color) !important;
+  border-color: white !important;
+  box-shadow: 0 0 0 0.3rem var(--text-placeholder-color) !important;
+}
+
+.saveButton {
+  width: 100%;
+  margin: 0;
+  margin-top: 2rem;
+  background-color: var(--blue-border-color);
+  color: var(--text-primary-color);
+  font-size: 3rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.saveButton:disabled {
+  background-color: var(--text-placeholder-color);
+  cursor: not-allowed;
+}
+
+.logoutButton {
+  text-decoration: underline;
+  font-size: 2.5rem;
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary-color);
+  cursor: pointer;
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 7rem;
+  height: 4rem;
+  display: inline-block;
+}
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 3rem;
+}
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 3rem;
+  width: 3rem;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #7ec6c8;
+}
+input:checked + .slider:before {
+  transform: translateX(3rem);
+}
+
+.section {
+  width: 85%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 3rem 2rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--blue-background-color);
+  /* background: linear-gradient(90deg, var(--orange-light-color) 50%, var(--background-color) 100%); */
+}
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--blue-border-color);
+  align-self: flex-start;
+}
+
+.bgmRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.labelContainer,
+.input,
+.radioContainer,
+.ageLabel {
+  font-size: 2rem;
+}
+.input {
+  padding: 0.8rem 1.2rem;
+}

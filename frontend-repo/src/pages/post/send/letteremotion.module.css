@@ -1,0 +1,66 @@
+.pageBackground {
+  background-color: var(--green-background-color);
+  height: 100dvh;
+}
+.container {
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-around;
+  padding-top: 12rem;
+  margin: 0;
+  text-align: center;
+}
+.title {
+  font-size: 4rem;
+}
+.emotionContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin: 6rem 0;
+}
+
+.emotionImage {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+}
+
+.emotionText {
+  margin-top: 1rem;
+  font-size: 2.4rem;
+  color: var(--green-border-color);
+}
+.shareButton {
+  width: 50rem;
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  &:nth-of-type(1) {
+    background-color: var(--orange-base-color);
+    border: 1rem solid var(--orange-border-color);
+  }
+  &:nth-of-type(2) {
+    background-color: var(--blue-base-color);
+    border: 1rem solid var(--blue-border-color);
+  }
+  &:nth-of-type(3) {
+    background-color: var(--yellow-base-color);
+    border: 1rem solid var(--yellow-border-color);
+  }
+}
+.shareButton > img {
+  margin: 1rem;
+}
+.text {
+  color: black;
+  font-size: 2.8rem;
+}
+.buttonImage {
+  width: 12rem;
+  height: 12rem;
+  object-fit: cover;
+}

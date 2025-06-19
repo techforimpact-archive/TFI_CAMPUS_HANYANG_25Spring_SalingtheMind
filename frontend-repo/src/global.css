@@ -1,0 +1,280 @@
+@font-face {
+  font-family: 'Pretendard Variable';
+  src: url('/font/PretendardVariable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Jua';
+  src: url('/font/BMJUA.woff') format('woff');
+}
+@font-face {
+  font-family: 'KyoboHand';
+  src: url('/font/KyoboHand.woff') format('woff');
+}
+
+/* css variable 색상표 정리 */
+:root {
+  --orange-base-color: #f9c776;
+  --orange-light-color: #f8eacd;
+  --orange-border-color: #ee9d3f;
+  --orange-active-color: #ff9900;
+  --blue-base-color: #b1dac7;
+  --blue-border-color: #74b9b2;
+  --blue-dark-color: #559a93;
+  --yellow-base-color: #f7e593;
+  --yellow-border-color: #eeca4e;
+  --green-border-color: #439445;
+  --apricot-base-color: #ffefa7;
+  --apricot-dark-color: #f7d984;
+  --apricot-border-color: #f1c16f;
+  --apricot-light-color: #fff3c1;
+
+  --letter-background-color: #fbf39d;
+  --letter-border-color: #f7eb6c;
+  --comment-background-color: #ffd5d5;
+  --comment-border-color: #f5bbbb;
+
+  --text-primary-color: #333;
+  --text-secondary-color: #666;
+  --text-placeholder-color: #ccc;
+
+  --button-disabled-color: #aaa;
+  --background-color: #f0f0f0;
+
+  --apricot-background-color: #fce89c;
+  --green-background-color: #e6f0cb;
+  --blue-background-color: #cae3e2;
+}
+
+.layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media screen and (min-width: 500px) and (pointer: fine) {
+  /* pc browser */
+  html {
+    font-size: 40%;
+  }
+  .layout {
+    background-color: var(--background-color);
+  }
+
+  .main {
+    height: 100vh;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+}
+@media screen and (min-aspect-ratio: 2 / 3) and (hover: none) {
+  /* tablets, 또는 가로모드  */
+  html {
+    font-size: 80%;
+  }
+  .layout {
+    background-color: var(--background-color);
+  }
+
+  .main {
+    height: 100dvh;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+}
+
+.footer {
+  height: 4rem;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--text-secondary-color);
+}
+
+body,
+html {
+  font-synthesis: none;
+}
+body {
+  font-family:
+    'Jua',
+    'KyoboHand',
+    'Pretendard Variable',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    sans-serif;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  cursor: pointer;
+  height: 6rem;
+  font-size: 2.5rem;
+  border: none;
+  border-radius: 1.5rem;
+  background-color: transparent;
+  transition: transform 0.2s ease;
+  font-family: Jua;
+  color: var(--text-primary-color);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button:active {
+  /* background-color: var(--orange-active-color); */
+  transform: scale(0.95);
+}
+button:disabled {
+  background-color: var(--button-disabled-color);
+}
+
+a {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--text-primary-color);
+}
+
+h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--text-primary-color);
+}
+
+label,
+p {
+  font-size: 2.5rem;
+  white-space: pre-wrap;
+  color: var(--text-primary-color);
+}
+
+caption {
+  font-size: 1.9rem;
+  color: var(--text-secondary-color);
+  white-space: pre-wrap;
+}
+
+input {
+  padding: 1rem;
+  color: var(--text-primary-color);
+  font-family: 'Jua';
+  font-size: 3rem;
+  line-height: 1.3;
+  border: none;
+  border-radius: 1rem;
+  border-color: var(--text-placeholder-color);
+  transition: border-color 0.2s;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+  border-color: var(--orange-base-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(248, 196, 100, 0.1);
+}
+
+input:disabled {
+  outline: none;
+  box-shadow: none;
+  color: var(--text-placeholder-color);
+}
+
+input::placeholder {
+  color: var(--text-placeholder-color);
+  font-family: 'Jua';
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  border: 0.4rem solid var(--text-placeholder-color);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input[type='radio']:checked {
+  background-color: var(--orange-base-color);
+  border: 0.4rem solid white;
+  box-shadow: 0 0 0 0.3rem var(--orange-base-color);
+}
+
+option {
+  font-size: 2rem;
+  padding: 10px;
+}
+
+.modal-button-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.modal-button-container > button {
+  width: 50%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 6rem;
+  align-items: center;
+  padding: 0 2rem;
+  background-color: var(--orange-base-color);
+  color: var(--text-primary-color);
+  &:nth-of-type(2) {
+    background-color: var(--background-color);
+    border: 0.3rem solid (--orange-active-color);
+  }
+}
+.nav-button-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.nav-button-container > button {
+  flex: 1;
+  height: fit-content;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.wide-button {
+  width: 100%;
+  flex-grow: 1;
+}

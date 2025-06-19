@@ -1,0 +1,55 @@
+.pageBackground {
+  background-color: var(--green-background-color);
+  min-height: 100dvh;
+}
+.container {
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-around;
+  padding-top: 10rem;
+  margin: 0;
+  text-align: center;
+}
+.title {
+  font-size: 4rem;
+}
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center;
+  gap: 4rem;
+  margin: 6rem 0;
+}
+.shareButton {
+  width: 50rem;
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  &:nth-of-type(1) {
+    background-color: var(--orange-base-color);
+    border: 1rem solid var(--orange-border-color);
+  }
+  &:nth-of-type(2) {
+    background-color: var(--blue-base-color);
+    border: 1rem solid var(--blue-border-color);
+  }
+  &:nth-of-type(3) {
+    background-color: var(--yellow-base-color);
+    border: 1rem solid var(--yellow-border-color);
+  }
+}
+.shareButton > img {
+  margin: 1rem;
+}
+.text {
+  color: black;
+  font-size: 2.8rem;
+}
+.buttonImage {
+  width: 12rem;
+  height: auto;
+  object-fit: cover;
+}

@@ -1,0 +1,25 @@
+.pageBackground {
+  background-color: var(--green-background-color);
+  min-height: 100dvh;
+}
+.container {
+  padding-top: 14rem;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+.container > :last-child {
+  margin-bottom: 0;
+}
+
+.loading {
+  text-align: center;
+  color: var(--text-secondary-color);
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-secondary-color);
+  border-radius: 1rem;
+  margin-top: 2rem;
+}

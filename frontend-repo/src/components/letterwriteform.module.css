@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.letterInputCount {
+  text-align: right;
+  color: var(--text-secondary-color);
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.completeContainer {
+  display: flex;
+  align-items: center;
+  margin: 2rem;
+}
+
+.rewardInfo {
+  color: var(--text-secondary-color);
+  font-size: 1.6rem;
+  flex-grow: 1;
+}
+
+.completeButton {
+  background-color: var(--yellow-base-color);
+  border: 0.3rem solid var(--yellow-border-color);
+  padding-top: 0.6rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.completeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.completeButton img {
+  width: 10rem;
+  height: auto;
+}

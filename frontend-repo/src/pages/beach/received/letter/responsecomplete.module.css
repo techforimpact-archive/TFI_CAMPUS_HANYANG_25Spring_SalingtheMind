@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  gap: 2rem;
+  background-color: var(--blue-background-color);
+  height: 100dvh;
+}
+
+.title {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.text {
+  font-size: 3rem;
+  padding: 2rem;
+}
+
+.otterImage {
+  width: auto;
+  height: 30%;
+  margin: 1rem;
+  object-fit: cover;
+}
+
+.rewardSection {
+  width: 100%;
+  text-align: center;
+  text-align: center;
+}
+
+.navButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.navButton {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.navIcon {
+  width: 15rem;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.yellowBoxButton {
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+  width: 50%;
+  background-color: var(--yellow-base-color);
+  border: 1rem solid var(--yellow-border-color);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary-color);
+}
+.buttonLabel {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-primary-color);
+  line-height: 1.2;
+  margin: 0;
+  word-break: keep-all;
+}

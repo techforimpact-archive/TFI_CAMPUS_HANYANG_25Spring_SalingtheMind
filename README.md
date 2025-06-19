@@ -79,7 +79,7 @@
 ---
 
 ## 🎓 Fellowship & Mentorship
-- **Fellow**: 조현식 님 (온기 Onji) <br>🔗 [Ongibox](https://ongibox.co.kr/)
+- **Fellow**: 조현식 님 (온기 Onji)<br>🔗 [Ongibox](https://ongibox.co.kr/)
 - **Mentor**: 이정음 님 (KakaoPay)
 
 ---

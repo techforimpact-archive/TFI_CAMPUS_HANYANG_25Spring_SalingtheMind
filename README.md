@@ -15,11 +15,22 @@
 
 ---
 
-## ✍️ 주요 기능 (Key Features)
-- 감정 기반 편지 작성을 통한 자기 표현
-- GPT-4o를 활용한 감정/내용 기반 질문 및 제안 제공
-- 개인보관함/익명사용자/온기우편함 대상 편지 송수신 교류
-- 메인 화면 꾸미기용 포인트 기반 보상 시스템
+### 📱 서비스 소개 (Service Summary)
+**『마음의 항해』**는 감정 표현에 어려움을 겪는 청소년을 위한 AI 기반 편지 작성 웹서비스입니다.
+사용자가 감정을 선택하면, AI가 맞춤형 질문을 제안하고 글쓰기를 유도하여,
+자기표현의 진입장벽을 낮추고 정서적 연결과 회복 경험을 제공합니다.
+
+---
+
+## 🧑‍🤝‍🧑 Team Members
+
+| Name | Affiliation | Role | Responsibility | Contact |
+|------|------|------|----------------|---------|
+| **유서현 (Seohyeon Yoo)** | DataScience | 리더 (PM) | "" | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| **이예진 (Yejin Lee)** | ComputerScience | 프론트엔드 개발자 | "" | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
+| **한채린 (Chaelin Han)** | InformationSystem | 백엔드 개발자 | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
+| **김혜연 (Hyeyeon Kim)** | DataScience | 백엔드 개발자 | "" | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
+| **임선민 (Sunmin Lim)** | InformationSystem | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
 ## ⚙️ Technical Implementation
@@ -128,18 +139,6 @@
 | **AI Service** | OpenAI GPT-4o API |
 | **Deployment** | Vercel (Frontend), Render (Backend) |
 | **Others** | Axios, REST API, Notion (Issue Mgmt), GitHub (Version Control) |
-
----
-
-## 🧑‍🤝‍🧑 Team Members
-
-| Name | Affiliation | Role | Responsibility | Contact |
-|------|------|------|----------------|---------|
-| **유서현 (Seohyeon Yoo)** | DataScience | 리더 (PM) | "" | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
-| **이예진 (Yejin Lee)** | ComputerScience | 프론트엔드 개발자 | "" | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
-| **한채린 (Chaelin Han)** | InformationSystem | 백엔드 개발자 | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
-| **김혜연 (Hyeyeon Kim)** | DataScience | 백엔드 개발자 | "" | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
-| **임선민 (Sunmin Lim)** | InformationSystem | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
 

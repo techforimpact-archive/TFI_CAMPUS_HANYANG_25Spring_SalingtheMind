@@ -31,6 +31,24 @@
 | **임선민 (Sunmin Lim)** | InformationSystem | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
+## 🧩 Key Features & UI Overview
+🏝 메인 화면
+- 캐릭터 ‘온달’이 감정 표현과 지속 활동을 돕는 서포터
+- 획득한 아이템으로 공간 커스터마이징
+
+🎁 리워드 시스템
+- 편지/답장 작성 시 포인트 지급
+- 일정 포인트 달성 시 레벨업 및 꾸미기 아이템 획득
+
+🌊 바다 (편지 읽기/답장 공간)
+- 익명 편지 열람
+- 랜덤 전송된 익명 편지 답장 가능
+
+📮 우체국 (편지 작성 공간)
+- 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
+- 자가 보관/익명 전송/온기우체부 전송 선택 가능
+
+---
 ## ⚙️ Technical Implementation
 
 ### 🧩 시스템 아키텍처
@@ -157,3 +175,21 @@
 - 💻 [서비스 링크 (Demo)](https://gominhanyang.vercel.app/signin)
 - 📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)
 - 📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
+
+🧵 Troubleshooting
+| 문제            | 원인              | 해결 방법                                                       |
+| ------------- | --------------- | ----------------------------------------------------------- |
+| `bson` 모듈 에러  | MongoDB 드라이버 누락 | `pip install pymongo` 또는 `pip install bson`                 |
+| CORS 오류       | 프론트/백엔드 도메인 불일치 | Flask에서 `CORS(app, resources={r"/*": {"origins": "*"}})` 설정 |
+| OpenAI API 오류 | 키 누락 또는 요금제 문제  | `.env` 파일에 `OPENAI_API_KEY=your-key` 등록                     |
+
+---
+## 🔮 Future Work
+- 📱 악성 문구 및 유해 답장 필터링
+- 📬 받은 편지 카카오톡 알림 (편지 작성 리마인드 및 답장 도착 알림)
+- 📈 정서 회복 성장 여정 시각화 → 임팩트 지표 측정에 활용
+- 🧠 위로 글귀 가챠
+- 학교 및 복지기관 대상 온기 서비스 시연
+
+
+

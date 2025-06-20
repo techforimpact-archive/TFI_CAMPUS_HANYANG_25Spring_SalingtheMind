@@ -176,7 +176,8 @@
 - 📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)
 - 📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
 
-🧵 Troubleshooting
+---
+## 🧵 Troubleshooting
 | 문제            | 원인              | 해결 방법                                                       |
 | ------------- | --------------- | ----------------------------------------------------------- |
 | `bson` 모듈 에러  | MongoDB 드라이버 누락 | `pip install pymongo` 또는 `pip install bson`                 |

@@ -31,22 +31,35 @@
 | **임선민 (Sunmin Lim)** | InformationSystem | UI 디자이너 | "" | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
+## 🔗 Live Demo
+https://gominhanyang.vercel.app/signin
+
+---
 ## 🧩 Key Features & UI Overview
 🏝 메인 화면
 - 캐릭터 ‘온달’이 감정 표현과 지속 활동을 돕는 서포터
 - 획득한 아이템으로 공간 커스터마이징
+<img width="376" alt="image" src="https://github.com/user-attachments/assets/874b0ccd-b867-4c38-8e29-59960a3d6b25" />
+
 
 🎁 리워드 시스템
 - 편지/답장 작성 시 포인트 지급
 - 일정 포인트 달성 시 레벨업 및 꾸미기 아이템 획득
+<img width="376" alt="image" src="https://github.com/user-attachments/assets/5f0c5d9a-c77b-47bd-ade2-1ccaa2ef0628" />
+
 
 🌊 바다 (편지 읽기/답장 공간)
 - 익명 편지 열람
 - 랜덤 전송된 익명 편지 답장 가능
 
+
 📮 우체국 (편지 작성 공간)
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
 - 자가 보관/익명 전송/온기우체부 전송 선택 가능
+<img width="377" alt="image" src="https://github.com/user-attachments/assets/64de1362-f479-45db-9576-d5a1a04026ea" />
+<img width="375" alt="image" src="https://github.com/user-attachments/assets/25cdac8e-1382-48a2-bcf8-365a2906688a" />
+
+
 
 ---
 ## ⚙️ Technical Implementation

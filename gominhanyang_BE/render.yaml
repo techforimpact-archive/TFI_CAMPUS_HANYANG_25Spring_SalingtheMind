@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: ai-auto-reply-worker  # 원하는 서비스 이름으로 수정 가능
+    env: python
+    buildCommand: ""            # 별도 빌드 명령 필요 없음
+    startCommand: python main.py
+    autoDeploy: true
+    plan: starter               # 계속 실행하려면 starter 이상 추천 (free는 sleep 가능성 있음)
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false             # Render 웹에서 수동으로 입력
+      - key: MONGODB_URI
+        sync: false             # Render 웹에서 수동으로 입력
+      - key: REPLY_INTERVAL_HOURS
+        value: "24"

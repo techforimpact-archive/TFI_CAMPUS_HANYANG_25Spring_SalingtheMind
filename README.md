@@ -90,7 +90,7 @@
 ## directory structure
 -**Frontend**
 -**Backend** 
-
+```plaintext
 ├── routes/                 # API 라우터 정의 모음
 │   ├── item_routes.py           # 아이템 관련 API : 아이템 상세조회, 
 │   ├── letter_routes.py         # 편지 작성/조회 API
@@ -117,7 +117,8 @@
 ├── render.yaml            # Render 배포 설정 파일
 ├── requirements.txt       # 사용 라이브러리 목록
 ├── test.http              # HTTP 요청 테스트용 -REST Client 확장
-└── README.md             
+└── README.md
+'''         
 
 ## 🛠 Development Environment
 

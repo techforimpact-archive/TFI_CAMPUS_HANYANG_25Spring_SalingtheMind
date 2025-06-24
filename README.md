@@ -1,5 +1,5 @@
 # 🌊 마음의 항해 (Sailing of the Heart)
-본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.<br><img width="196" alt="image" src="![임시 메인 이미지](attachment:c58b5ed0-d633-4959-aadf-4bbd22196c5f:IMG_4145.jpeg)" /><br>
+본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.<br><img width="196" alt="image" src="assets/thumbnail.jpeg><br>
 🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
 (⚠️ 본 서비스는 모바일 환경에 최적화되어 있습니다. PC가 아닌 스마트폰으로 접속해 주세요!)
 
@@ -190,7 +190,8 @@ backend-repo
 ├── test.http              # HTTP 요청 테스트용 -REST Client 확장
 └── README.md
 ```
-<img width="376" alt="image" src="![제목 없는 다이어그램.drawio.svg](attachment:c01c0fc2-b1d8-4b66-a733-f6d9bca5ef78:제목_없는_다이어그램.drawio.svg)" /><br>
+<img width="376" alt="image" src="assets/diagram.svg" /><br>
+
 **AI Service**
 - GPT-4o API 기반 감정 맞춤 질문 생성
 - 사용자 입력 응답 처리 및 텍스트 전처리
@@ -215,17 +216,18 @@ backend-repo
 - ‘집 가는 길’을 선택하면 편지를 작성하거나 개인 편지 보관함을 볼 수 있습니다.
 - ‘해변 가는 길’을 선택하면 타인이 작성한 편지와 받은 답장을 볼 수 있습니다.
 - 왼쪽 상단 조개 버튼을 누르면, 획득한 아이템으로 공간 커스터마이징할 수 있습니다.
-<img width="250" alt="image" src="https://github.com/user-attachments/assets/874b0ccd-b867-4c38-8e29-59960a3d6b25" />
+<img width="250" alt="image" src="assets/Mainpage.png" />
 
 ### 🌊 해변 화면 (편지 읽기/답장 공간)
 - 바다에 떠있는 종이배를 선택하면 익명의 편지를 열람하고, 직접 답장을 보낼 수 있습니다.
 - 편지가 담긴 유리병을 선택하면 자신이 보냈던 편지에 대한 답장을 열람할 수 있습니다.
+<img width="250" alt="image" src="assets/Beach.png" />
 
 ### 💌 편지 및 답장 작성 화면
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
-<img width="250" alt="image" src="https://github.com/user-attachments/assets/25cdac8e-1382-48a2-bcf8-365a2906688a" />
-<img width="250" alt="image" src="![image.png](attachment:49cbce29-8113-4604-853a-0c9046c68051:image.png)" />
+<img width="250" alt="image" src="assets/Letter.png" />
+<img width="250" alt="image" src="assets/response.png" />
 
 ## 🧵 Troubleshooting
 - 문제: BGM 자동재생 안 됨<br>

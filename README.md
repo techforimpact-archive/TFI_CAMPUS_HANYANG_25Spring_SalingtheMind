@@ -1,7 +1,7 @@
 # 🌊 마음의 항해 (Sailing of the Heart)
 <img width="196" alt="image" src="![임시 메인 이미지](attachment:c58b5ed0-d633-4959-aadf-4bbd22196c5f:IMG_4145.jpeg)" /><br>
 본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.
-- 🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
+🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
 (⚠️ 본 서비스는 모바일 환경에 최적화되어 있습니다. PC가 아닌 스마트폰으로 접속해 주세요!)
 
 ---
@@ -15,8 +15,8 @@
 - **게임화된 UI**와 **보상 시스템**을 통해 자발적 사용 유도
 
 ### 프로젝트 결과 (Resources)
-- 📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)
-- 📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
+📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)
+📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
 
 ---
 
@@ -24,25 +24,11 @@
 
 | Role | Name | Affiliation | Responsibility | Contact |
 |------|------|------|----------------|---------|
-| PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 총괄
-- UI/UX 설계 및 디자인 주도
-- 유저테스트 담당
-- 논문 작성 및 발표 | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
-| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획
-- 기술 스택 선정
-- 와이어프레임 개발
-- API 연결 및 기능 개발
-- 전체 화면 UI 개발 | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
+| PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표 | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
 | BE | **한채린 (Chaelin Han)** | InformationSystem | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
-| BE | **김혜연 (Hyeyeon Kim)** | DataScience | -Flask 백엔드 초기 세팅
--MongoDB 연결 및 Render 배포
--컬렉션 스키마 설계
--API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)
--Background worker 개발
--Flaswagger 문서화 | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
-| UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조
--프론트엔드 UI 개발 보조
--유저테스트 준비 보조 | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
+| BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
+| UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ---
 
@@ -78,11 +64,9 @@ OPENAI_API_KEY=your OpenAI API key (starts with sk-...)
 ```bash
 python app.py
 ```
-#### 6. Test the API
-- Open `test.http` (Make sure you already installed REST Client extension)
+#### 6. Open `test.http` (Make sure you already installed REST Client extension)
 - Click **"Send Request"** above the request line  
-- Or manually send a request to:  
-  `http://localhost:5000`
+- Or manually send a request to:`http://localhost:5000`
 
 ### Frontend
 #### 1. Clone the repository
@@ -106,24 +90,22 @@ VITE_GOOGLE_ANALYTICS_ID=your GA4 ID
 ```bash
 npm run dev
 ```
-#### 6. Go to the start page
-Open your browser and visit:  
-`http://localhost:3000`
+#### 6. Go to the start page `http://localhost:3000` in your web browser
 
 ---
 
 ## 기술 스택
 ### 공통
-*Notion   Github*
+*Notion,  Github*
 
 ### Frontend
-*React   Vite   Typescript   Zustand   Axios   CSSModules   Vercel   GitFlow   GoogleAnalytics4*
+*React,  Vite,  Typescript,  Zustand,  Axios,  CSSModules,  Vercel,  GitFlow   GoogleAnalytics4*
 - `Vite + React` HMR 빠른 개발 속도  
 - `Module CSS` 로 CSS 파일 분리  
 - `Axios + REST API + Zustand` 로 API 요청 횟수 개선
 
 ### Backend
-*Flask   MongoDB   JWT   OpenAI GPT-4o API   Render   Flasgger*
+*Flask,  MongoDB,  JWT,  OpenAI GPT-4o API,  Render,  Flasgger*
 - 프레임워크: `Flask` – 경량화된 웹 프레임워크로 RESTful API 설계
 - 라우팅 & 인증: `JWT Auth` + Flask Blueprint – 사용자 인증 및 기능별 라우터 분리
 - 데이터베이스: `MongoDB Atlas` – 유연한 비정형 데이터 저장 및 쿼리
@@ -240,18 +222,18 @@ backend-repo
   
 ---
 ## 주요 기능 Key Features & UI Overview
-🏝 메인 화면
+### 🏝 메인 화면
 - 캐릭터 ‘온달’이 감정 표현과 지속 활동을 돕는 서포터 역할을 합니다.
 - ‘집 가는 길’을 선택하면 편지를 작성하거나 개인 편지 보관함을 볼 수 있습니다.
 - ‘해변 가는 길’을 선택하면 타인이 작성한 편지와 받은 답장을 볼 수 있습니다.
 - 왼쪽 상단 조개 버튼을 누르면, 획득한 아이템으로 공간 커스터마이징할 수 있습니다.
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/874b0ccd-b867-4c38-8e29-59960a3d6b25" />
 
-🌊 바다 (편지 읽기/답장 공간)
+### 🌊 해변 화면 (편지 읽기/답장 공간)
 - 바다에 떠있는 종이배를 선택하면 익명의 편지를 열람하고, 직접 답장을 보낼 수 있습니다.
 - 편지가 담긴 유리병을 선택하면 자신이 보냈던 편지에 대한 답장을 열람할 수 있습니다.
 
-💌 편지 및 답장 작성 
+### 💌 편지 및 답장 작성 화면
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/25cdac8e-1382-48a2-bcf8-365a2906688a" />

@@ -14,7 +14,7 @@
 - **게임화된 UI**와 **보상 시스템**을 통해 자발적 사용 유도
 
 ### 프로젝트 결과 (Resources)
-📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)
+📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)<br>
 📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
 
 ---

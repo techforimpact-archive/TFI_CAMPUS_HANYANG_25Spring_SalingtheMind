@@ -22,7 +22,7 @@
 
 | Role | Name | Affiliation | Responsibility | Contact |
 |---------|------|------|------------|-----------|
-| PM<br>(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| PM<br><sub>(리더)</sub> | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
 | FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획 및 회의 리드<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
 | BE | **한채린 (Chaelin Han)** | InformationSystem | - 프로젝트 기획 및 백엔드 기술 스택 선정<br>- Flask 기반 백엔드 개발환경 셋팅<br>- API 개발 (엔드포인트별 구현)<br>- MongoDB 관리 및 Render 배포<br>- 프론트엔드 UI/UX 개발 보조<br>- 발표 자료 제작 | ✉️chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
 | BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |

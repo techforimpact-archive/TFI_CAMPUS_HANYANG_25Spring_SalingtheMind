@@ -22,11 +22,11 @@
 
 | Role | Name | Affiliation | Responsibility | Contact |
 |---------|------|------|------------|-----------|
-| PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
-| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획 및 회의 리드<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
-| BE | **한채린 (Chaelin Han)** | InformationSystem | - 프로젝트 기획 및 백엔드 기술 스택 선정<br>- Flask 기반 백엔드 개발환경 셋팅<br>- API 개발 (엔드포인트별 구현)<br>- MongoDB 관리 및 Render 배포<br>- 프론트엔드 UI/UX 개발 보조<br>- 발표 자료 제작 | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
-| BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
-| UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
+| PM<br>(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획 및 회의 리드<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
+| BE | **한채린 (Chaelin Han)** | InformationSystem | - 프로젝트 기획 및 백엔드 기술 스택 선정<br>- Flask 기반 백엔드 개발환경 셋팅<br>- API 개발 (엔드포인트별 구현)<br>- MongoDB 관리 및 Render 배포<br>- 프론트엔드 UI/UX 개발 보조<br>- 발표 자료 제작 | ✉️chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
+| BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
+| UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ## 설치 및 실행 방법 (Installation & Execution)
 해당 프로젝트는 상단 링크에서 배포된 버전을 바로 확인하실 수 있습니다.
@@ -231,7 +231,7 @@ backend-repo
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.<br>
 <img width="200" alt="image" src="assets/Letter.png" /> <img width="200" alt="image" src="assets/response.png" />
 
-## 🧵 Troubleshooting
+## Troubleshooting
 - 문제: BGM 자동재생 안 됨<br>
     원인: 2018년 Chrome 브라우저 등은 사용자 피드백 없는 오디오 자동재생을 막도록 정책을 바꿈<br>
     해결: `play()`에서 자동재생이 막히면 `catch`하여 `audioOn` 값을 `false`로 설정함. 이후, 사용자의 미디어 참여도 지수 기준점이 초과되면 `play()`에서 error가 발생하지 않고 올바르게 재생됨.
@@ -257,13 +257,13 @@ backend-repo
     원인: 키 누락 또는 요금제 문제<br>
     해결: `.env` 파일에 `OPENAI_API_KEY=your-key` 등록
 
-## 🔮 Future Work
+## Future Work
 - 악성 문구 및 유해 답장 필터링
 - 받은 편지 카카오톡 알림 (편지 작성 리마인드 및 답장 도착 알림)
 - 정서 회복 성장 여정 시각화 → 임팩트 지표 측정에 활용
 - 위로 글귀 가챠
 - 학교 및 복지기관 대상 온기 서비스 시연
 
-## 🎓 Fellowship & Mentorship
+## Fellowship & Mentorship
 - **Fellow**: 조현식 님 (온기 Onji) 🔗[Ongibox](https://ongibox.co.kr/)
 - **Mentor**: 이정음 님 (카카오 Kakao) 🔗[GitHub](https://github.com/jeongum) 

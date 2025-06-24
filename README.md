@@ -190,7 +190,7 @@ backend-repo
 ├── test.http              # HTTP 요청 테스트용 -REST Client 확장
 └── README.md
 ```
-<img width="376" alt="image" src="![제목 없는 다이어그램.drawio.svg](attachment:c01c0fc2-b1d8-4b66-a733-f6d9bca5ef78:제목_없는_다이어그램.drawio.svg)" />
+<img width="376" alt="image" src="![제목 없는 다이어그램.drawio.svg](attachment:c01c0fc2-b1d8-4b66-a733-f6d9bca5ef78:제목_없는_다이어그램.drawio.svg)" /><br>
 **AI Service**
 - GPT-4o API 기반 감정 맞춤 질문 생성
 - 사용자 입력 응답 처리 및 텍스트 전처리

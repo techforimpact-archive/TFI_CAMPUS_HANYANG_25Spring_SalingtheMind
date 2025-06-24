@@ -1,5 +1,8 @@
 # 🌊 마음의 항해 (Sailing of the Heart)
-본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.<br><img width="196" alt="image" src="assets/thumbnail.jpeg /><br>
+본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.
+
+<img src="assets/thumbnail.jpeg" alt="thumbnail image" width="196" />
+
 🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
 (⚠️ 본 서비스는 모바일 환경에 최적화되어 있습니다. PC가 아닌 스마트폰으로 접속해 주세요!)
 
@@ -190,7 +193,7 @@ backend-repo
 ├── test.http              # HTTP 요청 테스트용 -REST Client 확장
 └── README.md
 ```
-<img width="376" alt="image" src="assets/diagram.svg" /><br>
+<img width="450" alt="image" src="assets/diagram.svg" /><br>
 
 **AI Service**
 - GPT-4o API 기반 감정 맞춤 질문 생성
@@ -226,8 +229,7 @@ backend-repo
 ### 💌 편지 및 답장 작성 화면
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
-<img width="250" alt="image" src="assets/Letter.png" />
-<img width="250" alt="image" src="assets/response.png" />
+<img width="250" alt="image" src="assets/Letter.png" /><img width="250" alt="image" src="assets/response.png" />
 
 ## 🧵 Troubleshooting
 - 문제: BGM 자동재생 안 됨<br>

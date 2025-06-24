@@ -3,8 +3,6 @@
 🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
 (⚠️ 본 서비스는 모바일 환경에 최적화되어 있습니다. PC가 아닌 스마트폰으로 접속해 주세요!)
 
----
-
 ## Project Overview
 ### 프로젝트 소개
 『마음의 항해』는 감정 표현에 어려움을 겪는 청소년을 위한 AI 기반 편지 작성 웹서비스입니다. 사용자가 감정을 선택하면, AI가 맞춤형 질문을 제안하고 글쓰기를 유도하여, 자기표현의 진입장벽을 낮추고 정서적 연결과 회복 경험을 제공합니다.
@@ -17,8 +15,6 @@
 📄 [최종 발표자료 PDF](https://drive.google.com/file/d/1YeNR23y816Cup3twf0RxQrPRHCDIaSAY/view?usp=sharing)<br>
 📹 [시연 영상](https://drive.google.com/drive/u/0/folders/1PTBSqgeTHN83Uz9GSSe9Z2MQQmFQl-Mn) 
 
----
-
 ## Team Members
 
 | Role | Name | Affiliation | Responsibility | Contact |
@@ -28,8 +24,6 @@
 | BE | **한채린 (Chaelin Han)** | InformationSystem | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
 | BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
 | UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
-
----
 
 ## 설치 및 실행 방법 (Installation & Execution)
 해당 프로젝트는 상단 링크에서 배포된 버전을 바로 확인하실 수 있습니다.
@@ -91,8 +85,6 @@ npm run dev
 ```
 #### 6. Go to the start page `http://localhost:3000` in your web browser
 
----
-
 ## 기술 스택
 ### 공통
 *Notion,  Github*
@@ -109,8 +101,6 @@ npm run dev
 - 라우팅 & 인증: `JWT Auth` + Flask Blueprint – 사용자 인증 및 기능별 라우터 분리
 - 데이터베이스: `MongoDB Atlas` – 유연한 비정형 데이터 저장 및 쿼리
 - 문서화 도구: `Flasgger` – Swagger 기반 API 명세 자동화
-
----
 
 ## 프로젝트 구조
 ### Frontend
@@ -219,7 +209,6 @@ backend-repo
 **Deployment**
 - `Render` (Web Service와 Worker 인스턴스를 분리 배포)
   
----
 ## 주요 기능 Key Features & UI Overview
 ### 🏝 메인 화면
 - 캐릭터 ‘온달’이 감정 표현과 지속 활동을 돕는 서포터 역할을 합니다.
@@ -237,8 +226,6 @@ backend-repo
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/25cdac8e-1382-48a2-bcf8-365a2906688a" />
 <img width="250" alt="image" src="![image.png](attachment:49cbce29-8113-4604-853a-0c9046c68051:image.png)" />
-
----
 
 ## 🧵 Troubleshooting
 - 문제: BGM 자동재생 안 됨
@@ -265,8 +252,6 @@ backend-repo
 - 문제: OpenAI API 오류
     원인: 키 누락 또는 요금제 문제
     해결: `.env` 파일에 `OPENAI_API_KEY=your-key` 등록
-  
----
 
 ## 🔮 Future Work
 - 악성 문구 및 유해 답장 필터링
@@ -275,12 +260,6 @@ backend-repo
 - 위로 글귀 가챠
 - 학교 및 복지기관 대상 온기 서비스 시연
 
----
-
 ## 🎓 Fellowship & Mentorship
 - **Fellow**: 조현식 님 (온기 Onji) 🔗[Ongibox](https://ongibox.co.kr/)
 - **Mentor**: 이정음 님 (카카오 Kakao) 🔗[GitHub](https://github.com/jeongum) 
-
----
-
-

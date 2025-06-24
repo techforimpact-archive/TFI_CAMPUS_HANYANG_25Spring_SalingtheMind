@@ -20,7 +20,7 @@
 
 ## Team Members
 
-|  Role  | Name | Affiliation | Responsibility |  Contact  |
+|   Role   | Name | Affiliation | Responsibility |  Contact  |
 |---------|------|------|------------|-----------|
 | PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
 | FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획 및 회의 리드<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |

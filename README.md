@@ -1,7 +1,7 @@
 # 🌊 마음의 항해 (Sailing of the Heart)
 본 프로젝트는 2025-1 카카오임팩트 × 테크포임팩트 캠퍼스 프로그램의 지원을 받아, 관계의 회복을 돕는 소셜벤처 사단법인 온기와 함께 ‘돕는 기술’을 지향하는 **AI 기반 자기표현 글쓰기 조력 및 정서 지원 플랫폼**을 개발하였습니다.
 
-<img src="assets/Thumbnail.png" alt="thumbnail image" width="500" />
+<img src="assets/Thumbnail2.png" alt="thumbnail image" width="500" />
 
 🔗 [서비스 링크(Live Demo)](https://gominhanyang.vercel.app/signin)
 (⚠️ 본 서비스는 모바일 환경에 최적화되어 있습니다. PC가 아닌 스마트폰으로 접속해 주세요!)
@@ -22,9 +22,9 @@
 
 | Role | Name | Affiliation | Responsibility | Contact |
 |------|------|------|----------------|---------|
-| PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표 | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
-| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
-| BE | **한채린 (Chaelin Han)** | InformationSystem | "" | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
+| PM(리더) | **유서현 (Seohyeon Yoo)** | DataScience | - 프로젝트 기획 및 회의 총괄<br>- UI/UX 설계 및 디자인 주도<br>- 유저테스트 담당<br>- 논문 작성 및 발표<br>- 프론트엔드 UI/UX 개발 보조 | ✉️ dbtjgus6988@gmail.com<br>🔗 [GitHub](https://github.com/dbtjgus6988) |
+| FE | **이예진 (Yejin Lee)** | ComputerScience | - 프로젝트 기획 및 회의 리드<br>- 기술 스택 선정<br>- 와이어프레임 개발<br>- API 연결 및 기능 개발<br>- 전체 화면 UI 개발 | ✉️ clarecse02@gmail.com<br>🔗 [GitHub](https://github.com/lwjmcn) |
+| BE | **한채린 (Chaelin Han)** | InformationSystem | - 프로젝트 기획 및 백엔드 기술 스택 선정<br>- Flask 기반 백엔드 개발환경 셋팅<br>- API 개발 (엔드포인트별 구현)<br>- MongoDB 관리 및 Render 배포<br>- 프론트엔드 UI/UX 개발 보조<br>- 발표 자료 제작 | ✉️ chelin02@naver.com<br>🔗 [GitHub](https://github.com/han-chaelin) |
 | BE | **김혜연 (Hyeyeon Kim)** | DataScience | - Flask 백엔드 초기 세팅<br>- MongoDB 연결 및 Render 배포<br>- 컬렉션 스키마 설계<br>- API 개발 (엔드포인트별 구현, OpenAI API 연동, JWT 인증)<br>- Background worker 개발<br>- Flaswagger 문서화 | ✉️ rbanbla@hanyang.ac.kr<br>🔗 [GitHub](https://github.com/rbanbla) |
 | UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️ imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 

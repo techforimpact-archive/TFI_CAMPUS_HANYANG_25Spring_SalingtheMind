@@ -29,7 +29,7 @@
 | UI | **임선민 (Sunmin Lim)** | InformationSystem | - UI/UX 설계 및 디자인 보조<br>- 프론트엔드 UI 개발 보조<br>- 유저테스트 준비 보조 | ✉️imsnmn24@gmail.com<br>🔗 [GitHub](https://github.com/Sunmin-Lim) |
 
 ## 설치 및 실행 방법 (Installation & Execution)
-해당 프로젝트는 상단 링크에서 배포된 버전을 바로 확인하실 수 있습니다.
+해당 프로젝트는 상단의 서비스 링크에서 배포된 버전을 바로 확인하실 수 있습니다.<br>
 로컬 환경에서 실행하고자 할 경우, 아래의 절차를 따라 주세요.
 
 ### Backend
@@ -193,7 +193,7 @@ backend-repo
 ├── test.http              # HTTP 요청 테스트용 -REST Client 확장
 └── README.md
 ```
-<img width="600" alt="image" src="assets/diagram.svg" /><br>
+<img width="700" alt="image" src="assets/diagram.svg" /><br>
 
 **AI Service**
 - GPT-4o API 기반 감정 맞춤 질문 생성
@@ -228,7 +228,8 @@ backend-repo
 
 ### 💌 편지 및 답장 작성 화면
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
-- 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.<br>
+- 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
+  
 <img width="200" alt="image" src="assets/Letter.png" /> <img width="200" alt="image" src="assets/response.png" />
 
 ## Troubleshooting

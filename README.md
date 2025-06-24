@@ -229,7 +229,7 @@ backend-repo
 ### 💌 편지 및 답장 작성 화면
 - 수신자 선택 → 감정 선택 → AI 기반 질문으로 편지 작성 유도 → 편지 작성
 - 감정 기반 AI 질문으로 글쓰기를 시작하여, 전과정에서 내용 기반 AI 질문 도움을 받을 수 있습니다.
-<img width="200" alt="image" src="assets/Letter.png" /><img width="250" alt="image" src="assets/response.png" />
+<img width="200" alt="image" src="assets/Letter.png" /> <img width="200" alt="image" src="assets/response.png" />
 
 ## 🧵 Troubleshooting
 - 문제: BGM 자동재생 안 됨<br>
